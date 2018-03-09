@@ -4,7 +4,6 @@ import Helmet from 'react-helmet'
 import { ThemeProvider } from '@hackclub/design-system'
 
 import Header from '../components/Header'
-import './index.css'
 
 const TemplateWrapper = ({ children }) => (
   <ThemeProvider>
@@ -15,20 +14,10 @@ const TemplateWrapper = ({ children }) => (
           name: 'description',
           content: 'Community contributed high school hackathon schedule',
         },
-        { name: 'keywords', content: 'sample, something' },
       ]}
     />
     <Header />
-    <div
-      style={{
-        margin: '0 auto',
-        maxWidth: 960,
-        padding: '0px 1.0875rem 1.45rem',
-        paddingTop: 0,
-      }}
-    >
-      {children()}
-    </div>
+    {children()}
   </ThemeProvider>
 )
 
