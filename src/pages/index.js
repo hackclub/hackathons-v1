@@ -44,7 +44,6 @@ const EventCard = Card.extend.attrs({
 `
 
 const EventListing = ({ website, name, start, end, key }) => {
-  debugger
   return (
     <Link key={key} href={website} target="_blank">
       <EventCard>
