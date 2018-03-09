@@ -2,8 +2,8 @@
 const writeFile = require('fs').writeFile
 const axios = require('axios')
 
-exports.onPreBuild = () => {
-  axios.get('https://api.hackclub.com/v1/events')
+exports.onPreBootstrap = () => {
+  return axios.get('https://api.hackclub.com/v1/events')
     .then(res => {
       const data = JSON.stringify(res.data.map(event => (
         {...event, id: event.id.toString()}
