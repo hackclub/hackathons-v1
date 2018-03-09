@@ -1,38 +1,71 @@
-import React, { Fragment } from 'react'
-import Helment from 'react-helmet'
-import { Card, Flex, Heading, Link, theme } from '@hackclub/design-system'
+import React from 'react'
+import Helmet from 'react-helmet'
+import {
+  Box,
+  Card,
+  Flex,
+  Heading,
+  Link,
+  Text,
+  theme,
+} from '@hackclub/design-system'
+
+const Base = Box.extend`
+  width: 100vw;
+  margin: 0;
+  background-color: ${props => props.theme.colors.red[5]};
+  background-image: linear-gradient(
+    -16deg,
+    ${props => props.theme.colors.orange[4]} 0%,
+    ${props => props.theme.colors.red[5]} 50%,
+    ${props => props.theme.colors.primary} 100%
+  );
+`
+
+const Subtitle = Text.extend`
+  color: ${props => props.theme.colors.gray[6]};
+`
 
 const EventCard = Card.extend.attrs({
-  p: 1,
+  p: 2,
   m: 2,
   align: 'center',
-  boxShadowSize: 'sm',
+  boxShadowSize: 'md',
+  color: 'slate',
+  bg: 'white',
 })`
-  color: black;
   min-width: ${props => props.theme.space[3]}em;
+  min-height: ${props => props.theme.space[1]}em;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.32);
-  transition: transform .125s ease-in;
+  transition: transform .075s ease-out;
   &:hover {
-    transform: scale(1.03125);
+    transform: scale(1.1);
   }
 `
 
+const EventListing = ({ website, name, start, end, key }) => {
+  debugger
+  return (
+    <Link key={key} href={website} target="_blank">
+      <EventCard>
+        <Heading.h3>{name}</Heading.h3>
+        <Subtitle>
+          {start}
+          {start.indexOf(end) === -1 ? `—${end}` : null}
+        </Subtitle>
+      </EventCard>
+    </Link>
+  )
+}
+
 export default ({ data }) => (
-  <Fragment>
+  <Base>
     <Flex wrap justify="center">
       {data.allEventsJson.edges.map(({ node }, index) => (
-        <Link key={index} href={node.website} target="_blank">
-          <EventCard>
-            <strong>{node.name}</strong>
-            <br />
-            <em>
-              {node.start} – {node.end}
-            </em>
-          </EventCard>
-        </Link>
+        <EventListing {...node} key={index} />
       ))}
     </Flex>
-  </Fragment>
+  </Base>
 )
 
 export const pageQuery = graphql`
