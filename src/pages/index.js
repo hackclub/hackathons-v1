@@ -1,21 +1,37 @@
 import React, { Fragment } from 'react'
-import Link from 'gatsby-link'
 import Helment from 'react-helmet'
-import { Heading } from '@hackclub/design-system'
+import { Card, Flex, Heading, Link, theme } from '@hackclub/design-system'
+
+const EventCard = Card.extend.attrs({
+  p: 1,
+  m: 2,
+  align: 'center',
+  boxShadowSize: 'sm',
+})`
+  color: black;
+  min-width: ${props => props.theme.space[3]}em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.32);
+  transition: transform .125s ease-in;
+  &:hover {
+    transform: scale(1.03125);
+  }
+`
 
 export default ({ data }) => (
   <Fragment>
-    <Heading>Hello</Heading>
-    <ul>
+    <Flex wrap justify="center">
       {data.allEventsJson.edges.map(({ node }, index) => (
-        <li key={index}>
-          <strong>{node.name}</strong>{' '}
-          <em>
-            {node.start} – {node.end}
-          </em>
-        </li>
+        <Link key={index} href={node.website} target="_blank">
+          <EventCard>
+            <strong>{node.name}</strong>
+            <br />
+            <em>
+              {node.start} – {node.end}
+            </em>
+          </EventCard>
+        </Link>
       ))}
-    </ul>
+    </Flex>
   </Fragment>
 )
 
@@ -27,6 +43,7 @@ export const pageQuery = graphql`
           start(formatString: "MMMM DD")
           end(formatString: "DD")
           name
+          website
         }
       }
     }
