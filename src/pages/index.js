@@ -43,14 +43,21 @@ const EventCard = Card.extend.attrs({
   }
 `
 
-const EventListing = ({ website, name, start, end, key }) => {
+const EventListing = ({
+  website,
+  name,
+  start,
+  end,
+  key,
+  startHumanized,
+  endHumanized,
+}) => {
   return (
     <Link key={key} href={website} target="_blank">
       <EventCard>
         <Heading.h3>{name}</Heading.h3>
         <Subtitle>
-          {start}
-          {start.indexOf(end) === -1 ? `—${end}` : null}
+          {start === end ? startHumanized : `${startHumanized}—${endHumanized}`}
         </Subtitle>
       </EventCard>
     </Link>
@@ -72,8 +79,10 @@ export const pageQuery = graphql`
     allEventsJson {
       edges {
         node {
-          start(formatString: "MMMM DD")
-          end(formatString: "DD")
+          startHumanized: start(formatString: "MMMM DD")
+          endHumanized: end(formatString: "DD")
+          start
+          end
           name
           website
         }
