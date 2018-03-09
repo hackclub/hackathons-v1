@@ -1,11 +1,10 @@
 import React from 'react'
-import Link from 'gatsby-link'
+import { Link, theme } from '@hackclub/design-system'
 
 const Header = () => (
   <div
     style={{
-      background: 'rebeccapurple',
-      marginBottom: '1.45rem',
+      background: theme.colors.primary,
     }}
   >
     <div
@@ -17,13 +16,13 @@ const Header = () => (
     >
       <h1 style={{ margin: 0 }}>
         <Link
-          to="/"
+          href="/"
           style={{
             color: 'white',
             textDecoration: 'none',
           }}
         >
-          Gatsby
+          Hack Club
         </Link>
       </h1>
     </div>
