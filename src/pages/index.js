@@ -64,6 +64,7 @@ const EventListing = ({
   image = 'https://s3.amazonaws.com/assets.mlh.io/events/splashes/000/000/693/thumb/1311a958833a-Image.jpg?1500306839',
   logo = 'https://s3.amazonaws.com/assets.mlh.io/events/logos/000/000/715/thumb/bm_logo_mlh-01.png?1502205705',
   distanceTo,
+  startYear,
 }) => {
   return (
     <Tilt options={{ max: 10, perspective: 500 }}>
@@ -79,6 +80,9 @@ const EventListing = ({
               {start === end
                 ? startHumanized
                 : `${startHumanized}—${endHumanized}`}
+              {new Date().getFullYear() !== parseInt(startYear)
+                ? `, ${startYear}`
+                : null}
             </Subtitle>
             <Subtitle>
               {distanceTo
@@ -265,6 +269,7 @@ export const pageQuery = graphql`
           endHumanized: end(formatString: "DD")
           start
           end
+          startYear: start(formatString: "YYYY")
           city: parsed_city
           state: parsed_state_code
           name
