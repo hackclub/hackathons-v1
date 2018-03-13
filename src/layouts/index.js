@@ -8,7 +8,7 @@ import Header from 'components/Header'
 const TemplateWrapper = ({ children }) => (
   <ThemeProvider>
     <Helmet
-      title={`${new Date().getFullYear()} High School Hackathon Calendar`}
+      title={`${new Date().getFullYear()} High School Hackathon Calendar // Worldwide`}
       meta={[
         {
           name: 'description',
