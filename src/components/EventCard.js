@@ -19,7 +19,10 @@ const humanizeDistance = num => {
   }
 }
 
-const Logo = Image.extend`
+const Logo = Image.extend.attrs({
+  boxShadowSize: 'md',
+  w: 60,
+})`
   display: inline;
   border-radius: 5px;
 `
@@ -72,7 +75,7 @@ export default ({
     <Link href={website} target="_blank">
       <EventCard background={image}>
         <Logo src={logo} />
-        <Heading.h3>{name}</Heading.h3>
+        <Heading.h3 fontWeight="normal">{name}</Heading.h3>
         <Flex justify="space-between">
           <Text>
             {start === end
