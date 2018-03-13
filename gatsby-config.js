@@ -13,5 +13,6 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-react-next',
     'gatsby-transformer-json',
+    'gatsby-plugin-resolve-src',
   ],
 };

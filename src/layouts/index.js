@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { ThemeProvider } from '@hackclub/design-system'
 
-import Header from '../components/Header'
+import Header from 'components/Header'
 
 const TemplateWrapper = ({ children }) => (
   <ThemeProvider>

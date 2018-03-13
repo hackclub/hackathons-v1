@@ -10,7 +10,7 @@ import {
   Input,
   theme,
 } from '@hackclub/design-system'
-import EventCard from '../components/EventCard'
+import EventCard from 'components/EventCard'
 
 const Base = Box.extend.attrs({ m: 0 })`
   width: 100vw;

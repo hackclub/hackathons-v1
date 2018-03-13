@@ -1,4 +1,5 @@
 import React from 'react'
+import Tilt from 'react-tilt'
 import {
   Box,
   Card,
@@ -9,7 +10,6 @@ import {
   Flex,
   theme,
 } from '@hackclub/design-system'
-import Tilt from 'react-tilt'
 
 const humanizeDistance = num => {
   if (num <= 100) {
