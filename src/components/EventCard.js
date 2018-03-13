@@ -20,7 +20,6 @@ const humanizeDistance = num => {
 }
 
 const Logo = Image.extend.attrs({
-  boxShadowSize: 'md',
   w: 60,
 })`
   display: inline;
