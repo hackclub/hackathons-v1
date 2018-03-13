@@ -1,100 +1,20 @@
 import React, { Component } from 'react'
 import Helmet from 'react-helmet'
-import Tilt from 'react-tilt'
 import axios from 'axios'
 import {
   Box,
   Button,
-  Card,
+  Container,
   Flex,
-  Heading,
-  Link,
   Text,
-  Image,
   Input,
   theme,
 } from '@hackclub/design-system'
+import EventCard from '../components/EventCard'
 
-const Base = Box.extend.attrs({
-  m: 0,
-})`
+const Base = Box.extend.attrs({ m: 0 })`
   width: 100vw;
 `
-
-const Subtitle = Text.extend`
-  color: ${props => props.theme.colors.gray[6]};
-`
-
-const EventCard = Card.withComponent(Flex).extend.attrs({
-  m: 3,
-  align: 'center',
-  boxShadowSize: 'md',
-  color: 'slate',
-  bg: 'white',
-})`
-  overflow: hidden;
-  flex-direction: column;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.32);
-  transition: transform .075s ease-out;
-`
-
-const Logo = Image.extend`
-  position: absolute;
-  margin-top: 3px;
-  border-radius: 5px;
-`
-
-const humanizeNumber = num => {
-  if (num < 10) {
-    return parseFloat(num.toFixed(1))
-  } else {
-    return Math.round(num)
-  }
-}
-
-const EventListing = ({
-  website,
-  name,
-  start,
-  end,
-  startHumanized,
-  endHumanized,
-  city,
-  state,
-  image = 'https://s3.amazonaws.com/assets.mlh.io/events/splashes/000/000/693/thumb/1311a958833a-Image.jpg?1500306839',
-  logo = 'https://s3.amazonaws.com/assets.mlh.io/events/logos/000/000/715/thumb/bm_logo_mlh-01.png?1502205705',
-  distanceTo,
-  startYear,
-}) => {
-  return (
-    <Tilt options={{ max: 10, perspective: 500 }}>
-      <Link href={website} target="_blank">
-        <EventCard>
-          <Logo src={logo} style={{ transform: 'translateZ(50px)' }} />
-          <Box style={{ maxHeight: `${theme.space[2]}em`, overflow: 'hidden' }}>
-            <Image src={image} />
-          </Box>
-          <Box p={2}>
-            <Heading.h4>{name}</Heading.h4>
-            <Subtitle>
-              {start === end
-                ? startHumanized
-                : `${startHumanized}—${endHumanized}`}
-              {new Date().getFullYear() !== parseInt(startYear)
-                ? `, ${startYear}`
-                : null}
-            </Subtitle>
-            <Subtitle>
-              {distanceTo
-                ? `${humanizeNumber(distanceTo)} miles`
-                : `${city}, ${state}`}
-            </Subtitle>
-          </Box>
-        </EventCard>
-      </Link>
-    </Tilt>
-  )
-}
 
 export default class extends Component {
   constructor(props) {
@@ -232,29 +152,31 @@ export default class extends Component {
             </Button>
           </Box>
         </Flex>
-        <Flex wrap justify="center">
-          {events
-            .sort((a, b) => {
-              if (formattedAddress) {
-                return (
-                  this.distanceTo(a.latitude, a.longitude).miles -
-                  this.distanceTo(b.latitude, b.longitude).miles
-                )
-              } else {
-                return new Date(a.start) - new Date(b.start)
-              }
-            })
-            .map((event, index) => (
-              <EventListing
-                {...event}
-                distanceTo={
-                  formattedAddress &&
-                  this.distanceTo(event.latitude, event.longitude).miles
+        <Container maxWidth={theme.space[5]}>
+          <Flex wrap justify="center">
+            {events
+              .sort((a, b) => {
+                if (formattedAddress) {
+                  const distToA = this.distanceTo(a.latitude, a.longitude).miles
+                  const distToB = this.distanceTo(b.latitude, b.longitude).miles
+                  return distToA - distToB
+                } else {
+                  return new Date(a.start) - new Date(b.start)
                 }
-                key={index}
-              />
-            ))}
-        </Flex>
+              })
+              .map((event, index) => (
+                <EventCard
+                  {...event}
+                  distanceTo={
+                    formattedAddress
+                      ? this.distanceTo(event.latitude, event.longitude).miles
+                      : null
+                  }
+                  key={index}
+                />
+              ))}
+          </Flex>
+        </Container>
       </Base>
     )
   }
