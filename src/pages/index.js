@@ -204,16 +204,14 @@ export const pageQuery = graphql`
           start
           end
           startYear: start(formatString: "YYYY")
-          city: parsed_city
-          state: parsed_state_code
-          parsed_state
+          parsed_city
+          parsed_state_code
+          parsed_country_code
           parsed_country
           name
           website
           latitude
           longitude
-          parsed_state_code
-          parsed_country_code
           banner {
             file_path
           }

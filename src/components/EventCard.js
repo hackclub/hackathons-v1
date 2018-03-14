@@ -60,8 +60,10 @@ export default ({
   end,
   startHumanized,
   endHumanized,
-  city,
-  state,
+  parsed_city,
+  parsed_state_code,
+  parsed_country,
+  parsed_country_code,
   banner,
   logo,
   distanceTo,
@@ -86,7 +88,11 @@ export default ({
           <Text>
             {distanceTo
               ? `${humanizeDistance(distanceTo)} miles`
-              : `${city}, ${state}`}
+              : `${parsed_city}, ${
+                  parsed_country_code === 'US'
+                    ? parsed_state_code
+                    : parsed_country
+                }`}
           </Text>
         </Flex>
       </EventCard>
