@@ -3,57 +3,62 @@ import Helmet from 'react-helmet'
 import axios from 'axios'
 import {
   Box,
-  Button,
   Container,
   Flex,
   Text,
-  Input,
-  Link,
+  Image,
+  Link as L,
+  Heading,
+  Section,
   theme,
 } from '@hackclub/design-system'
 import EventCard from 'components/EventCard'
-import AddLink from 'components/AddLink'
-import Header from 'components/Header'
+import flag from 'static/flag.svg'
+import { distance } from 'utils'
 
 const Base = Box.extend.attrs({ m: 0 })`
   width: 100vw;
 `
 
+const Link = L.extend`
+  color: ${props => props.theme.colors.primary};
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
 export default class extends Component {
   constructor(props) {
     super(props)
+
+    const events = props.data.allEventsJson.edges.map(({ node }) => node)
+
     this.state = {
-      events: props.data.allEventsJson.edges.map(({ node }) => node),
+      events: events,
       searchLat: null,
       searchLng: null,
       searchAddress: '',
       formattedAddress: undefined,
+      hidePastEvents: false,
+      sortByProximity: false,
+    }
+
+    this.stats = {
+      total: events.length,
+      state: new Set(events.map(event => event.parsed_state)).size,
+      country: new Set(events.map(event => event.parsed_country)).size,
     }
   }
 
   distanceTo(eventLat, eventLng) {
-    // https://www.geodatasource.com/developers/javascript
     const { searchLat, searchLng } = this.state
     if (!searchLat || !searchLng) {
-      return NaN
+      return undefined
     }
-    const radEventLat = Math.PI * eventLat / 180
-    const radSearchLat = Math.PI * searchLat / 180
-    const theta = eventLng - searchLng
-    const radtheta = Math.PI * theta / 180
-    let dist =
-      Math.sin(radEventLat) * Math.sin(radSearchLat) +
-      Math.cos(radEventLat) * Math.cos(radSearchLat) * Math.cos(radtheta)
-    dist = Math.acos(dist)
-    dist = dist * 180 / Math.PI
-    dist = dist * 60 * 1.1515
-    return {
-      miles: dist,
-      kilometers: dist * 1.609344,
-    }
+    return distance(eventLat, eventLng, searchLat, searchLng)
   }
 
-  setCurrentLocation() {
+  setCurrentLocation(cb) {
     const geo = window.navigator.geolocation
     if (geo) {
       geo.getCurrentPosition(
@@ -72,17 +77,16 @@ export default class extends Component {
                 searchLng: pos.coords.longitude,
                 formattedAddress: formattedAddress,
                 searchAddress: formattedAddress,
+                sortByProximity: true,
               })
             })
         },
         err => {
-          alert(
-            'We couldn’t get your current location. Search by address instead.'
-          )
+          alert('We couldn’t get your current location.')
         }
       )
     } else {
-      alert('We couldn’t get your current location. Search by address instead.')
+      alert('We couldn’t get your current location.')
     }
   }
 
@@ -115,54 +119,27 @@ export default class extends Component {
   }
 
   render() {
-    const { events, searchAddress, formattedAddress } = this.state
+    const {
+      events,
+      searchAddress,
+      formattedAddress,
+      hidePastEvents,
+    } = this.state
     return (
       <Fragment>
-        <Header>
-          <Flex justify="space-evenly" mx={3}>
-            <Input
-              placeholder="Where are you?"
-              value={searchAddress}
-              onKeyDown={event => {
-                if (event.keyCode === 13 /* enter */) {
-                  event.preventDefault()
-                  this.searchLocation()
-                }
-              }}
-              onChange={event => {
-                const val = event.target.value
-                setTimeout(() => {
-                  if (val === this.state.searchAddress) {
-                    this.searchLocation()
-                  }
-                }, 1250)
-                this.setState({ searchAddress: val })
-              }}
-            />
-            <Button
-              inverted
-              color="white"
-              href="#"
-              onClick={e => {
-                e.preventDefault()
-                this.setCurrentLocation()
-              }}
-            >
-              Use my current location
-            </Button>
-          </Flex>
-        </Header>
         <Base>
-          <Flex justify="flex-end">
-            <Box w={0.5}>
-              <Text>
-                Here are {events.length} events, sorted{' '}
-                {formattedAddress ? `near ${formattedAddress}` : 'date'}
-              </Text>
-            </Box>
-          </Flex>
-          <Container maxWidth={theme.space[5]}>
-            <AddLink />
+          <Image src={flag} width="10em" ml="5em" />
+          <Container maxWidth={theme.space[5]} align="center">
+            <Heading.h1 my={5}>Upcoming Hackathons</Heading.h1>
+            <Text mb={5} fontSize={4} style={{ maxWidth: '800px' }} mx="auto">
+              Find, register, and compete in {this.stats.total} free student-led
+              hackathons across {this.stats.state} states and{' '}
+              {this.stats.country} countries.{' '}
+              <Link href="https://goo.gl/forms/ZdVkkunalNGW9nQ82">
+                Click here
+              </Link>{' '}
+              to add your event.
+            </Text>
             <Flex wrap justify="center">
               {events
                 .sort((a, b) => {
@@ -188,8 +165,17 @@ export default class extends Component {
                   />
                 ))}
             </Flex>
+            <Link />
           </Container>
         </Base>
+        <Section mt={3} color="black">
+          <Heading.h4>
+            Hack Club.{' '}
+            <Link color="primary" href="//hackclub.com">
+              Learn More
+            </Link>
+          </Heading.h4>
+        </Section>
       </Fragment>
     )
   }
@@ -200,19 +186,27 @@ export const pageQuery = graphql`
     allEventsJson {
       edges {
         node {
-          startHumanized: start(formatString: "MMMM DD")
-          endHumanized: end(formatString: "DD")
+          startHumanized: start(formatString: "MMMM Do")
+          endHumanized: end(formatString: "Do")
           start
           end
           startYear: start(formatString: "YYYY")
           city: parsed_city
           state: parsed_state_code
+          parsed_state
+          parsed_country
           name
           website
           latitude
           longitude
-          logoPath: logo_path
-          bannerPath: banner_path
+          parsed_state_code
+          parsed_country_code
+          banner {
+            file_path
+          }
+          logo {
+            file_path
+          }
         }
       }
     }

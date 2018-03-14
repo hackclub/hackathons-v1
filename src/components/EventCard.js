@@ -19,9 +19,8 @@ const humanizeDistance = num => {
   }
 }
 
-const Logo = Image.extend.attrs({
-  w: 60,
-})`
+const Logo = Image.extend`
+  height: 60px;
   display: inline;
   border-radius: 5px;
 `
@@ -34,7 +33,11 @@ const EventCard = Card.extend.attrs({
   color: 'white',
 })`
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.32);
-  background: ${props => tintedBackground(props.background)} no-repeat;
+  background: linear-gradient(
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.45) 75%
+  ),
+  url(${props => props.background}) no-repeat;
   background-size: cover;
 `
 
@@ -48,15 +51,7 @@ const Base = Box.withComponent(Tilt).extend.attrs({
   min-width: ${props => props.theme.space[3]}em;
 `
 
-const tintedBackground = img => `
-  linear-gradient(
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.45) 75%
-  ),
-  url(${img})
-`
-
-const pathToUrl = path => (path ? `https://api.hackclub.com/${path}` : null)
+const pathToUrl = path => (path ? `https://api.hackclub.com${path}` : null)
 
 export default ({
   website,
@@ -67,16 +62,18 @@ export default ({
   endHumanized,
   city,
   state,
-  bannerPath,
-  logoPath,
+  banner,
+  logo,
   distanceTo,
   startYear,
 }) => (
   <Base>
     <Link href={website} target="_blank">
-      <EventCard background={pathToUrl(bannerPath)}>
-        <Logo src={pathToUrl(logoPath)} />
-        <Heading.h3 fontWeight="normal">{name}</Heading.h3>
+      <EventCard background={pathToUrl((banner || {}).file_path)}>
+        <Logo src={pathToUrl((logo || {}).file_path)} />
+        <Heading.h3 fontWeight="normal" my={2}>
+          {name}
+        </Heading.h3>
         <Flex justify="space-between">
           <Text>
             {start === end

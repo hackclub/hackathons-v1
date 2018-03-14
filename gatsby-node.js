@@ -1,4 +1,3 @@
-// import { writeFile } from 'fs'
 const writeFile = require('fs').writeFile
 const axios = require('axios')
 
