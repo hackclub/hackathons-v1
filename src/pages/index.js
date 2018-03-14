@@ -182,12 +182,13 @@ export default class extends Component {
           </Container>
         </Base>
         <Section mt={3} color="black">
-          <Heading.h4>
-            Hack Club is a non-profit network of student-led coding clubs.{' '}
+          <Text fontSize={4} style={{ maxWidth: '800px' }} mx="auto">
+            This directory is maintained by Hack Club, a non-profit network of
+            student-led coding clubs.{' '}
             <Link color="primary" href="//hackclub.com">
               Learn More
             </Link>
-          </Heading.h4>
+          </Text>
         </Section>
       </Fragment>
     )
