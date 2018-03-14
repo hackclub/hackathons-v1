@@ -58,8 +58,7 @@ export default class extends Component {
       filteredEvents: filteredEvents,
       searchLat: null,
       searchLng: null,
-      searchAddress: '',
-      formattedAddress: undefined,
+      formattedAddress: '(loading)',
       showHistoricalEvents: false,
       sortByProximity: false,
     }
@@ -79,7 +78,7 @@ export default class extends Component {
     return distance(eventLat, eventLng, searchLat, searchLng)
   }
 
-  setCurrentLocation(cb) {
+  setCurrentLocation() {
     const geo = window.navigator.geolocation
     if (geo) {
       geo.getCurrentPosition(
@@ -96,9 +95,8 @@ export default class extends Component {
               this.setState({
                 searchLat: pos.coords.latitude,
                 searchLng: pos.coords.longitude,
-                formattedAddress: formattedAddress,
-                searchAddress: formattedAddress,
                 sortByProximity: true,
+                formattedAddress: formattedAddress,
               })
             })
         },
@@ -111,41 +109,41 @@ export default class extends Component {
     }
   }
 
-  searchLocation() {
-    const { searchAddress } = this.state
-    if (searchAddress === '') {
-      this.setState({
-        searchLat: undefined,
-        searchLng: undefined,
-        formattedAddress: undefined,
-      })
-    } else {
-      axios
-        .get(
-          `https://maps.google.com/maps/api/geocode/json?address=${encodeURI(
-            searchAddress
-          )}`
-        )
-        .then(resp => {
-          const firstResult = resp.data.results[0]
-          if (firstResult) {
-            this.setState({
-              searchLat: firstResult.geometry.location.lat,
-              searchLng: firstResult.geometry.location.lng,
-              formattedAddress: firstResult.formatted_address,
-            })
-          }
-        })
-    }
-  }
+  // searchLocation() {
+  //   const { searchAddress } = this.state
+  //   if (searchAddress === '') {
+  //     this.setState({
+  //       searchLat: undefined,
+  //       searchLng: undefined,
+  //       formattedAddress: undefined,
+  //     })
+  //   } else {
+  //     axios
+  //       .get(
+  //         `https://maps.google.com/maps/api/geocode/json?address=${encodeURI(
+  //           searchAddress
+  //         )}`
+  //       )
+  //       .then(resp => {
+  //         const firstResult = resp.data.results[0]
+  //         if (firstResult) {
+  //           this.setState({
+  //             searchLat: firstResult.geometry.location.lat,
+  //             searchLng: firstResult.geometry.location.lng,
+  //             formattedAddress: firstResult.formatted_address,
+  //           })
+  //         }
+  //       })
+  //   }
+  // }
 
   render() {
     const {
       events,
       filteredEvents,
-      searchAddress,
       formattedAddress,
       showHistoricalEvents,
+      sortByProximity,
     } = this.state
     return (
       <Fragment>
@@ -176,10 +174,10 @@ export default class extends Component {
               </Link>{' '}
               to add your event.
             </Text>
-            <Text mb={5}>
+            <Text>
               {showHistoricalEvents
-                ? 'Currently showing all recorded events.'
-                : 'Currently showing events from the 2017 - 2018 school year.'}{' '}
+                ? 'Showing all recorded events.'
+                : 'Only showing events from the 2017 - 2018 school year.'}{' '}
               <Link
                 href="#"
                 onClick={e => {
@@ -192,10 +190,28 @@ export default class extends Component {
                 Toggle?
               </Link>
             </Text>
+            <Text mb={5}>
+              {sortByProximity
+                ? `Closest events to ${formattedAddress} are first.`
+                : 'Soonest events are first.'}{' '}
+              <Link
+                href="#"
+                onClick={e => {
+                  e.preventDefault()
+                  if (this.state.sortByProximity) {
+                    this.setState({ sortByProximity: false })
+                  } else {
+                    this.setCurrentLocation()
+                  }
+                }}
+              >
+                Toggle?
+              </Link>
+            </Text>
             <Flex wrap justify="center">
               {(this.state.showHistoricalEvents ? events : filteredEvents)
                 .sort((a, b) => {
-                  if (formattedAddress) {
+                  if (sortByProximity) {
                     const distToA = this.distanceTo(a.latitude, a.longitude)
                       .miles
                     const distToB = this.distanceTo(b.latitude, b.longitude)
@@ -209,7 +225,7 @@ export default class extends Component {
                   <EventCard
                     {...event}
                     distanceTo={
-                      formattedAddress
+                      sortByProximity
                         ? this.distanceTo(event.latitude, event.longitude).miles
                         : null
                     }
