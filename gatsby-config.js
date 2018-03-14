@@ -11,5 +11,6 @@ module.exports = {
     'gatsby-plugin-react-next',
     'gatsby-transformer-json',
     'gatsby-plugin-resolve-src',
+    'gatsby-plugin-styled-components',
   ],
 };
