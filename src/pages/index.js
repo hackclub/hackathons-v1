@@ -162,7 +162,7 @@ export default class extends Component {
             <Text>
               {showHistoricalEvents
                 ? 'All events from all time are being shown.'
-                : 'All events from this school year are being shown.'}{' '}
+                : 'All events from the 2017-2018 school year are being shown.'}{' '}
               <Link
                 href="#"
                 onClick={e => {
