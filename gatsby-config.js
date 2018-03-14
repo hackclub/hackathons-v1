@@ -7,6 +7,12 @@ module.exports = {
         path: `${__dirname}/data/`,
       },
     },
+    {
+      resolve: 'gatsby-plugin-segment',
+      options: {
+        writeKey: 'enReVnqn2tVrMigdaSA5py2tRjSzlgHb'
+      }
+    },
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-react-next',
     'gatsby-transformer-json',
