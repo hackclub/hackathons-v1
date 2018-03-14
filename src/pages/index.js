@@ -198,7 +198,7 @@ export default class extends Component {
                 href="#"
                 onClick={e => {
                   e.preventDefault()
-                  if (this.state.sortByProximity) {
+                  if (sortByProximity) {
                     this.setState({ sortByProximity: false })
                   } else {
                     this.setCurrentLocation()
