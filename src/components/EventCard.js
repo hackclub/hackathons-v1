@@ -56,6 +56,8 @@ const tintedBackground = img => `
   url(${img})
 `
 
+const pathToUrl = path => (path ? `https://api.hackclub.com/${path}` : null)
+
 export default ({
   website,
   name,
@@ -65,15 +67,15 @@ export default ({
   endHumanized,
   city,
   state,
-  image = 'https://s3.amazonaws.com/assets.mlh.io/events/splashes/000/000/693/thumb/1311a958833a-Image.jpg?1500306839',
-  logo = 'https://s3.amazonaws.com/assets.mlh.io/events/logos/000/000/715/thumb/bm_logo_mlh-01.png?1502205705',
+  bannerPath,
+  logoPath,
   distanceTo,
   startYear,
 }) => (
   <Base>
     <Link href={website} target="_blank">
-      <EventCard background={image}>
-        <Logo src={logo} />
+      <EventCard background={pathToUrl(bannerPath)}>
+        <Logo src={pathToUrl(logoPath)} />
         <Heading.h3 fontWeight="normal">{name}</Heading.h3>
         <Flex justify="space-between">
           <Text>

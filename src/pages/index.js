@@ -211,6 +211,8 @@ export const pageQuery = graphql`
           website
           latitude
           longitude
+          logoPath: logo_path
+          bannerPath: banner_path
         }
       }
     }
