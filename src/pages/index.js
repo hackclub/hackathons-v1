@@ -150,7 +150,9 @@ export default class extends Component {
     return (
       <Fragment>
         <Base>
-          <Image src={flag} width="10em" ml="5em" />
+          <L href="https://hackclub.com" target="_blank">
+            <Image src={flag} width="10em" ml="5em" />
+          </L>
           <HideOnMobile>
             <Link
               href="https://github.com/hackclub/hackathons"
