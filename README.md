@@ -8,7 +8,9 @@ Hackathons are awesome - but it's hard to find a high quality directory of event
 
 To ensure that the directory remains as high quality as possible, we have strict guidelines for listing hackathons.
 
-For the time being, primarily for ease of development, requests for listing new events happens through [this Google Form](https://docs.google.com/forms/d/e/1FAIpQLScytGFj0IBP3NSO1ZOKIwNaRLVF8tTpX8zis7_uE00-XLB29Q/viewform). Please do not open an issue or submit a pull request to add your event - the form is the easiest and fastest way for us to review submissions.
+For the time being, primarily for ease of development, requests for listing new events happens through [this Google Form](https://docs.google.com/forms/d/e/1FAIpQLScytGFj0IBP3NSO1ZOKIwNaRLVF8tTpX8zis7_uE00-XLB29Q/viewform).
+
+Please do not open an issue or submit a pull request to add your event - the form is the easiest and fastest way for us to review submissions.
 
 ### Development environment setup
 
