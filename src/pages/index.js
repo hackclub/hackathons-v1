@@ -183,7 +183,7 @@ export default class extends Component {
         </Base>
         <Section mt={3} color="black">
           <Heading.h4>
-            Hack Club.{' '}
+            Hack Club is a non-profit network of student-led coding clubs.{' '}
             <Link color="primary" href="//hackclub.com">
               Learn More
             </Link>
