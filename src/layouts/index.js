@@ -14,7 +14,7 @@ const TemplateWrapper = ({ children }) => (
         name="description"
         content="Community contributed high school hackathon schedule"
       />
-      <link rel="icon" href={favicon} />
+      <link rel="shortcut icon" href={favicon} />
     </Helmet>
     {children()}
   </ThemeProvider>
