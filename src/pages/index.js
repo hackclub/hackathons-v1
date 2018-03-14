@@ -31,7 +31,18 @@ export default class extends Component {
   constructor(props) {
     super(props)
 
-    const events = props.data.allEventsJson.edges.map(({ node }) => node)
+    // This spagetti filters out events from before this school year
+    let beginningOfSchoolYear
+    const now = new Date()
+    if (now.getMonth() < 7 /* august */) {
+      beginningOfSchoolYear = new Date(now.getYear() - 1, 7)
+    } else {
+      beginningOfSchoolYear = new Date(now.getYear(), 7)
+    }
+
+    const events = props.data.allEventsJson.edges
+      .map(({ node }) => node)
+      .filter(event => new Date(event.start) > beginningOfSchoolYear)
 
     this.state = {
       events: events,
@@ -130,7 +141,9 @@ export default class extends Component {
         <Base>
           <Image src={flag} width="10em" ml="5em" />
           <Container maxWidth={theme.space[5]} align="center">
-            <Heading.h1 my={5}>Upcoming Hackathons</Heading.h1>
+            <Heading.h1 my={5}>
+              Upcoming High School Hackathons in {new Date().getFullYear()}
+            </Heading.h1>
             <Text mb={5} fontSize={4} style={{ maxWidth: '800px' }} mx="auto">
               Find, register, and compete in {this.stats.total} free student-led
               hackathons across {this.stats.state} states and{' '}
