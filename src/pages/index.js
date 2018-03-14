@@ -148,7 +148,10 @@ export default class extends Component {
               Find, register, and compete in {this.stats.total} free student-led
               hackathons across {this.stats.state} states and{' '}
               {this.stats.country} countries.{' '}
-              <Link href="https://goo.gl/forms/ZdVkkunalNGW9nQ82">
+              <Link
+                href="https://goo.gl/forms/ZdVkkunalNGW9nQ82"
+                target="_blank"
+              >
                 Click here
               </Link>{' '}
               to add your event.
@@ -185,7 +188,7 @@ export default class extends Component {
           <Text fontSize={4} style={{ maxWidth: '800px' }} mx="auto">
             This directory is maintained by Hack Club, a non-profit network of
             student-led coding clubs.{' '}
-            <Link color="primary" href="//hackclub.com">
+            <Link href="//hackclub.com" target="_blank">
               Learn More
             </Link>.
           </Text>
