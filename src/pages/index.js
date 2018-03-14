@@ -187,7 +187,7 @@ export default class extends Component {
             student-led coding clubs.{' '}
             <Link color="primary" href="//hackclub.com">
               Learn More
-            </Link>
+            </Link>.
           </Text>
         </Section>
       </Fragment>
