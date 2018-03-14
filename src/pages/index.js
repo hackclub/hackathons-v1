@@ -15,6 +15,7 @@ import {
 import EventCard from 'components/EventCard'
 import flag from 'static/flag.svg'
 import { distance } from 'utils'
+import styled from 'styled-components'
 
 const Base = Box.extend.attrs({ m: 0 })`
   width: 100vw;
@@ -24,6 +25,13 @@ const Link = L.extend`
   color: ${props => props.theme.colors.primary};
   &:hover {
     text-decoration: underline;
+  }
+`
+
+const HideOnMobile = styled.div`
+  display: none;
+  ${props => props.theme.mediaQueries[0]} {
+    display: initial;
   }
 `
 
@@ -143,11 +151,19 @@ export default class extends Component {
       <Fragment>
         <Base>
           <Image src={flag} width="10em" ml="5em" />
+          <HideOnMobile>
+            <Link
+              href="https://github.com/hackclub/hackathons"
+              style={{ position: 'absolute', top: 0, right: 0, margin: '1em' }}
+            >
+              Contribute on GitHub
+            </Link>
+          </HideOnMobile>
           <Container maxWidth={theme.space[5]} align="center">
-            <Heading.h1 my={5}>
+            <Heading.h1 mt={5} mb={4}>
               Upcoming High School Hackathons in {new Date().getFullYear()}
             </Heading.h1>
-            <Text mb={5} fontSize={4} style={{ maxWidth: '800px' }} mx="auto">
+            <Text mb={4} fontSize={4} style={{ maxWidth: '800px' }} mx="auto">
               Find, register, and compete in {this.stats.total} free student-led
               hackathons across {this.stats.state} states and{' '}
               {this.stats.country} countries.{' '}
@@ -159,10 +175,10 @@ export default class extends Component {
               </Link>{' '}
               to add your event.
             </Text>
-            <Text>
+            <Text mb={5}>
               {showHistoricalEvents
-                ? 'All events from all time are being shown.'
-                : 'All events from the 2017-2018 school year are being shown.'}{' '}
+                ? 'Currently showing all recorded events.'
+                : 'Currently showing events from the 2017 - 2018 school year.'}{' '}
               <Link
                 href="#"
                 onClick={e => {
@@ -208,8 +224,8 @@ export default class extends Component {
             This directory is maintained by Hack Club, a non-profit network of
             student-led coding clubs.{' '}
             <Link href="//hackclub.com" target="_blank">
-              Learn more
-            </Link>.
+              Learn more.
+            </Link>
           </Text>
         </Section>
       </Fragment>

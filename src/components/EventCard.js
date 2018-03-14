@@ -35,6 +35,7 @@ const EventCard = Card.withComponent(Tilt).extend.attrs({
   p: 3,
   boxShadowSize: 'md',
 })`
+  color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,7 +50,6 @@ const EventCard = Card.withComponent(Tilt).extend.attrs({
 
 const Base = styled(Overdrive)`
   padding: 0.5em;
-  color: white;
   text-decoration: none;
   display: flex;
   flex: 1 0 auto;
@@ -81,7 +81,7 @@ export default ({
   distanceTo,
   startYear,
 }) => (
-  <Base id={id} element={'a'} href={website} target="_blank">
+  <Base id={id} element={'a'} href={website} target="_blank" duration={400}>
     <EventCard background={pathToUrl((banner || {}).file_path)}>
       <Logo src={pathToUrl((logo || {}).file_path)} />
       <Heading.h3 fontWeight="normal" my={2} style={{ flex: '1 0 auto' }}>
