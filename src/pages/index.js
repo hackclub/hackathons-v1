@@ -35,9 +35,9 @@ export default class extends Component {
     let beginningOfSchoolYear
     const now = new Date()
     if (now.getMonth() < 7 /* august */) {
-      beginningOfSchoolYear = new Date(now.getYear() - 1, 7)
+      beginningOfSchoolYear = new Date(now.getFullYear() - 1, 7)
     } else {
-      beginningOfSchoolYear = new Date(now.getYear(), 7)
+      beginningOfSchoolYear = new Date(now.getFullYear(), 7)
     }
 
     const events = props.data.allEventsJson.edges
