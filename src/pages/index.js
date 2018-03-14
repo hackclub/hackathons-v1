@@ -189,7 +189,7 @@ export default class extends Component {
             This directory is maintained by Hack Club, a non-profit network of
             student-led coding clubs.{' '}
             <Link href="//hackclub.com" target="_blank">
-              Learn More
+              Learn more
             </Link>.
           </Text>
         </Section>
