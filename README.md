@@ -35,3 +35,7 @@ Install dependencies!
 Run it!
 
     $ yarn run develop
+
+### License
+
+This project is licensed under the MIT license. Please see [`LICENSE.md`](LICENSE.md) for the full text.
