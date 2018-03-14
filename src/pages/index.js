@@ -40,17 +40,19 @@ export default class extends Component {
       beginningOfSchoolYear = new Date(now.getFullYear(), 7)
     }
 
-    const events = props.data.allEventsJson.edges
-      .map(({ node }) => node)
-      .filter(event => new Date(event.start) > beginningOfSchoolYear)
+    const events = props.data.allEventsJson.edges.map(({ node }) => node)
+    const filteredEvents = events.filter(
+      event => new Date(event.start) > beginningOfSchoolYear
+    )
 
     this.state = {
       events: events,
+      filteredEvents: filteredEvents,
       searchLat: null,
       searchLng: null,
       searchAddress: '',
       formattedAddress: undefined,
-      hidePastEvents: false,
+      showHistoricalEvents: false,
       sortByProximity: false,
     }
 
@@ -132,9 +134,10 @@ export default class extends Component {
   render() {
     const {
       events,
+      filteredEvents,
       searchAddress,
       formattedAddress,
-      hidePastEvents,
+      showHistoricalEvents,
     } = this.state
     return (
       <Fragment>
@@ -156,8 +159,24 @@ export default class extends Component {
               </Link>{' '}
               to add your event.
             </Text>
+            <Text>
+              {showHistoricalEvents
+                ? 'All events from all time are being shown.'
+                : 'All events from this school year are being shown.'}{' '}
+              <Link
+                href="#"
+                onClick={e => {
+                  e.preventDefault()
+                  this.setState({
+                    showHistoricalEvents: !this.state.showHistoricalEvents,
+                  })
+                }}
+              >
+                Toggle?
+              </Link>
+            </Text>
             <Flex wrap justify="center">
-              {events
+              {(this.state.showHistoricalEvents ? events : filteredEvents)
                 .sort((a, b) => {
                   if (formattedAddress) {
                     const distToA = this.distanceTo(a.latitude, a.longitude)
