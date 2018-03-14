@@ -20,18 +20,22 @@ const humanizeDistance = num => {
 }
 
 const Logo = Image.extend`
-  height: 60px;
-  display: inline;
   border-radius: 5px;
+  height: 60px;
 `
 
-const EventCard = Card.extend.attrs({
-  m: 2,
+const EventCard = Card.withComponent(Tilt).extend.attrs({
+  options: {
+    max: 15,
+    scale: 1.05,
+  },
+  w: 1,
   p: 3,
-  align: 'center',
   boxShadowSize: 'md',
-  color: 'white',
 })`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.32);
   background: linear-gradient(
     rgba(0, 0, 0, 0) 0%,
@@ -41,14 +45,17 @@ const EventCard = Card.extend.attrs({
   background-size: cover;
 `
 
-const Base = Box.withComponent(Tilt).extend.attrs({
-  options: {
-    max: 15,
-    scale: 1.05,
-  },
+const Base = Flex.withComponent(Link).extend.attrs({
+  p: 2,
+  color: 'white',
 })`
-  flex: ${100 / 3}%;
-  min-width: ${props => props.theme.space[3]}em;
+  width: 100%;
+  ${props => props.theme.mediaQueries[1]} {
+    width: 50%;
+  }
+  ${props => props.theme.mediaQueries[2]} {
+    width: 33.33%;
+  }
 `
 
 const pathToUrl = path => (path ? `https://api.hackclub.com${path}` : null)
@@ -69,33 +76,29 @@ export default ({
   distanceTo,
   startYear,
 }) => (
-  <Base>
-    <Link href={website} target="_blank">
-      <EventCard background={pathToUrl((banner || {}).file_path)}>
-        <Logo src={pathToUrl((logo || {}).file_path)} />
-        <Heading.h3 fontWeight="normal" my={2}>
-          {name}
-        </Heading.h3>
-        <Flex justify="space-between">
-          <Text>
-            {start === end
-              ? startHumanized
-              : `${startHumanized}–${endHumanized}`}
-            {new Date().getFullYear() !== parseInt(startYear)
-              ? `, ${startYear}`
-              : null}
-          </Text>
-          <Text>
-            {distanceTo
-              ? `${humanizeDistance(distanceTo)} miles`
-              : `${parsed_city}, ${
-                  parsed_country_code === 'US'
-                    ? parsed_state_code
-                    : parsed_country
-                }`}
-          </Text>
-        </Flex>
-      </EventCard>
-    </Link>
+  <Base href={website} target="_blank">
+    <EventCard background={pathToUrl((banner || {}).file_path)}>
+      <Logo src={pathToUrl((logo || {}).file_path)} />
+      <Heading.h3 fontWeight="normal" my={2} style={{ flex: '1 0 auto' }}>
+        {name}
+      </Heading.h3>
+      <Flex justify="space-between" w={1}>
+        <Text>
+          {start === end ? startHumanized : `${startHumanized}–${endHumanized}`}
+          {new Date().getFullYear() !== parseInt(startYear)
+            ? `, ${startYear}`
+            : null}
+        </Text>
+        <Text>
+          {distanceTo
+            ? `${humanizeDistance(distanceTo)} miles`
+            : `${parsed_city}, ${
+                parsed_country_code === 'US'
+                  ? parsed_state_code
+                  : parsed_country
+              }`}
+        </Text>
+      </Flex>
+    </EventCard>
   </Base>
 )
