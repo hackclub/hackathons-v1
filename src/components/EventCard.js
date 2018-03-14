@@ -10,6 +10,8 @@ import {
   Flex,
   theme,
 } from '@hackclub/design-system'
+import Overdrive from 'react-overdrive'
+import styled from 'styled-components'
 
 const humanizeDistance = num => {
   if (num <= 100) {
@@ -45,10 +47,12 @@ const EventCard = Card.withComponent(Tilt).extend.attrs({
   background-size: cover;
 `
 
-const Base = Flex.withComponent(Link).extend.attrs({
-  p: 2,
-  color: 'white',
-})`
+const Base = styled(Overdrive)`
+  padding: 0.5em;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  flex: 1 0 auto;
   width: 100%;
   ${props => props.theme.mediaQueries[1]} {
     width: 50%;
@@ -61,6 +65,7 @@ const Base = Flex.withComponent(Link).extend.attrs({
 const pathToUrl = path => (path ? `https://api.hackclub.com${path}` : null)
 
 export default ({
+  id,
   website,
   name,
   start,
@@ -76,7 +81,7 @@ export default ({
   distanceTo,
   startYear,
 }) => (
-  <Base href={website} target="_blank">
+  <Base id={id} element={'a'} href={website} target="_blank">
     <EventCard background={pathToUrl((banner || {}).file_path)}>
       <Logo src={pathToUrl((logo || {}).file_path)} />
       <Heading.h3 fontWeight="normal" my={2} style={{ flex: '1 0 auto' }}>

@@ -222,6 +222,7 @@ export const pageQuery = graphql`
     allEventsJson {
       edges {
         node {
+          id
           startHumanized: start(formatString: "MMMM Do")
           endHumanized: end(formatString: "Do")
           start
