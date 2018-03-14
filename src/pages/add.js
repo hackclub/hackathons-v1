@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Fragment } from 'react'
 import {
   Container,
   Box,
@@ -12,6 +12,7 @@ import {
 } from '@hackclub/design-system'
 import { withFormik } from 'formik'
 import yup from 'yup'
+import Header from 'components/Header'
 
 const fieldNames = {
   name: 'entry.299763282',
@@ -107,7 +108,7 @@ const InnerForm = ({
   </Container>
 )
 
-export default withFormik({
+const AddEventForm = withFormik({
   mapPropsToValues: props => ({
     name: '',
     start: '',
@@ -146,3 +147,10 @@ export default withFormik({
     }
   },
 })(InnerForm)
+
+export default () => (
+  <Fragment>
+    <Header />
+    <AddEventForm />
+  </Fragment>
+)

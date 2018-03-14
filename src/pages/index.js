@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import Helmet from 'react-helmet'
 import axios from 'axios'
 import {
@@ -8,9 +8,12 @@ import {
   Flex,
   Text,
   Input,
+  Link,
   theme,
 } from '@hackclub/design-system'
 import EventCard from 'components/EventCard'
+import AddLink from 'components/AddLink'
+import Header from 'components/Header'
 
 const Base = Box.extend.attrs({ m: 0 })`
   width: 100vw;
@@ -114,15 +117,9 @@ export default class extends Component {
   render() {
     const { events, searchAddress, formattedAddress } = this.state
     return (
-      <Base>
-        <Flex justify="flex-end">
-          <Box w={0.5}>
-            <Text>
-              Here are {events.length} events, sorted{' '}
-              {formattedAddress ? `near ${formattedAddress}` : 'date'}
-            </Text>
-          </Box>
-          <Box w={0.5}>
+      <Fragment>
+        <Header>
+          <Flex justify="space-evenly" mx={3}>
             <Input
               placeholder="Where are you?"
               value={searchAddress}
@@ -144,40 +141,56 @@ export default class extends Component {
             />
             <Button
               inverted
-              onClick={() => {
+              color="white"
+              href="#"
+              onClick={e => {
+                e.preventDefault()
                 this.setCurrentLocation()
               }}
             >
               Use my current location
             </Button>
-          </Box>
-        </Flex>
-        <Container maxWidth={theme.space[5]}>
-          <Flex wrap justify="center">
-            {events
-              .sort((a, b) => {
-                if (formattedAddress) {
-                  const distToA = this.distanceTo(a.latitude, a.longitude).miles
-                  const distToB = this.distanceTo(b.latitude, b.longitude).miles
-                  return distToA - distToB
-                } else {
-                  return new Date(a.start) - new Date(b.start)
-                }
-              })
-              .map((event, index) => (
-                <EventCard
-                  {...event}
-                  distanceTo={
-                    formattedAddress
-                      ? this.distanceTo(event.latitude, event.longitude).miles
-                      : null
-                  }
-                  key={index}
-                />
-              ))}
           </Flex>
-        </Container>
-      </Base>
+        </Header>
+        <Base>
+          <Flex justify="flex-end">
+            <Box w={0.5}>
+              <Text>
+                Here are {events.length} events, sorted{' '}
+                {formattedAddress ? `near ${formattedAddress}` : 'date'}
+              </Text>
+            </Box>
+          </Flex>
+          <Container maxWidth={theme.space[5]}>
+            <AddLink />
+            <Flex wrap justify="center">
+              {events
+                .sort((a, b) => {
+                  if (formattedAddress) {
+                    const distToA = this.distanceTo(a.latitude, a.longitude)
+                      .miles
+                    const distToB = this.distanceTo(b.latitude, b.longitude)
+                      .miles
+                    return distToA - distToB
+                  } else {
+                    return new Date(a.start) - new Date(b.start)
+                  }
+                })
+                .map((event, index) => (
+                  <EventCard
+                    {...event}
+                    distanceTo={
+                      formattedAddress
+                        ? this.distanceTo(event.latitude, event.longitude).miles
+                        : null
+                    }
+                    key={index}
+                  />
+                ))}
+            </Flex>
+          </Container>
+        </Base>
+      </Fragment>
     )
   }
 }

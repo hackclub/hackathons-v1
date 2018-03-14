@@ -16,7 +16,6 @@ const TemplateWrapper = ({ children }) => (
         },
       ]}
     />
-    <Header />
     {children()}
   </ThemeProvider>
 )
