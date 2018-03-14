@@ -205,9 +205,10 @@ export const pageQuery = graphql`
           end
           startYear: start(formatString: "YYYY")
           parsed_city
+          parsed_state
           parsed_state_code
-          parsed_country_code
           parsed_country
+          parsed_country_code
           name
           website
           latitude
