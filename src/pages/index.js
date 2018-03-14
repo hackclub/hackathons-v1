@@ -240,8 +240,8 @@ export const pageQuery = graphql`
       edges {
         node {
           id
-          startHumanized: start(formatString: "MMMM Do")
-          endHumanized: end(formatString: "Do")
+          startHumanized: start(formatString: "MMMM D")
+          endHumanized: end(formatString: "D")
           start
           end
           startYear: start(formatString: "YYYY")
