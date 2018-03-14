@@ -154,6 +154,7 @@ export default class extends Component {
           <HideOnMobile>
             <Link
               href="https://github.com/hackclub/hackathons"
+              target="_blank"
               style={{ position: 'absolute', top: 0, right: 0, margin: '1em' }}
             >
               Contribute on GitHub
