@@ -22,8 +22,8 @@ const humanizeDistance = num => {
 }
 
 const Logo = Image.extend`
-  border-radius: ${props => props.theme.space[1]};
-  height: ${props => props.theme.space[5]};
+  border-radius: ${props => props.theme.radius};
+  height: ${props => props.theme.space[5]}px;
 `
 
 const EventCard = Card.withComponent(Tilt).extend.attrs({
@@ -33,7 +33,7 @@ const EventCard = Card.withComponent(Tilt).extend.attrs({
   },
   w: 1,
   p: 3,
-  m: [2, 3],
+  m: [1, 2],
   color: 'white',
   boxShadowSize: 'md',
 })`

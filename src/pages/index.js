@@ -157,33 +157,40 @@ export default class extends Component {
     return (
       <Fragment>
         <Base>
-          <Image src={flag} width={128} ml={5} />
-          <Link
-            href="https://github.com/hackclub/hackathons"
-            target="_blank"
+          <a href="https://hackclub.com" target="_blank">
+            <Image src={flag} width={128} ml={[3, 4, 5]} />
+          </a>
+          <Flex
             py={3}
-            pr={[4, 5]}
+            pr={[3, 4, 5]}
             style={{ position: 'absolute', top: 0, right: 0 }}
           >
-            <HideOnMobile>Contribute on</HideOnMobile> GitHub
-          </Link>
-          <Container px={3} align="center">
-            <Heading.h1 f={[5, null, 6]} mt={5} mb={4}>
+            <L
+              href="https://goo.gl/forms/ZdVkkunalNGW9nQ82"
+              target="_blank"
+              color="slate"
+            >
+              Add your event
+            </L>
+            <Text.span px={[2, 3]} />
+            <L
+              href="https://github.com/hackclub/hackathons"
+              target="_blank"
+              color="slate"
+            >
+              <HideOnMobile>Contribute on</HideOnMobile> GitHub
+            </L>
+          </Flex>
+          <Container maxWidth={36} px={3} align="center">
+            <Heading.h1 f={[5, null, 6]} mt={[4, 5]} mb={3}>
               Upcoming High School Hackathons in {new Date().getFullYear()}
             </Heading.h1>
-            <Text mb={5} f={4} style={{ maxWidth: '800px' }} mx="auto">
-              Find, register, and compete in {this.stats.total} free student-led
-              hackathons across {this.stats.state} states and{' '}
-              {this.stats.country} countries.{' '}
-              <Link
-                href="https://goo.gl/forms/ZdVkkunalNGW9nQ82"
-                target="_blank"
-              >
-                Click here
-              </Link>{' '}
-              to add your event.
+            <Text mb={2} f={4} style={{ maxWidth: '800px' }} mx="auto">
+              Find, register, and compete in {this.stats.total} free{' '}
+              <U>student-led hackathons</U> across {this.stats.state} states +{' '}
+              {this.stats.country} countries.
             </Text>
-            <Text color="muted" mb={3}>
+            <Text color="muted" mt={4} mb={3}>
               {showHistoricalEvents
                 ? 'Currently showing all recorded events.'
                 : 'Currently showing events from the 2017 - 2018 school year.'}{' '}
@@ -199,6 +206,8 @@ export default class extends Component {
                 Toggle?
               </Link>
             </Text>
+          </Container>
+          <Container px={3}>
             <Flex mx={[1, 2, -3]} wrap justify="center">
               {(this.state.showHistoricalEvents ? events : filteredEvents)
                 .sort((a, b) => {
