@@ -28,10 +28,10 @@ const Link = L.extend`
   }
 `
 
-const HideOnMobile = styled.div`
+const HideOnMobile = Box.extend`
   display: none;
-  ${props => props.theme.mediaQueries[0]} {
-    display: initial;
+  ${props => props.theme.mediaQueries.md} {
+    display: unset;
   }
 `
 
@@ -155,7 +155,9 @@ export default class extends Component {
             <Link
               href="https://github.com/hackclub/hackathons"
               target="_blank"
-              style={{ position: 'absolute', top: 0, right: 0, margin: '1em' }}
+              py={3}
+              pr={5}
+              style={{ position: 'absolute', top: 0, right: 0 }}
             >
               Contribute on GitHub
             </Link>

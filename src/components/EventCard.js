@@ -22,8 +22,8 @@ const humanizeDistance = num => {
 }
 
 const Logo = Image.extend`
-  border-radius: 5px;
-  height: 60px;
+  border-radius: ${props => props.theme.space[1]};
+  height: ${props => props.theme.space[5]};
 `
 
 const EventCard = Card.withComponent(Tilt).extend.attrs({
@@ -85,7 +85,7 @@ export default ({
   <Base id={id} element="a" href={website} target="_blank" duration={400}>
     <EventCard background={pathToUrl((banner || {}).file_path)}>
       <Logo src={pathToUrl((logo || {}).file_path)} />
-      <Heading.h3 fontWeight="normal" my={2} style={{ flex: '1 0 auto' }}>
+      <Heading.h3 regular my={2} style={{ flex: '1 0 auto' }}>
         {name}
       </Heading.h3>
       <Flex justify="space-between" w={1}>
