@@ -126,8 +126,8 @@ export default class extends Component {
             searchAddress
           )}`
         )
-        .then(resp => {
-          const firstResult = resp.data.results[0]
+        .then(res => res.data.results[0])
+        .then(firstResult => {
           if (firstResult) {
             this.setState({
               searchLat: firstResult.geometry.location.lat,

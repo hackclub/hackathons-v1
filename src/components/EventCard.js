@@ -33,18 +33,19 @@ const EventCard = Card.withComponent(Tilt).extend.attrs({
   },
   w: 1,
   p: 3,
+  color: 'white',
   boxShadowSize: 'md',
 })`
-  color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.32);
-  background: linear-gradient(
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.45) 75%
-  ),
-  url(${props => props.background}) no-repeat;
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.45) 75%
+    ),
+    url(${props => props.background}) no-repeat;
   background-size: cover;
 `
 
@@ -81,7 +82,7 @@ export default ({
   distanceTo,
   startYear,
 }) => (
-  <Base id={id} element={'a'} href={website} target="_blank" duration={400}>
+  <Base id={id} element="a" href={website} target="_blank" duration={400}>
     <EventCard background={pathToUrl((banner || {}).file_path)}>
       <Logo src={pathToUrl((logo || {}).file_path)} />
       <Heading.h3 fontWeight="normal" my={2} style={{ flex: '1 0 auto' }}>
