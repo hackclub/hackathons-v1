@@ -158,7 +158,7 @@ export default class extends Component {
       <Fragment>
         <Base>
           <a href="https://hackclub.com" target="_blank">
-            <Image src={flag} width={128} ml={[3, 4, 5]} />
+            <Image src="/flag.svg" width={128} ml={[3, 4, 5]} />
           </a>
           <Flex
             py={3}
