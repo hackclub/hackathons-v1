@@ -10,10 +10,10 @@ import {
   Link as L,
   Heading,
   Section,
+  Button,
   theme,
 } from '@hackclub/design-system'
 import EventCard from 'components/EventCard'
-import flag from 'static/flag.svg'
 import { distance } from 'utils'
 import styled from 'styled-components'
 
@@ -30,9 +30,16 @@ const Link = L.extend`
 
 const HideOnMobile = Box.extend`
   display: none;
-  ${props => props.theme.mediaQueries.md} {
+  ${props => props.theme.mediaQueries.sm} {
     display: unset;
   }
+`
+
+const U = Text.withComponent('mark').extend`
+  color: ${props => props.theme.colors.warning};
+  background: transparent url(//hackclub.com/underline.svg) bottom left no-repeat;
+  background-size: 100% ${props => props.theme.space[2]}px;
+  padding-bottom: ${props => props.theme.space[1]}px;
 `
 
 export default class extends Component {
@@ -150,23 +157,21 @@ export default class extends Component {
     return (
       <Fragment>
         <Base>
-          <Image src={flag} width="10em" ml="5em" />
-          <HideOnMobile>
-            <Link
-              href="https://github.com/hackclub/hackathons"
-              target="_blank"
-              py={3}
-              pr={5}
-              style={{ position: 'absolute', top: 0, right: 0 }}
-            >
-              Contribute on GitHub
-            </Link>
-          </HideOnMobile>
-          <Container maxWidth={theme.space[5]} align="center">
-            <Heading.h1 mt={5} mb={4}>
+          <Image src={flag} width={128} ml={5} />
+          <Link
+            href="https://github.com/hackclub/hackathons"
+            target="_blank"
+            py={3}
+            pr={[4, 5]}
+            style={{ position: 'absolute', top: 0, right: 0 }}
+          >
+            <HideOnMobile>Contribute on</HideOnMobile> GitHub
+          </Link>
+          <Container px={3} align="center">
+            <Heading.h1 f={[5, null, 6]} mt={5} mb={4}>
               Upcoming High School Hackathons in {new Date().getFullYear()}
             </Heading.h1>
-            <Text mb={4} fontSize={4} style={{ maxWidth: '800px' }} mx="auto">
+            <Text mb={5} f={4} style={{ maxWidth: '800px' }} mx="auto">
               Find, register, and compete in {this.stats.total} free student-led
               hackathons across {this.stats.state} states and{' '}
               {this.stats.country} countries.{' '}
@@ -178,7 +183,7 @@ export default class extends Component {
               </Link>{' '}
               to add your event.
             </Text>
-            <Text mb={5}>
+            <Text color="muted" mb={3}>
               {showHistoricalEvents
                 ? 'Currently showing all recorded events.'
                 : 'Currently showing events from the 2017 - 2018 school year.'}{' '}
@@ -194,7 +199,7 @@ export default class extends Component {
                 Toggle?
               </Link>
             </Text>
-            <Flex wrap justify="center">
+            <Flex mx={[1, 2, -3]} wrap justify="center">
               {(this.state.showHistoricalEvents ? events : filteredEvents)
                 .sort((a, b) => {
                   if (formattedAddress) {
@@ -222,15 +227,15 @@ export default class extends Component {
             <Link />
           </Container>
         </Base>
-        <Section mt={3} color="black">
-          <Text fontSize={4} style={{ maxWidth: '800px' }} mx="auto">
+        <Container maxWidth={40} px={3} py={5} align="center">
+          <Text f={4} color="black">
             This directory is maintained by Hack Club, a non-profit network of
-            student-led coding clubs.{' '}
-            <Link href="//hackclub.com" target="_blank">
-              Learn more.
-            </Link>
+            <U ml={1}>student-led coding clubs</U>.
           </Text>
-        </Section>
+          <Button href="//hackclub.com" target="_blank" mt={3}>
+            Learn more »
+          </Button>
+        </Container>
       </Fragment>
     )
   }

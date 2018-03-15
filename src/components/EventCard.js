@@ -33,6 +33,7 @@ const EventCard = Card.withComponent(Tilt).extend.attrs({
   },
   w: 1,
   p: 3,
+  m: [2, 3],
   color: 'white',
   boxShadowSize: 'md',
 })`
@@ -50,7 +51,7 @@ const EventCard = Card.withComponent(Tilt).extend.attrs({
 `
 
 const Base = styled(Overdrive)`
-  padding: 0.5em;
+  padding: ${props => props.theme.space[2]};
   text-decoration: none;
   display: flex;
   flex: 1 0 auto;
