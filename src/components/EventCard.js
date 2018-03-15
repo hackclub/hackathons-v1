@@ -10,6 +10,7 @@ import {
   Flex,
   theme,
 } from '@hackclub/design-system'
+import { trackClick } from 'utils'
 import Overdrive from 'react-overdrive'
 import styled from 'styled-components'
 
@@ -81,7 +82,21 @@ export default ({
   distanceTo,
   startYear,
 }) => (
-  <Base id={id} element={'a'} href={website} target="_blank" duration={400}>
+  <Base
+    id={id}
+    duration={400}
+    element="a"
+    href={website}
+    target="_blank"
+    onClick={trackClick({
+      analyticsEventName: 'Event Clicked',
+      analyticsProperties: {
+        eventUrl: website,
+        eventName: name,
+        eventId: id,
+      },
+    })}
+  >
     <EventCard background={pathToUrl((banner || {}).file_path)}>
       <Logo src={pathToUrl((logo || {}).file_path)} />
       <Heading.h3 fontWeight="normal" my={2} style={{ flex: '1 0 auto' }}>
