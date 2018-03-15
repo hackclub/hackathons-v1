@@ -15,3 +15,16 @@ export const distance = (lat1, lon1, lat2, lon2) => {
     kilometers: dist * 1.609344,
   }
 }
+
+export const trackClick = props => e => {
+  e.preventDefault()
+  try {
+    window.analytics.track(props.analyticsEventName || 'Clicked Link', {
+      href: props.href,
+      ...(props.analyticsProperties || {}),
+    })
+  } catch (err) {
+    console.error(err)
+  }
+  props.onClick ? props.onClick(e) : window.open(props.href, '_blank')
+}

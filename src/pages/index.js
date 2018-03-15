@@ -14,19 +14,21 @@ import {
 } from '@hackclub/design-system'
 import EventCard from 'components/EventCard'
 import flag from 'static/flag.svg'
-import { distance } from 'utils'
+import { distance, trackClick } from 'utils'
 import styled from 'styled-components'
 
 const Base = Box.extend.attrs({ m: 0 })`
   width: 100vw;
 `
 
-const Link = L.extend`
+const StyledLink = L.extend`
   color: ${props => props.theme.colors.primary};
   &:hover {
     text-decoration: underline;
   }
 `
+
+const Link = props => <StyledLink {...props} onClick={trackClick(props)} />
 
 const HideOnMobile = styled.div`
   display: none;
@@ -184,6 +186,9 @@ export default class extends Component {
                 : 'Currently showing events from the 2017 - 2018 school year.'}{' '}
               <Link
                 href="#"
+                analyticsEventName={`Toggle ${
+                  showHistoricalEvents ? 'Off' : 'On'
+                } Historical Events`}
                 onClick={e => {
                   e.preventDefault()
                   this.setState({
@@ -226,7 +231,7 @@ export default class extends Component {
           <Text fontSize={4} style={{ maxWidth: '800px' }} mx="auto">
             This directory is maintained by Hack Club, a non-profit network of
             student-led coding clubs.{' '}
-            <Link href="//hackclub.com" target="_blank">
+            <Link href="https://hackclub.com" target="_blank">
               Learn more.
             </Link>
           </Text>
