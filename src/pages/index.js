@@ -58,7 +58,7 @@ export default class extends Component {
       filteredEvents: filteredEvents,
       searchLat: null,
       searchLng: null,
-      formattedAddress: '(loading)',
+      formattedAddress: undefined,
       showHistoricalEvents: false,
       sortByProximity: false,
     }
@@ -191,9 +191,6 @@ export default class extends Component {
               </Link>
             </Text>
             <Text mb={5}>
-              {sortByProximity
-                ? `Closest events to ${formattedAddress} are first.`
-                : 'Soonest events are first.'}{' '}
               <Link
                 href="#"
                 onClick={e => {
@@ -205,7 +202,9 @@ export default class extends Component {
                   }
                 }}
               >
-                Toggle?
+              {sortByProximity
+                ? `Sorting by proximity off events to ${formattedAddress}.`
+                : 'Sorting by location.'}
               </Link>
             </Text>
             <Flex wrap justify="center">
