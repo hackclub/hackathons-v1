@@ -89,6 +89,7 @@ export default ({
     href={website}
     target="_blank"
     onClick={trackClick({
+      href: website,
       analyticsEventName: 'Event Clicked',
       analyticsProperties: {
         eventUrl: website,
