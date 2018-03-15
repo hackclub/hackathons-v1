@@ -14,19 +14,21 @@ import {
   theme,
 } from '@hackclub/design-system'
 import EventCard from 'components/EventCard'
-import { distance } from 'utils'
+import { distance, trackClick } from 'utils'
 import styled from 'styled-components'
 
 const Base = Box.extend.attrs({ m: 0 })`
   width: 100vw;
 `
 
-const Link = L.extend`
+const StyledLink = L.extend`
   color: ${props => props.theme.colors.primary};
   &:hover {
     text-decoration: underline;
   }
 `
+
+const Link = props => <StyledLink {...props} onClick={trackClick(props)} />
 
 const HideOnMobile = Box.extend`
   display: none;
@@ -196,6 +198,9 @@ export default class extends Component {
                 : 'Currently showing events from the 2017 - 2018 school year.'}{' '}
               <Link
                 href="#"
+                analyticsEventName={`Toggle ${
+                  showHistoricalEvents ? 'Off' : 'On'
+                } Historical Events`}
                 onClick={e => {
                   e.preventDefault()
                   this.setState({
@@ -236,10 +241,10 @@ export default class extends Component {
             <Link />
           </Container>
         </Base>
-        <Container maxWidth={40} px={3} py={5} align="center">
+        <Container maxWidth={40} px={[2, 3]} py={5} align="center">
           <Text f={4} color="black">
-            This directory is maintained by Hack Club, a non-profit network of
-            <U ml={1}>student-led coding clubs</U>.
+            This directory is maintained by Hack Club, a non-profit network of{' '}
+            <U>student-led coding clubs</U>.
           </Text>
           <Button href="//hackclub.com" target="_blank" mt={3}>
             Learn more »
