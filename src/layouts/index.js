@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { ThemeProvider } from '@hackclub/design-system'
 
-import favicon from 'static/favicon.ico'
-
 const TemplateWrapper = ({ children }) => (
   <ThemeProvider>
     <Helmet>
@@ -14,7 +12,7 @@ const TemplateWrapper = ({ children }) => (
         name="description"
         content="Community contributed high school hackathon schedule"
       />
-      <link rel="shortcut icon" href={favicon} />
+      <link rel="shortcut icon" href="/favicon.ico" />
     </Helmet>
     {children()}
   </ThemeProvider>

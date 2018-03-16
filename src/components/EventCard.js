@@ -23,8 +23,8 @@ const humanizeDistance = num => {
 }
 
 const Logo = Image.extend`
-  border-radius: 5px;
-  height: 60px;
+  border-radius: ${props => props.theme.radius};
+  height: ${props => props.theme.space[5]}px;
 `
 
 const EventCard = Card.withComponent(Tilt).extend.attrs({
@@ -34,23 +34,25 @@ const EventCard = Card.withComponent(Tilt).extend.attrs({
   },
   w: 1,
   p: 3,
+  m: [1, 2],
+  color: 'white',
   boxShadowSize: 'md',
 })`
-  color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.32);
-  background: linear-gradient(
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.45) 75%
-  ),
-  url(${props => props.background}) no-repeat;
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.45) 75%
+    ),
+    url(${props => props.background}) no-repeat;
   background-size: cover;
 `
 
 const Base = styled(Overdrive)`
-  padding: 0.5em;
+  padding: ${props => props.theme.space[2]};
   text-decoration: none;
   display: flex;
   flex: 1 0 auto;
@@ -100,7 +102,7 @@ export default ({
   >
     <EventCard background={pathToUrl((banner || {}).file_path)}>
       <Logo src={pathToUrl((logo || {}).file_path)} />
-      <Heading.h3 fontWeight="normal" my={2} style={{ flex: '1 0 auto' }}>
+      <Heading.h3 regular my={2} style={{ flex: '1 0 auto' }}>
         {name}
       </Heading.h3>
       <Flex justify="space-between" w={1}>

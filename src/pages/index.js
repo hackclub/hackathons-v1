@@ -10,10 +10,10 @@ import {
   Link as L,
   Heading,
   Section,
+  Button,
   theme,
 } from '@hackclub/design-system'
 import EventCard from 'components/EventCard'
-import flag from 'static/flag.svg'
 import { distance, trackClick } from 'utils'
 import styled from 'styled-components'
 
@@ -30,11 +30,18 @@ const StyledLink = L.extend`
 
 const Link = props => <StyledLink {...props} onClick={trackClick(props)} />
 
-const HideOnMobile = styled.div`
+const HideOnMobile = Box.extend`
   display: none;
-  ${props => props.theme.mediaQueries[0]} {
-    display: initial;
+  ${props => props.theme.mediaQueries.sm} {
+    display: unset;
   }
+`
+
+const U = Text.withComponent('mark').extend`
+  color: ${props => props.theme.colors.warning};
+  background: transparent url(//hackclub.com/underline.svg) bottom left no-repeat;
+  background-size: 100% ${props => props.theme.space[2]}px;
+  padding-bottom: ${props => props.theme.space[1]}px;
 `
 
 export default class extends Component {
@@ -128,8 +135,8 @@ export default class extends Component {
             searchAddress
           )}`
         )
-        .then(resp => {
-          const firstResult = resp.data.results[0]
+        .then(res => res.data.results[0])
+        .then(firstResult => {
           if (firstResult) {
             this.setState({
               searchLat: firstResult.geometry.location.lat,
@@ -152,35 +159,40 @@ export default class extends Component {
     return (
       <Fragment>
         <Base>
-          <L href="https://hackclub.com" target="_blank">
-            <Image src={flag} width="10em" ml="5em" />
-          </L>
-          <HideOnMobile>
-            <Link
+          <a href="https://hackclub.com" target="_blank">
+            <Image src="/flag.svg" width={128} ml={[3, 4, 5]} />
+          </a>
+          <Flex
+            py={3}
+            pr={[3, 4, 5]}
+            style={{ position: 'absolute', top: 0, right: 0 }}
+          >
+            <L
+              href="https://goo.gl/forms/ZdVkkunalNGW9nQ82"
+              target="_blank"
+              color="slate"
+            >
+              Add your event
+            </L>
+            <Text.span px={[2, 3]} />
+            <L
               href="https://github.com/hackclub/hackathons"
               target="_blank"
-              style={{ position: 'absolute', top: 0, right: 0, margin: '1em' }}
+              color="slate"
             >
-              Contribute on GitHub
-            </Link>
-          </HideOnMobile>
-          <Container maxWidth={theme.space[5]} align="center">
-            <Heading.h1 mt={5} mb={4}>
+              <HideOnMobile>Contribute on</HideOnMobile> GitHub
+            </L>
+          </Flex>
+          <Container maxWidth={36} px={3} align="center">
+            <Heading.h1 f={[5, null, 6]} mt={[4, 5]} mb={3}>
               Upcoming High School Hackathons in {new Date().getFullYear()}
             </Heading.h1>
-            <Text mb={4} fontSize={4} style={{ maxWidth: '800px' }} mx="auto">
-              Find, register, and compete in {this.stats.total} free student-led
-              hackathons across {this.stats.state} states and{' '}
-              {this.stats.country} countries.{' '}
-              <Link
-                href="https://goo.gl/forms/ZdVkkunalNGW9nQ82"
-                target="_blank"
-              >
-                Click here
-              </Link>{' '}
-              to add your event.
+            <Text mb={2} f={4} style={{ maxWidth: '800px' }} mx="auto">
+              Find, register, and compete in {this.stats.total} free{' '}
+              <U>student-led hackathons</U> across {this.stats.state} states +{' '}
+              {this.stats.country} countries.
             </Text>
-            <Text mb={5}>
+            <Text color="muted" mt={4} mb={3}>
               {showHistoricalEvents
                 ? 'Currently showing all recorded events.'
                 : 'Currently showing events from the 2017 - 2018 school year.'}{' '}
@@ -199,7 +211,9 @@ export default class extends Component {
                 Toggle?
               </Link>
             </Text>
-            <Flex wrap justify="center">
+          </Container>
+          <Container px={3}>
+            <Flex mx={[1, 2, -3]} wrap justify="center">
               {(this.state.showHistoricalEvents ? events : filteredEvents)
                 .sort((a, b) => {
                   if (formattedAddress) {
@@ -227,15 +241,15 @@ export default class extends Component {
             <Link />
           </Container>
         </Base>
-        <Section mt={3} color="black">
-          <Text fontSize={4} style={{ maxWidth: '800px' }} mx="auto">
-            This directory is maintained by Hack Club, a non-profit network of
-            student-led coding clubs.{' '}
-            <Link href="https://hackclub.com" target="_blank">
-              Learn more.
-            </Link>
+        <Container maxWidth={40} px={[2, 3]} py={5} align="center">
+          <Text f={4} color="black">
+            This directory is maintained by Hack Club, a non-profit network of{' '}
+            <U>student-led coding clubs</U>.
           </Text>
-        </Section>
+          <Button href="//hackclub.com" target="_blank" mt={3}>
+            Learn more »
+          </Button>
+        </Container>
       </Fragment>
     )
   }
