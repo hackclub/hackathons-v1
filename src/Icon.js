@@ -1,5 +1,4 @@
 const { createElement: h } = require('react')
-import { colors } from '@hackclub/design-system'
 
 const width = 512
 const widthIcon = 0.75 * width
@@ -15,7 +14,6 @@ module.exports = props =>
         padding,
         width,
         height: width,
-        backgroundColor: colors.blue,
         backgroundImage:
           'linear-gradient(-33deg, rgb(235, 151, 99) 0%, rgb(228, 45, 66) 50%, rgb(206, 41, 60) 100%)',
         backgroundBlendMode: 'overlay',

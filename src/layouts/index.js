@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { ThemeProvider } from '@hackclub/design-system'
-import favicon from 'static/favicon.ico'
 import data from 'data.json'
 
 const { description, url, img, title, name } = data
@@ -18,7 +17,6 @@ const TemplateWrapper = ({ children }) => (
       <title>
         {`${new Date().getFullYear()} High School Hackathon Calendar // Worldwide`}
       </title>
-      <link rel="shortcut icon" href="/favicon.ico" />
       {meta([
         { name: 'description', content: description },
         { name: 'twitter:card', content: 'summary_large_image' },
@@ -36,6 +34,7 @@ const TemplateWrapper = ({ children }) => (
         { property: 'og:type', content: 'website' },
         { property: 'og:url', content: url },
       ])}
+      <link rel="shortcut icon" href="favicon.ico" />
     </Helmet>
     {children()}
   </ThemeProvider>
