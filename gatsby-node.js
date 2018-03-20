@@ -1,12 +1,13 @@
 const writeFile = require('fs').writeFile
 const axios = require('axios')
 
-exports.onPreBootstrap = () => {
-  return axios.get('https://api.hackclub.com/v1/events')
+exports.onPreBootstrap = () =>
+  axios
+    .get('https://api.hackclub.com/v1/events')
     .then(res => {
-      const data = JSON.stringify(res.data.map(event => (
-        {...event, id: event.id.toString()}
-      )))
+      const data = JSON.stringify(
+        res.data.map(event => ({ ...event, id: event.id.toString() }))
+      )
       writeFile('./data/events.json', data, err => {
         if (err) throw err
       })
@@ -14,4 +15,3 @@ exports.onPreBootstrap = () => {
     .catch(e => {
       console.error(e)
     })
-}
