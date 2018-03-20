@@ -10,6 +10,7 @@ import {
   Flex,
   theme,
 } from '@hackclub/design-system'
+import { trackClick } from 'utils'
 import Overdrive from 'react-overdrive'
 import styled from 'styled-components'
 
@@ -22,8 +23,8 @@ const humanizeDistance = num => {
 }
 
 const Logo = Image.extend`
-  border-radius: 5px;
-  height: 60px;
+  border-radius: ${props => props.theme.radius};
+  height: ${props => props.theme.space[5]}px;
 `
 
 const EventCard = Card.withComponent(Tilt).extend.attrs({
@@ -33,23 +34,25 @@ const EventCard = Card.withComponent(Tilt).extend.attrs({
   },
   w: 1,
   p: 3,
+  m: [1, 2],
+  color: 'white',
   boxShadowSize: 'md',
 })`
-  color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.32);
-  background: linear-gradient(
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.45) 75%
-  ),
-  url(${props => props.background}) no-repeat;
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.45) 75%
+    ),
+    url(${props => props.background}) no-repeat;
   background-size: cover;
 `
 
 const Base = styled(Overdrive)`
-  padding: 0.5em;
+  padding: ${props => props.theme.space[2]};
   text-decoration: none;
   display: flex;
   flex: 1 0 auto;
@@ -81,10 +84,32 @@ export default ({
   distanceTo,
   startYear,
 }) => (
-  <Base id={id} element={'a'} href={website} target="_blank" duration={400}>
-    <EventCard background={pathToUrl((banner || {}).file_path)}>
-      <Logo src={pathToUrl((logo || {}).file_path)} />
-      <Heading.h3 fontWeight="normal" my={2} style={{ flex: '1 0 auto' }}>
+  <Base
+    id={id}
+    duration={400}
+    element="a"
+    href={website}
+    target="_blank"
+    onClick={trackClick({
+      href: website,
+      analyticsEventName: 'Event Clicked',
+      analyticsProperties: {
+        eventUrl: website,
+        eventName: name,
+        eventId: id,
+      },
+    })}
+    itemScope
+    itemType="http://schema.org/Event"
+  >
+    <EventCard background={pathToUrl((banner || {}).file_path)} >
+      <Logo itemProp="image" src={pathToUrl((logo || {}).file_path)} />
+      <Heading.h3
+        regular
+        my={2}
+        style={{ flex: '1 0 auto' }}
+        itemProp="name"
+      >
         {name}
       </Heading.h3>
       <Flex justify="space-between" w={1}>
@@ -94,16 +119,33 @@ export default ({
             ? `, ${startYear}`
             : null}
         </Text>
-        <Text>
-          {distanceTo
-            ? `${humanizeDistance(distanceTo)} miles`
-            : `${parsed_city}, ${
-                parsed_country_code === 'US'
-                  ? parsed_state_code
-                  : parsed_country
-              }`}
-        </Text>
+        {distanceTo
+            ? (
+              <Text>`${humanizeDistance(distanceTo)} miles`</Text>
+            ) : (
+              <Text
+                itemProp="location"
+                itemScope
+                itemType="http://schema.org/Place"
+              >
+                <span itemProp="address">
+                  {parsed_city}, {
+                    parsed_country_code === 'US'
+                    ? parsed_state_code
+                    : parsed_country
+                  }
+                </span>
+              </Text>
+            )
+        }
       </Flex>
+
+      { /* Include microdata that doesn't easily fit elsewhere */ }
+      <div style={ {display: 'none'} }>
+        <span itemProp="url">{website}</span>
+        <span itemProp="startDate" content={start}>{start}</span>
+        <span itemProp="endDate" content={end}>{end}</span>
+      </div>
     </EventCard>
   </Base>
 )
