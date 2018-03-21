@@ -102,14 +102,9 @@ export default ({
     itemScope
     itemType="http://schema.org/Event"
   >
-    <EventCard background={pathToUrl((banner || {}).file_path)} >
+    <EventCard background={pathToUrl((banner || {}).file_path)}>
       <Logo itemProp="image" src={pathToUrl((logo || {}).file_path)} />
-      <Heading.h3
-        regular
-        my={2}
-        style={{ flex: '1 0 auto' }}
-        itemProp="name"
-      >
+      <Heading.h3 regular my={2} style={{ flex: '1 0 auto' }} itemProp="name">
         {name}
       </Heading.h3>
       <Flex justify="space-between" w={1}>
@@ -119,32 +114,33 @@ export default ({
             ? `, ${startYear}`
             : null}
         </Text>
-        {distanceTo
-            ? (
-              <Text>`${humanizeDistance(distanceTo)} miles`</Text>
-            ) : (
-              <Text
-                itemProp="location"
-                itemScope
-                itemType="http://schema.org/Place"
-              >
-                <span itemProp="address">
-                  {parsed_city}, {
-                    parsed_country_code === 'US'
-                    ? parsed_state_code
-                    : parsed_country
-                  }
-                </span>
-              </Text>
-            )
-        }
+        {distanceTo ? (
+          <Text>{`${humanizeDistance(distanceTo)} miles`}</Text>
+        ) : (
+          <Text
+            itemProp="location"
+            itemScope
+            itemType="http://schema.org/Place"
+          >
+            <span itemProp="address">
+              {parsed_city},{' '}
+              {parsed_country_code === 'US'
+                ? parsed_state_code
+                : parsed_country}
+            </span>
+          </Text>
+        )}
       </Flex>
 
-      { /* Include microdata that doesn't easily fit elsewhere */ }
-      <div style={ {display: 'none'} }>
+      {/* Include microdata that doesn't easily fit elsewhere */}
+      <div style={{ display: 'none' }}>
         <span itemProp="url">{website}</span>
-        <span itemProp="startDate" content={start}>{start}</span>
-        <span itemProp="endDate" content={end}>{end}</span>
+        <span itemProp="startDate" content={start}>
+          {start}
+        </span>
+        <span itemProp="endDate" content={end}>
+          {end}
+        </span>
       </div>
     </EventCard>
   </Base>

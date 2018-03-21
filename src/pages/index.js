@@ -67,7 +67,6 @@ export default class extends Component {
       filteredEvents: filteredEvents,
       searchLat: null,
       searchLng: null,
-      searchAddress: '',
       formattedAddress: undefined,
       showHistoricalEvents: false,
       sortByProximity: false,
@@ -88,7 +87,7 @@ export default class extends Component {
     return distance(eventLat, eventLng, searchLat, searchLng)
   }
 
-  setCurrentLocation(cb) {
+  setCurrentLocation() {
     const geo = window.navigator.geolocation
     if (geo) {
       geo.getCurrentPosition(
@@ -100,23 +99,31 @@ export default class extends Component {
               },${pos.coords.longitude}`
             )
             .then(resp => {
-              const formattedAddress =
-                resp.data.results[0] && resp.data.results[0].formatted_address
-              this.setState({
+              const { results } = resp.data
+              const newState = {
                 searchLat: pos.coords.latitude,
                 searchLng: pos.coords.longitude,
-                formattedAddress: formattedAddress,
-                searchAddress: formattedAddress,
                 sortByProximity: true,
-              })
+              }
+              if (results.length > 0) {
+                const formattedAddress = (
+                  results.find(
+                    result => result.types.indexOf('neighborhood') !== -1
+                  ) || results[0]
+                ).formatted_address
+                newState.formattedAddress = formattedAddress
+              }
+              this.setState(newState)
             })
         },
         err => {
-          alert('We couldn’t get your current location.')
+          alert(
+            'We couldn’t get your current location. We can only sort by date'
+          )
         }
       )
     } else {
-      alert('We couldn’t get your current location.')
+      alert('We couldn’t get your current location. We can only sort by date')
     }
   }
 
@@ -152,9 +159,9 @@ export default class extends Component {
     const {
       events,
       filteredEvents,
-      searchAddress,
       formattedAddress,
       showHistoricalEvents,
+      sortByProximity,
     } = this.state
     return (
       <Fragment>
@@ -194,8 +201,8 @@ export default class extends Component {
             </Text>
             <Text color="muted" mt={4} mb={3}>
               {showHistoricalEvents
-                ? 'Currently showing all recorded events.'
-                : 'Currently showing events from the 2017 - 2018 school year.'}{' '}
+                ? 'Showing all recorded events.'
+                : 'Only showing events from the 2017 - 2018 school year.'}{' '}
               <Link
                 href="#"
                 analyticsEventName={`Toggle ${
@@ -211,12 +218,29 @@ export default class extends Component {
                 Toggle?
               </Link>
             </Text>
+            <Text color="muted" mt={3} mb={4}>
+              Sorting by{' '}
+              <Link
+                href="#"
+                onClick={e => {
+                  e.preventDefault()
+                  if (sortByProximity) {
+                    this.setState({ sortByProximity: false })
+                  } else {
+                    this.setCurrentLocation()
+                  }
+                }}
+              >
+                {sortByProximity ? `proximity` : 'date'}
+              </Link>
+              {sortByProximity && formattedAddress && ` to ${formattedAddress}`}.
+            </Text>
           </Container>
           <Container px={3}>
             <Flex mx={[1, 2, -3]} wrap justify="center">
               {(this.state.showHistoricalEvents ? events : filteredEvents)
                 .sort((a, b) => {
-                  if (formattedAddress) {
+                  if (sortByProximity) {
                     const distToA = this.distanceTo(a.latitude, a.longitude)
                       .miles
                     const distToB = this.distanceTo(b.latitude, b.longitude)
@@ -230,7 +254,7 @@ export default class extends Component {
                   <EventCard
                     {...event}
                     distanceTo={
-                      formattedAddress
+                      sortByProximity
                         ? this.distanceTo(event.latitude, event.longitude).miles
                         : null
                     }
