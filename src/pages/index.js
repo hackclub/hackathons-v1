@@ -99,22 +99,31 @@ export default class extends Component {
               },${pos.coords.longitude}`
             )
             .then(resp => {
-              const formattedAddress =
-                resp.data.results[0] && resp.data.results[0].formatted_address
-              this.setState({
+              const { results } = resp.data
+              const newState = {
                 searchLat: pos.coords.latitude,
                 searchLng: pos.coords.longitude,
                 sortByProximity: true,
-                formattedAddress: formattedAddress,
-              })
+              }
+              if (results.length > 0) {
+                const formattedAddress = (
+                  results.find(
+                    result => result.types.indexOf('neighborhood') !== -1
+                  ) || results[0]
+                ).formatted_address
+                newState.formattedAddress = formattedAddress
+              }
+              this.setState(newState)
             })
         },
         err => {
-          alert('We couldn’t get your current location.')
+          alert(
+            'We couldn’t get your current location. We can only sort by date'
+          )
         }
       )
     } else {
-      alert('We couldn’t get your current location.')
+      alert('We couldn’t get your current location. We can only sort by date')
     }
   }
 
@@ -209,7 +218,8 @@ export default class extends Component {
                 Toggle?
               </Link>
             </Text>
-            <Text mb={5}>
+            <Text color="muted" mt={3} mb={4}>
+              Sorting by{' '}
               <Link
                 href="#"
                 onClick={e => {
@@ -221,10 +231,9 @@ export default class extends Component {
                   }
                 }}
               >
-              {sortByProximity
-                ? `Sorting by proximity off events to ${formattedAddress}.`
-                : 'Sorting by location.'}
+                {sortByProximity ? `proximity` : 'date'}
               </Link>
+              {sortByProximity && formattedAddress && ` to ${formattedAddress}`}.
             </Text>
           </Container>
           <Container px={3}>
