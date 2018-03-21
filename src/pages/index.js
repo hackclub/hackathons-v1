@@ -11,7 +11,6 @@ import {
   Heading,
   Section,
   Button,
-  theme,
 } from '@hackclub/design-system'
 import EventCard from 'components/EventCard'
 import { distance, trackClick } from 'utils'
@@ -35,13 +34,6 @@ const HideOnMobile = Box.extend`
   ${props => props.theme.mediaQueries.sm} {
     display: unset;
   }
-`
-
-const U = Text.withComponent('mark').extend`
-  color: ${props => props.theme.colors.warning};
-  background: transparent url(//hackclub.com/underline.svg) bottom left no-repeat;
-  background-size: 100% ${props => props.theme.space[2]}px;
-  padding-bottom: ${props => props.theme.space[1]}px;
 `
 
 // This spagetti filters out events from before this school year
@@ -210,9 +202,9 @@ export default class extends Component {
               Upcoming High School Hackathons in {new Date().getFullYear()}
             </Heading.h1>
             <Text mb={2} f={4} style={{ maxWidth: '800px' }} mx="auto">
-              Find, register, and compete in {this.stats.total} free{' '}
-              <U>student-led hackathons</U> across {this.stats.state} states +{' '}
-              {this.stats.country} countries.
+              Find, register, and compete in {this.stats.total} free student-led
+              hackathons across {this.stats.state} states + {this.stats.country}{' '}
+              countries.
             </Text>
             <Text color="muted" mt={4} mb={3}>
               Showing events{' '}
@@ -280,7 +272,7 @@ export default class extends Component {
         <Container maxWidth={40} px={[2, 3]} py={5} align="center">
           <Text f={4} color="black">
             This directory is maintained by Hack Club, a non-profit network of{' '}
-            <U>student-led coding clubs</U>.
+            student-led coding clubs.
           </Text>
           <Button href="//hackclub.com" target="_blank" mt={3}>
             Learn more »
