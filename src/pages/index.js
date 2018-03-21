@@ -44,38 +44,54 @@ const U = Text.withComponent('mark').extend`
   padding-bottom: ${props => props.theme.space[1]}px;
 `
 
+// This spagetti filters out events from before this school year
+let beginningOfSchoolYear
+const now = new Date()
+if (now.getMonth() < 7 /* august */) {
+  beginningOfSchoolYear = new Date(now.getFullYear() - 1, 7)
+} else {
+  beginningOfSchoolYear = new Date(now.getFullYear(), 7)
+}
+
+const timeFilters = {
+  'school year': {
+    name: 'from the 2017 - 2018 school year',
+    function: event => new Date(event.start) > beginningOfSchoolYear,
+  },
+  future: {
+    name: 'in the future',
+    function: event => new Date(event.start) > new Date(),
+  },
+  'all time': {
+    name: 'from all time',
+    function: event => true,
+  },
+}
+
 export default class extends Component {
   constructor(props) {
     super(props)
 
-    // This spagetti filters out events from before this school year
-    let beginningOfSchoolYear
-    const now = new Date()
-    if (now.getMonth() < 7 /* august */) {
-      beginningOfSchoolYear = new Date(now.getFullYear() - 1, 7)
-    } else {
-      beginningOfSchoolYear = new Date(now.getFullYear(), 7)
-    }
+    this.events = props.data.allEventsJson.edges.map(({ node }) => node)
 
-    const events = props.data.allEventsJson.edges.map(({ node }) => node)
-    const filteredEvents = events.filter(
-      event => new Date(event.start) > beginningOfSchoolYear
-    )
+    const filteredEvents = {}
+    Object.keys(timeFilters).forEach(key => {
+      filteredEvents[key] = this.events.filter(timeFilters[key].function)
+    })
 
     this.state = {
-      events: events,
-      filteredEvents: filteredEvents,
+      filteredEvents,
       searchLat: null,
       searchLng: null,
       formattedAddress: undefined,
-      showHistoricalEvents: false,
+      timeFilter: 'school year',
       sortByProximity: false,
     }
 
     this.stats = {
-      total: events.length,
-      state: new Set(events.map(event => event.parsed_state)).size,
-      country: new Set(events.map(event => event.parsed_country)).size,
+      total: this.events.length,
+      state: new Set(this.events.map(event => event.parsed_state)).size,
+      country: new Set(this.events.map(event => event.parsed_country)).size,
     }
   }
 
@@ -157,10 +173,9 @@ export default class extends Component {
 
   render() {
     const {
-      events,
-      filteredEvents,
       formattedAddress,
-      showHistoricalEvents,
+      timeFilter,
+      filteredEvents,
       sortByProximity,
     } = this.state
     return (
@@ -200,23 +215,20 @@ export default class extends Component {
               {this.stats.country} countries.
             </Text>
             <Text color="muted" mt={4} mb={3}>
-              {showHistoricalEvents
-                ? 'Showing all recorded events.'
-                : 'Only showing events from the 2017 - 2018 school year.'}{' '}
+              Showing events{' '}
               <Link
                 href="#"
-                analyticsEventName={`Toggle ${
-                  showHistoricalEvents ? 'Off' : 'On'
-                } Historical Events`}
                 onClick={e => {
                   e.preventDefault()
+                  const fKeys = Object.keys(timeFilters)
+                  const index = (fKeys.indexOf(timeFilter) + 1) % fKeys.length
                   this.setState({
-                    showHistoricalEvents: !this.state.showHistoricalEvents,
+                    timeFilter: fKeys[index],
                   })
                 }}
               >
-                Toggle?
-              </Link>
+                {timeFilters[timeFilter].name}
+              </Link>.
             </Text>
             <Text color="muted" mt={3} mb={4}>
               Sorting by{' '}
@@ -238,7 +250,7 @@ export default class extends Component {
           </Container>
           <Container px={3}>
             <Flex mx={[1, 2, -3]} wrap justify="center">
-              {(this.state.showHistoricalEvents ? events : filteredEvents)
+              {filteredEvents[timeFilter]
                 .sort((a, b) => {
                   if (sortByProximity) {
                     const distToA = this.distanceTo(a.latitude, a.longitude)
