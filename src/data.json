@@ -1,5 +1,6 @@
 {
-  "description": "Find, register, and compete in 49 free student-led hackathons across 14 states + 4 countries .. Currently showing events from the 2017 - 2018 school year. Toggle? .. This directory is maintained by Hack Club, a non-profit network of student-led coding clubs.",
+  "description":
+    "Find, register, and compete in 49 free student-led hackathons across 14 states + 4 countries .. Currently showing events from the 2017 - 2018 school year. Toggle? .. This directory is maintained by Hack Club, a non-profit network of student-led coding clubs.",
   "url": "https://hackathons.hackclub.com",
   "img": "https://hackathons.hackclub.com/icon.png",
   "name": "High School Hackathon Calendar",
