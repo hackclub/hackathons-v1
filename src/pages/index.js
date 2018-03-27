@@ -270,13 +270,17 @@ export default class extends Component {
           </Container>
         </Base>
         <Container maxWidth={40} px={[2, 3]} py={5} align="center">
-          <Text f={4} color="black">
-            This directory is maintained by Hack Club, a non-profit network of{' '}
-            student-led coding clubs.
+          <Text f={3} mb={4} color="black">
+            This directory is maintained by{' '}
+            <Link href="//hackclub.com">Hack Club</Link>, a non-profit network
+            of student-led coding clubs.
           </Text>
-          <Button href="//hackclub.com" target="_blank" mt={3}>
-            Learn more »
-          </Button>
+          <Text f={3} color="black">
+            Want to run your own hackathon? Do it with the support of{' '}
+            <Link href="https://mlh.io/event-membership" target="_blank">
+              MLH
+            </Link>.
+          </Text>
         </Container>
       </Fragment>
     )
