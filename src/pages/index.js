@@ -13,7 +13,6 @@ import {
   Button,
 } from '@hackclub/design-system'
 import EventCard from 'components/EventCard'
-import EmailListForm from 'components/EmailListForm'
 import { distance, trackClick } from 'utils'
 import styled from 'styled-components'
 
@@ -207,7 +206,6 @@ export default class extends Component {
               hackathons across {this.stats.state} states + {this.stats.country}{' '}
               countries.
             </Text>
-            <EmailListForm mt={4} />
             <Text color="muted" mt={4} mb={3}>
               Showing events{' '}
               <Link
