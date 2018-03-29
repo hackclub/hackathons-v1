@@ -207,7 +207,7 @@ export default class extends Component {
               hackathons across {this.stats.state} states + {this.stats.country}{' '}
               countries.
             </Text>
-            <EmailListForm />
+            <EmailListForm location={formattedAddress} />
             <Text color="muted" mt={5} mb={3}>
               Showing events{' '}
               <Link

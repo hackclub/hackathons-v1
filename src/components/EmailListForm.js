@@ -69,6 +69,7 @@ const InnerForm = ({
 )
 
 const FormikForm = withFormik({
+  enableReinitialize: true,
   handleSubmit: (
     values,
     { setSubmitting, setErrors, setValues, setStatus, resetForm }
