@@ -1,8 +1,30 @@
 import React from 'react'
-import { Field, Box } from '@hackclub/design-system'
+import { Field, Box, Button } from '@hackclub/design-system'
 import { withFormik } from 'formik'
 import yup from 'yup'
 import axios from 'axios'
+
+const bg = {
+  error: 'error',
+  success: 'success',
+  submitting: 'gray.4',
+}
+
+const content = {
+  error: 'Something went wrong',
+  success: 'Submitted',
+  submitting: 'Submitting...',
+}
+
+const Submit = ({ status, onSubmit }) => (
+  <Button.input
+    value={content[status] || 'Submit'}
+    bg={bg[status] || 'primary'}
+    onSubmit={onSubmit}
+    type="submit"
+    disabled={status === 'submitting'}
+  />
+)
 
 const InnerForm = ({
   values,
@@ -12,6 +34,7 @@ const InnerForm = ({
   handleBlur,
   handleSubmit,
   isSubmitting,
+  status,
 }) => (
   <form onSubmit={handleSubmit}>
     <Field
@@ -25,19 +48,26 @@ const InnerForm = ({
       onBlur={handleBlur}
       disabled={isSubmitting}
     />
+    <Submit status={status} onSubmit={handleSubmit} />
   </form>
 )
 
 const FormikForm = withFormik({
-  handleSubmit: (values, { setSubmitting, setErrors, setValues }) => {
+  handleSubmit: (
+    values,
+    { setSubmitting, setErrors, setValues, setStatus }
+  ) => {
+    setStatus('submitting')
     axios
       .post('http://example.com', values)
       .then(_resp => {
         setSubmitting(false)
+        setStatus('success')
         setValues({ email: '' })
       })
       .catch(err => {
         setSubmitting(false)
+        setStatus('error')
         setErrors(err)
       })
   },
