@@ -38,7 +38,9 @@ const InnerForm = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <Text>Be notified when an event is running in your area</Text>
-    <Text><em>(We'll never spam you)</em></Text>
+    <Text>
+      <em>(We'll never spam you)</em>
+    </Text>
     <Flex nowrap justify="center">
       <Field
         name="email"
@@ -73,20 +75,18 @@ const FormikForm = withFormik({
   ) => {
     setStatus('submitting')
     const data = {
-      'entry.1968413973': values.email,
-      'entry.1170418241': values.location
+      email: values.email,
+      location: values.location,
+      timestamp: new Date(),
     }
-    axios({
-      method: 'get',
-      url: 'https://docs.google.com/forms/d/e/1FAIpQLSccVRnydeDLLSWslbR6tsLHWOg6zUw9XakHkoi3mFsNy0EazA/formResponse',
-      data: data,
-      headers: {
-        'Content-type': 'application/x-www-form-urlencoded'
-      }
-    }).then(_resp => {
+    axios
+      .get('https://hooks.zapier.com/hooks/catch/507705/k0zdat/', {
+        params: data,
+      })
+      .then(_resp => {
+        setValues({ email: '' })
         setSubmitting(false)
         setStatus('success')
-        setValues({ email: '' })
       })
       .catch(err => {
         setSubmitting(false)
@@ -95,13 +95,16 @@ const FormikForm = withFormik({
       })
   },
   validationSchema: yup.object().shape({
-    email: yup.string().email('Invalid email').required(),
-    location: yup.string().required()
+    email: yup
+      .string()
+      .email('Invalid email')
+      .required(),
+    location: yup.string().required(),
   }),
 })(InnerForm)
 
 export default props => (
   <Box {...props}>
-    <FormikForm location={props.location}/>
+    <FormikForm location={props.location} />
   </Box>
 )
