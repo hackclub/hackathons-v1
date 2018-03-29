@@ -71,7 +71,7 @@ const InnerForm = ({
 const FormikForm = withFormik({
   handleSubmit: (
     values,
-    { setSubmitting, setErrors, setValues, setStatus }
+    { setSubmitting, setErrors, setValues, setStatus, resetForm }
   ) => {
     setStatus('submitting')
     const data = {
@@ -84,8 +84,7 @@ const FormikForm = withFormik({
         params: data,
       })
       .then(_resp => {
-        setValues({ email: '' })
-        setSubmitting(false)
+        resetForm()
         setStatus('success')
       })
       .catch(err => {
