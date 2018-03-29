@@ -1,5 +1,12 @@
 import React from 'react'
-import { Field, Box, Button, Text, Flex } from '@hackclub/design-system'
+import {
+  Field,
+  Box,
+  Button,
+  Text,
+  Flex,
+  Heading,
+} from '@hackclub/design-system'
 import { withFormik } from 'formik'
 import yup from 'yup'
 import axios from 'axios'
@@ -37,11 +44,14 @@ const InnerForm = ({
   status,
 }) => (
   <form onSubmit={handleSubmit}>
-    <Text>Be notified when an event is running in your area</Text>
-    <Text>
+    <Heading.h4>
+      Want to hear about future events in your area? Enter your email +
+      location.
+    </Heading.h4>
+    <Heading.h4 color="slate" my={3}>
       <em>(We'll never spam you)</em>
-    </Text>
-    <Flex nowrap justify="center">
+    </Heading.h4>
+    <Flex justify="center">
       <Field
         name="email"
         label=""
@@ -104,7 +114,7 @@ const FormikForm = withFormik({
 })(InnerForm)
 
 export default props => (
-  <Box {...props}>
+  <Box align="center" mx="auto" my={4} {...props}>
     <FormikForm location={props.location} />
   </Box>
 )

@@ -207,7 +207,6 @@ export default class extends Component {
               hackathons across {this.stats.state} states + {this.stats.country}{' '}
               countries.
             </Text>
-            <EmailListForm location={formattedAddress} />
             <Text color="muted" mt={5} mb={3}>
               Showing events{' '}
               <Link
@@ -269,9 +268,10 @@ export default class extends Component {
                 ))}
             </Flex>
           </Container>
+          <EmailListForm location={formattedAddress} />
         </Base>
         <Container maxWidth={40} px={[2, 3]} py={5} align="center">
-          <Text f={3} mb={4} color="black">
+          <Text f={3} my={4} color="black">
             This directory is maintained by{' '}
             <Link href="//hackclub.com">Hack Club</Link>, a non-profit network
             of student-led coding clubs.
