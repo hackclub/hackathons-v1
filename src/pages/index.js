@@ -268,7 +268,6 @@ export default class extends Component {
                   />
                 ))}
             </Flex>
-            <Link />
           </Container>
         </Base>
         <Container maxWidth={40} px={[2, 3]} py={5} align="center">
