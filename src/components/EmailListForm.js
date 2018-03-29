@@ -1,5 +1,5 @@
 import React from 'react'
-import { Field, Box, Button } from '@hackclub/design-system'
+import { Field, Box, Button, Text, Flex } from '@hackclub/design-system'
 import { withFormik } from 'formik'
 import yup from 'yup'
 import axios from 'axios'
@@ -37,17 +37,31 @@ const InnerForm = ({
   status,
 }) => (
   <form onSubmit={handleSubmit}>
-    <Field
-      name="email"
-      type="email"
-      label="Be notified when an event is running in your area"
-      value={values.email || ''}
-      error={touched.email && errors.email}
-      placeholder="your@email.com"
-      onChange={handleChange}
-      onBlur={handleBlur}
-      disabled={isSubmitting}
-    />
+    <Text>Be notified when an event is running in your area</Text>
+    <Text><em>(We'll never spam you)</em></Text>
+    <Flex nowrap justify="center">
+      <Field
+        name="email"
+        label=""
+        type="email"
+        value={values.email || ''}
+        error={touched.email && errors.email}
+        placeholder="your@email.com"
+        onChange={handleChange}
+        onBlur={handleBlur}
+        disabled={isSubmitting}
+      />
+      <Field
+        name="location"
+        label=""
+        value={values.location || ''}
+        error={touched.location && errors.location}
+        placeholder="city, region, country"
+        onChange={handleChange}
+        onBlur={handleBlur}
+        disabled={isSubmitting}
+      />
+    </Flex>
     <Submit status={status} onSubmit={handleSubmit} />
   </form>
 )
@@ -58,9 +72,18 @@ const FormikForm = withFormik({
     { setSubmitting, setErrors, setValues, setStatus }
   ) => {
     setStatus('submitting')
-    axios
-      .post('http://example.com', values)
-      .then(_resp => {
+    const data = {
+      'entry.1968413973': values.email,
+      'entry.1170418241': values.location
+    }
+    axios({
+      method: 'get',
+      url: 'https://docs.google.com/forms/d/e/1FAIpQLSccVRnydeDLLSWslbR6tsLHWOg6zUw9XakHkoi3mFsNy0EazA/formResponse',
+      data: data,
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded'
+      }
+    }).then(_resp => {
         setSubmitting(false)
         setStatus('success')
         setValues({ email: '' })
@@ -72,12 +95,13 @@ const FormikForm = withFormik({
       })
   },
   validationSchema: yup.object().shape({
-    email: yup.string().email('Invalid email'),
+    email: yup.string().email('Invalid email').required(),
+    location: yup.string().required()
   }),
 })(InnerForm)
 
 export default props => (
   <Box {...props}>
-    <FormikForm />
+    <FormikForm location={props.location}/>
   </Box>
 )
