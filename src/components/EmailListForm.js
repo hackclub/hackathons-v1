@@ -19,19 +19,27 @@ const bg = {
 
 const content = {
   error: 'Something went wrong',
-  success: 'Submitted',
+  success: 'Check Your Email ✈️',
   submitting: 'Submitting...',
 }
 
 const Submit = ({ status, onSubmit }) => (
   <Button.input
-    value={content[status] || 'Submit'}
+    value={content[status] || 'Add My Email'}
     bg={bg[status] || 'primary'}
     onSubmit={onSubmit}
     type="submit"
     disabled={status === 'submitting'}
   />
 )
+
+const EmailHeading = Heading.h4.extend.attrs({color: 'black'})`
+font-style: italic;
+max-width: 400px;
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 16px;
+`
 
 const InnerForm = ({
   values,
@@ -44,13 +52,10 @@ const InnerForm = ({
   status,
 }) => (
   <form onSubmit={handleSubmit}>
-    <Heading.h4>
-      Want to hear about future events in your area? Enter your email +
+    <EmailHeading>
+      Want an email when events are added in your area? Enter your email +
       location.
-    </Heading.h4>
-    <Heading.h4 color="slate" my={3}>
-      <em>(We’ll never spam you)</em>
-    </Heading.h4>
+    </EmailHeading>
     <Flex justify="center">
       <Field
         name="email"
@@ -58,22 +63,26 @@ const InnerForm = ({
         type="email"
         value={values.email || ''}
         error={touched.email && errors.email}
-        placeholder="your@email.com"
+        placeholder="orpheus@hackclub.com"
         onChange={handleChange}
         onBlur={handleBlur}
         disabled={isSubmitting}
       />
+      <span style={{width: '10px'}}></span> {/* spacer */}
       <Field
         name="location"
         label=""
         value={values.location || ''}
         error={touched.location && errors.location}
-        placeholder="city, region, country"
+        placeholder="Chicago, IL"
         onChange={handleChange}
         onBlur={handleBlur}
         disabled={isSubmitting}
       />
     </Flex>
+    <Heading.h4 color="muted" mt={2} mb={3} f={2}>
+      <em>(we’ll never spam you & you can always unsubscribe)</em>
+    </Heading.h4>
     <Submit status={status} onSubmit={handleSubmit} />
   </form>
 )
@@ -114,7 +123,7 @@ const FormikForm = withFormik({
 })(InnerForm)
 
 export default props => (
-  <Box align="center" mx="auto" my={4} {...props}>
+  <Box align="center" mx="auto" mb={4} {...props}>
     <FormikForm location={props.location} />
   </Box>
 )

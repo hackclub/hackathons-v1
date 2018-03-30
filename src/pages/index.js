@@ -202,12 +202,13 @@ export default class extends Component {
             <Heading.h1 f={[5, null, 6]} mt={[4, 5]} mb={3}>
               Upcoming High School Hackathons in {new Date().getFullYear()}
             </Heading.h1>
-            <Text mb={5} f={4} style={{ maxWidth: '800px' }} mx="auto">
+            <Text mb={4} f={4} style={{ maxWidth: '800px' }} mx="auto">
               Find, register, and compete in {this.stats.total} free student-led
               hackathons across {this.stats.state} states + {this.stats.country}{' '}
               countries.
             </Text>
-            <Text color="muted" mt={5} mb={3}>
+            <EmailListForm location={formattedAddress} />
+            <Text color="muted" mt={4} mb={3}>
               Showing events{' '}
               <Link
                 href="#"
@@ -268,7 +269,6 @@ export default class extends Component {
                 ))}
             </Flex>
           </Container>
-          <EmailListForm location={formattedAddress} />
         </Base>
         <Container maxWidth={40} px={[2, 3]} py={5} align="center">
           <Text f={3} my={4} color="black">
