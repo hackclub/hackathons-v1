@@ -49,7 +49,7 @@ const InnerForm = ({
       location.
     </Heading.h4>
     <Heading.h4 color="slate" my={3}>
-      <em>(We'll never spam you)</em>
+      <em>(We’ll never spam you)</em>
     </Heading.h4>
     <Flex justify="center">
       <Field
