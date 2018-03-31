@@ -13,6 +13,7 @@ import {
   Button,
 } from '@hackclub/design-system'
 import EventCard from 'components/EventCard'
+import EmailListForm from 'components/EmailListForm'
 import { distance, trackClick } from 'utils'
 import styled from 'styled-components'
 
@@ -201,11 +202,12 @@ export default class extends Component {
             <Heading.h1 f={[5, null, 6]} mt={[4, 5]} mb={3}>
               Upcoming High School Hackathons in {new Date().getFullYear()}
             </Heading.h1>
-            <Text mb={2} f={4} style={{ maxWidth: '800px' }} mx="auto">
+            <Text mb={4} f={4} style={{ maxWidth: '800px' }} mx="auto">
               Find, register, and compete in {this.stats.total} free student-led
               hackathons across {this.stats.state} states + {this.stats.country}{' '}
               countries.
             </Text>
+            <EmailListForm location={formattedAddress} />
             <Text color="muted" mt={4} mb={3}>
               Showing events{' '}
               <Link
@@ -266,11 +268,10 @@ export default class extends Component {
                   />
                 ))}
             </Flex>
-            <Link />
           </Container>
         </Base>
         <Container maxWidth={40} px={[2, 3]} py={5} align="center">
-          <Text f={3} mb={4} color="black">
+          <Text f={3} my={4} color="black">
             This directory is maintained by{' '}
             <Link href="//hackclub.com">Hack Club</Link>, a non-profit network
             of student-led coding clubs.
