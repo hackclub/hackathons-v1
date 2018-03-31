@@ -1,6 +1,7 @@
 import React from 'react'
 import {
-  Field,
+  Label,
+  Input,
   Box,
   Button,
   Text,
@@ -33,13 +34,35 @@ const Submit = ({ status, onSubmit }) => (
   />
 )
 
-const EmailHeading = Heading.h4.extend.attrs({color: 'black'})`
+const EmailHeading = Heading.h4.extend.attrs({ color: 'black' })`
 font-style: italic;
 max-width: 400px;
 margin-left: auto;
 margin-right: auto;
 margin-bottom: 16px;
 `
+
+export const Error = Text.extend.attrs({
+  className: 'error',
+  color: 'error',
+  f: 1,
+  ml: 1,
+  my: 0,
+})`
+  font-weight: normal;
+  text-transform: lowercase;
+  &:before { content: '— '; }
+`
+
+const Field = ({ type, name, placeholder, error, label, ...props }) => (
+  <Label className={type} id={name} mb={2}>
+    <Input name={name} type={type} placeholder={placeholder} {...props} />
+    <Flex align="center" mb={2} wrap>
+      {error && <Error children={error} />}
+      {label}
+    </Flex>
+  </Label>
+)
 
 const InnerForm = ({
   values,
@@ -68,7 +91,7 @@ const InnerForm = ({
         onBlur={handleBlur}
         disabled={isSubmitting}
       />
-      <span style={{width: '10px'}}></span> {/* spacer */}
+      <span style={{ width: '10px' }} /> {/* spacer */}
       <Field
         name="location"
         label=""
