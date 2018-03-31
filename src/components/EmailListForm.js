@@ -123,9 +123,7 @@ const FormikForm = withFormik({
       timestamp: new Date(),
     }
     axios
-      .get('https://hooks.zapier.com/hooks/catch/507705/k0zdat/', {
-        params: data,
-      })
+      .post('https://api.hackclub.com/v1/event_email_subscribers', data)
       .then(_resp => {
         resetForm()
         setStatus('success')
