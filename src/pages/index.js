@@ -305,7 +305,7 @@ export const pageQuery = graphql`
           parsed_country
           parsed_country_code
           name
-          website
+          website: website_redirect
           latitude
           longitude
           banner {
