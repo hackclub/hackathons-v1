@@ -37,17 +37,19 @@ const EventCard = Card.withComponent(Tilt).extend.attrs({
   color: 'white',
   boxShadowSize: 'md',
 })`
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.32);
-   background:
-     linear-gradient(
-       rgba(0, 0, 0, 0) 0%,
-       rgba(0, 0, 0, 0.45) 75%
-     ),
-     url(${props => props.bg}) no-repeat;
-   background-size: cover;
+  padding-bottom: ${props => 16 - (props.associated ? 5 : 0)}px;
+  border-bottom: solid ${props => props.theme.colors.primary} ${props => props.associated ? 5 : 0}px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.32);
+  background:
+   linear-gradient(
+     rgba(0, 0, 0, 0) 0%,
+     rgba(0, 0, 0, 0.45) 75%
+   ),
+   url(${props => props.bg}) no-repeat;
+ background-size: cover;
 `
 
 const Base = styled(Overdrive)`
@@ -63,6 +65,16 @@ const Base = styled(Overdrive)`
   ${props => props.theme.mediaQueries[2]} {
     width: 33.33%;
   }
+`
+
+const AssociatedEvent = Box.extend.attrs({
+  children: 'Hack Club',
+  bg: 'primary',
+  p: 1,
+})`
+  border-radius: 5px;
+  position: absolute;
+  right: 0;
 `
 
 const pathToUrl = path => (path ? `https://api.hackclub.com${path}` : null)
@@ -103,7 +115,7 @@ export default ({
       itemScope
       itemType="http://schema.org/Event"
     >
-      <EventCard bg={banner}>
+      <EventCard bg={banner} associated={Math.random() > 0.5}>
         <LogoContainer>
           {logo && (
             <Image

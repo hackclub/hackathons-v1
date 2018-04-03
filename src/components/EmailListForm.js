@@ -122,6 +122,11 @@ const FormikForm = withFormik({
       location: values.location,
       timestamp: new Date(),
     }
+    try{
+      analytics.identify({email: data.email})
+    } catch(err) {
+      console.error(err)
+    }
     axios
       .post('https://api.hackclub.com/v1/event_email_subscribers', data)
       .then(_resp => {
