@@ -78,7 +78,6 @@ export default class extends Component {
     Object.keys(timeFilters).forEach(key => {
       filteredEvents[key] = this.events.filter(timeFilters[key].function)
     })
-    console.log(this.events)
 
     this.state = {
       filteredEvents,
