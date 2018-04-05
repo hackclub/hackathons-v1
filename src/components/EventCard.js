@@ -13,7 +13,6 @@ import {
 import { trackClick } from 'utils'
 import Overdrive from 'react-overdrive'
 import styled from 'styled-components'
-import Img from 'gatsby-image'
 
 const humanizeDistance = num => {
   if (num <= 100) {
