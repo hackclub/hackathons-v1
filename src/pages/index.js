@@ -65,12 +65,20 @@ export default class extends Component {
   constructor(props) {
     super(props)
 
-    this.events = props.data.allEventsJson.edges.map(({ node }) => node)
+    this.allLogo = props.data.allLogo.edges.map(({ node }) => node)
+    this.allBanner = props.data.allBanner.edges.map(({ node }) => node)
+    this.events = props.data.allEventsJson.edges.map(({ node }) => {
+      // This method has STUPID time complexity, but I'm just doing this as a proof of concept
+      node.banner = this.allBanner.find(img => img.id.match(node.id))
+      node.logo = this.allLogo.find(img => img.id.match(`logo_${node.id}`))
+      return node
+    })
 
     const filteredEvents = {}
     Object.keys(timeFilters).forEach(key => {
       filteredEvents[key] = this.events.filter(timeFilters[key].function)
     })
+    console.log(this.events)
 
     this.state = {
       filteredEvents,
@@ -308,11 +316,31 @@ export const pageQuery = graphql`
           website: website_redirect
           latitude
           longitude
-          banner {
-            file_path
+        }
+      }
+    }
+    allLogo: allImageSharp(
+      filter: { original: { src: { regex: "/logo_/" } } }
+    ) {
+      edges {
+        node {
+          id
+          sizes {
+            src
+            tracedSVG
           }
-          logo {
-            file_path
+        }
+      }
+    }
+    allBanner: allImageSharp(
+      filter: { original: { src: { regex: "/banner_/" } } }
+    ) {
+      edges {
+        node {
+          id
+          sizes {
+            src
+            tracedSVG
           }
         }
       }
