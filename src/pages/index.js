@@ -326,7 +326,6 @@ export const pageQuery = graphql`
           id
           sizes {
             src
-            tracedSVG
           }
         }
       }
@@ -339,7 +338,6 @@ export const pageQuery = graphql`
           id
           sizes {
             src
-            tracedSVG
           }
         }
       }

@@ -3,7 +3,6 @@ import Tilt from 'react-tilt'
 import {
   Box,
   Card,
-  Link,
   Heading,
   Image,
   Text,
@@ -23,7 +22,6 @@ const humanizeDistance = num => {
 }
 
 const LogoContainer = Box.extend`
-  border-radius: ${props => props.theme.radius};
   height: ${props => props.theme.space[5]}px;
   position: relative;
 `
@@ -48,12 +46,12 @@ const EventCard = Card.withComponent(Tilt).extend.attrs({
        rgba(0, 0, 0, 0) 0%,
        rgba(0, 0, 0, 0.45) 75%
      ),
-     url(${props => props.bg}) no-repeat,
-     url("${props => props.svg}") no-repeat;
+     url(${props => props.bg}) no-repeat;
    background-size: cover;
 `
 
 const Base = styled(Overdrive)`
+  opacity: 1 !important;
   padding: ${props => props.theme.space[2]};
   text-decoration: none;
   display: flex;
@@ -106,29 +104,13 @@ export default ({
       itemScope
       itemType="http://schema.org/Event"
     >
-      <EventCard
-        svg={((banner && banner.sizes) || {}).tracedSVG}
-        bg={((banner && banner.sizes) || {}).src}
-      >
+      <EventCard bg={((banner && banner.sizes) || {}).src}>
         <LogoContainer>
           {logo && (
             <Image
               itemProp="image"
               src={logo.sizes.src}
               style={{ height: theme.space[5] }}
-            />
-          )}
-          {logo && (
-            <Image
-              itemProp="image"
-              src={logo.sizes.tracedSVG}
-              style={{
-                height: theme.space[5],
-                zIndex: -1,
-                position: 'absolute',
-                top: 0,
-                left: 0,
-              }}
             />
           )}
         </LogoContainer>
