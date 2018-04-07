@@ -8,3 +8,5 @@ yarn-error.log
 /public
 /data/*
 !/data/.keep
+
+/static/images

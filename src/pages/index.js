@@ -308,12 +308,8 @@ export const pageQuery = graphql`
           website: website_redirect
           latitude
           longitude
-          banner {
-            file_path
-          }
-          logo {
-            file_path
-          }
+          banner
+          logo
         }
       }
     }
