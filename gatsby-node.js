@@ -1,66 +1,63 @@
-const writeFile = require('fs').writeFile
+const { writeFile, existsSync, mkdirSync } = require('fs')
 const axios = require('axios')
 
-const downloadImage = (url, tag) => (
+const imageFolder = 'static/images/'
+
+const downloadImage = image => (
   new Promise((resolve, reject) => {
-    const extensionRegex = /(?:\.([^.]+))?$/
-    const extension = extensionRegex.exec(url)[0].toLowerCase()
+    if (!image) resolve(null)
     axios
-      .get(`https://api.hackclub.com${url}`, { responseType: 'arraybuffer' })
+      .get(`https://api.hackclub.com${image.file_path}`, { responseType: 'arraybuffer' })
       .then(res => {
-          writeFile(`data/images/${tag + extension}`, res.data, 'binary', err => {
-            if (err) throw err
-            resolve()
-          })
+        let extension = ''
+        switch(res.headers['content-type']) {
+          case 'image/jpeg':
+            extension = '.jpg'
+            break
+          case 'image/png':
+            extension = '.png'
+            break
+          default:
+            throw `Invalid content-type: ${res.headers['content-type']}`
         }
-      )
-      .catch(err => {
-        reject(err)
-      })
-  })
-)
-
-const downloadImagesFromEvents = events => (
-  new Promise(async (resolve, reject) => {
-    try {
-      const imagePromises = []
-      events.forEach(event => {
-        const { banner, logo, id } = event
-        if (logo) {
-          imagePromises.push(downloadImage(logo.file_path, `logo_${id}`))
-        }
-        if (banner) {
-          imagePromises.push(downloadImage(banner.file_path, `banner_${id}`))
-        }
-      })
-      Promise.all(imagePromises)
-        .then(resolve)
-        .catch(err => {
-          throw err
-        })
-    } catch(err) {
-      reject(err)
-    }
-  })
-)
-
-exports.onPreBootstrap = async () => {
-  await new Promise((resolve, reject) => (
-    axios
-      .get('https://api.hackclub.com/v1/events')
-      .then(res => {
-        const data = JSON.stringify(
-          res.data.map(event => ({ ...event, id: event.id.toString() }))
-        )
-        writeFile('data/events.json', data, err => {
+        const fileName = image.type + '_' + image.id + extension
+        writeFile(imageFolder + fileName, res.data, 'binary', err => {
           if (err) throw err
-          downloadImagesFromEvents(res.data)
-            .then(resolve)
-            .catch(err => {
-              throw err
-            })
+          resolve(`images/${fileName}`)
         })
       })
       .catch(err => reject(err))
-  ))
-}
+  })
+)
+
+const processEvent = async event => ({
+  ...event,
+  id: event.id.toString(),
+  banner: await downloadImage(event.banner),
+  logo: await downloadImage(event.logo)
+})
+
+exports.onPreBootstrap = () => (
+  new Promise((resolve, reject) => {
+    axios
+    .get('https://api.hackclub.com/v1/events')
+    .then(res => {
+      console.log('Creating image folder')
+      if (!existsSync(imageFolder)){
+        mkdirSync(imageFolder)
+      }
+      console.log('Mapping through event data')
+      const promiseArray = res.data.map(event => processEvent(event))
+      return new Promise.all(promiseArray).then(data => {
+        console.log('Writing event data to file')
+        writeFile('data/events.json', JSON.stringify(data), err => {
+          if (err) reject(err)
+          console.log('Event data written to file')
+          resolve()
+        })
+      })
+      .catch(err => { throw err })
+    })
+    .catch(reject)
+  })
+)

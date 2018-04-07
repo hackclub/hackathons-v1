@@ -84,7 +84,6 @@ export default ({
   distanceTo,
   startYear,
 }) => {
-  // if (!(logo)) debugger
   return (
     <Base
       id={id}
@@ -104,12 +103,12 @@ export default ({
       itemScope
       itemType="http://schema.org/Event"
     >
-      <EventCard bg={((banner && banner.sizes) || {}).src}>
+      <EventCard bg={banner}>
         <LogoContainer>
           {logo && (
             <Image
               itemProp="image"
-              src={logo.sizes.src}
+              src={logo}
               style={{ height: theme.space[5] }}
             />
           )}
