@@ -37,8 +37,10 @@ const EventCard = Card.withComponent(Tilt).extend.attrs({
   color: 'white',
   boxShadowSize: 'md',
 })`
-  padding-bottom: ${props => 16 - (props.associated ? 5 : 0)}px;
-  border-bottom: solid ${props => props.theme.colors.primary} ${props => props.associated ? 5 : 0}px;
+  padding-top: ${props =>
+    props.theme.space[3] - (props.isAssociated ? 5 : 0)}px;
+  border-top: solid ${props => props.theme.colors.primary} ${props =>
+  props.isAssociated ? 5 : 0}px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,6 +53,31 @@ const EventCard = Card.withComponent(Tilt).extend.attrs({
    url(${props => props.bg}) no-repeat;
  background-size: cover;
 `
+
+const AssociatedText = Text.span.extend.attrs({
+  color: 'white',
+  bg: 'primary',
+  children: 'By Hack Club',
+  py: 1,
+  px: 2,
+})`
+  position: relative;
+  left: 0;
+  top: 0;
+  border-bottom-right-radius: ${props => props.theme.space[2]}px;
+  display: ${props => (props.isAssociated ? 'initial' : 'none')};
+`
+
+const AssociatedSeal = Box.extend.attrs({
+  w: 1,
+  ml: -theme.space[4],
+  mt: -theme.space[3] + 5,
+  children: props => (
+    <AssociatedText
+      style={{ display: props.isAssociated ? 'initial' : 'none' }}
+    />
+  ),
+})``
 
 const Base = styled(Overdrive)`
   opacity: 1 !important;
@@ -96,6 +123,7 @@ export default ({
   distanceTo,
   startYear,
 }) => {
+  const isAssociated = Math.random() > 0.5 ? 'true' : ''
   return (
     <Base
       id={id}
@@ -115,7 +143,8 @@ export default ({
       itemScope
       itemType="http://schema.org/Event"
     >
-      <EventCard bg={banner} associated={Math.random() > 0.5}>
+      <EventCard bg={banner} isAssociated={isAssociated}>
+        <AssociatedSeal isAssociated={isAssociated} />
         <LogoContainer>
           {logo && (
             <Image
