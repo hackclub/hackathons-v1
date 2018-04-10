@@ -256,7 +256,7 @@ export default class extends Component {
                     return new Date(a.start) - new Date(b.start)
                   }
                 })
-                .map((event, index) => (
+                .map(event => (
                   <EventCard
                     {...event}
                     distanceTo={
@@ -264,7 +264,7 @@ export default class extends Component {
                         ? this.distanceTo(event.latitude, event.longitude).miles
                         : null
                     }
-                    key={index}
+                    key={event.id.toString()}
                   />
                 ))}
             </Flex>
