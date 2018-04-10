@@ -264,7 +264,7 @@ export default class extends Component {
                         ? this.distanceTo(event.latitude, event.longitude).miles
                         : null
                     }
-                    key={event.id.toString()}
+                    key={event.id}
                   />
                 ))}
             </Flex>
