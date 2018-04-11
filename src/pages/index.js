@@ -310,6 +310,7 @@ export const pageQuery = graphql`
           longitude
           banner
           logo
+          isAssociated: is_associated
         }
       }
     }

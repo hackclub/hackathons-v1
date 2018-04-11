@@ -122,79 +122,77 @@ export default ({
   logo,
   distanceTo,
   startYear,
-}) => {
-  const isAssociated = Math.random() > 0.5 ? 'true' : ''
-  return (
-    <Base
-      id={id}
-      duration={400}
-      element="a"
-      href={website}
-      target="_blank"
-      onClick={trackClick({
-        href: website,
-        analyticsEventName: 'Event Clicked',
-        analyticsProperties: {
-          eventUrl: website,
-          eventName: name,
-          eventId: id,
-        },
-      })}
-      itemScope
-      itemType="http://schema.org/Event"
-    >
-      <EventCard bg={banner} isAssociated={isAssociated}>
-        <AssociatedSeal isAssociated={isAssociated} />
-        <LogoContainer>
-          {logo && (
-            <Image
-              itemProp="image"
-              src={logo}
-              style={{ height: theme.space[5] }}
-            />
-          )}
-        </LogoContainer>
-        <Heading.h3 regular my={2} style={{ flex: '1 0 auto' }} itemProp="name">
-          {name}
-        </Heading.h3>
-        <Flex justify="space-between" w={1}>
-          <Text>
-            {start === end
-              ? startHumanized
-              : `${startHumanized}–${endHumanized}`}
-            {new Date().getFullYear() !== parseInt(startYear)
-              ? `, ${startYear}`
-              : null}
+  isAssociated,
+}) => (
+  <Base
+    id={id}
+    duration={400}
+    element="a"
+    href={website}
+    target="_blank"
+    onClick={trackClick({
+      href: website,
+      analyticsEventName: 'Event Clicked',
+      analyticsProperties: {
+        eventUrl: website,
+        eventName: name,
+        eventId: id,
+      },
+    })}
+    itemScope
+    itemType="http://schema.org/Event"
+  >
+    <EventCard bg={banner} isAssociated={isAssociated}>
+      <AssociatedSeal isAssociated={isAssociated} />
+      <LogoContainer>
+        {logo && (
+          <Image
+            itemProp="image"
+            src={logo}
+            style={{ height: theme.space[5] }}
+          />
+        )}
+      </LogoContainer>
+      <Heading.h3 regular my={2} style={{ flex: '1 0 auto' }} itemProp="name">
+        {name}
+      </Heading.h3>
+      <Flex justify="space-between" w={1}>
+        <Text>
+          {start === end
+            ? startHumanized
+            : `${startHumanized}–${endHumanized}`}
+          {new Date().getFullYear() !== parseInt(startYear)
+            ? `, ${startYear}`
+            : null}
+        </Text>
+        {distanceTo ? (
+          <Text>{`${humanizeDistance(distanceTo)} miles`}</Text>
+        ) : (
+          <Text
+            itemProp="location"
+            itemScope
+            itemType="http://schema.org/Place"
+          >
+            <span itemProp="address">
+              {parsed_city},{' '}
+              {parsed_country_code === 'US'
+                ? parsed_state_code
+                : parsed_country}
+            </span>
           </Text>
-          {distanceTo ? (
-            <Text>{`${humanizeDistance(distanceTo)} miles`}</Text>
-          ) : (
-            <Text
-              itemProp="location"
-              itemScope
-              itemType="http://schema.org/Place"
-            >
-              <span itemProp="address">
-                {parsed_city},{' '}
-                {parsed_country_code === 'US'
-                  ? parsed_state_code
-                  : parsed_country}
-              </span>
-            </Text>
-          )}
-        </Flex>
+        )}
+      </Flex>
 
-        {/* Include microdata that doesn't easily fit elsewhere */}
-        <div style={{ display: 'none' }}>
-          <span itemProp="url">{website}</span>
-          <span itemProp="startDate" content={start}>
-            {start}
-          </span>
-          <span itemProp="endDate" content={end}>
-            {end}
-          </span>
-        </div>
-      </EventCard>
-    </Base>
-  )
-}
+      {/* Include microdata that doesn't easily fit elsewhere */}
+      <div style={{ display: 'none' }}>
+        <span itemProp="url">{website}</span>
+        <span itemProp="startDate" content={start}>
+          {start}
+        </span>
+        <span itemProp="endDate" content={end}>
+          {end}
+        </span>
+      </div>
+    </EventCard>
+  </Base>
+)
