@@ -159,9 +159,7 @@ export default ({
       </Heading.h3>
       <Flex justify="space-between" w={1}>
         <Text>
-          {start === end
-            ? startHumanized
-            : `${startHumanized}–${endHumanized}`}
+          {start === end ? startHumanized : `${startHumanized}–${endHumanized}`}
           {new Date().getFullYear() !== parseInt(startYear)
             ? `, ${startYear}`
             : null}
