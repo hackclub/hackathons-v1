@@ -60,21 +60,22 @@ const AssociatedText = Text.span.extend.attrs({
   children: 'Hack Club Affiliated',
   py: 1,
   px: 2,
+  f: 1,
 })`
   position: relative;
   left: 0;
   top: 0;
   border-bottom-right-radius: ${props => props.theme.space[2]}px;
-  display: ${props => (props.isAssociated ? 'initial' : 'none')};
 `
 
 const AssociatedSeal = Box.extend.attrs({
   w: 1,
   ml: -theme.space[4],
   mt: -theme.space[3] + 5,
+  mb: 1,
   children: props => (
     <AssociatedText
-      style={{ display: props.isAssociated ? 'initial' : 'none' }}
+      style={{ visibility: props.isAssociated ? 'visible' : 'hidden' }}
     />
   ),
 })``
@@ -149,7 +150,7 @@ export default ({
           <Image
             itemProp="image"
             src={logo}
-            style={{ height: theme.space[5] }}
+            style={{ height: theme.space[5], borderRadius: theme.space[1] }}
           />
         )}
       </LogoContainer>
