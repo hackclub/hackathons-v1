@@ -57,7 +57,7 @@ const EventCard = Card.withComponent(Tilt).extend.attrs({
 const AssociatedText = Text.span.extend.attrs({
   color: 'white',
   bg: 'primary',
-  children: 'By Hack Club',
+  children: 'Hack Club Affiliated',
   py: 1,
   px: 2,
 })`
