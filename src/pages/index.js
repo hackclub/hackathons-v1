@@ -310,6 +310,7 @@ export const pageQuery = graphql`
           longitude
           banner
           logo
+          isAssociated: hack_club_associated
         }
       }
     }
