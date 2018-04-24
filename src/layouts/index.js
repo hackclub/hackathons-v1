@@ -15,7 +15,7 @@ const TemplateWrapper = ({ children }) => (
   <ThemeProvider>
     <Helmet>
       <title>
-        {`List of Upcoming High School Hackathons // Hack Club`}
+        {`Upcoming High School Hackathons - Hack Club`}
       </title>
       {meta([
         { name: 'description', content: description },
