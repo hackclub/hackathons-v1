@@ -65,7 +65,8 @@ export default class extends Component {
   constructor(props) {
     super(props)
 
-    this.events = props.data.allEventsJson.edges.map(({ node }) => node)
+    this.events = props.pathContext.events.map(({ node }) => node)
+    this.region = props.pathContext.region
 
     const filteredEvents = {}
     Object.keys(timeFilters).forEach(key => {
@@ -76,7 +77,7 @@ export default class extends Component {
       filteredEvents,
       searchLat: null || props.searchLat,
       searchLng: null || props.searchLng,
-      formattedAddress: undefined,
+      formattedAddress: undefined || this.region.name,
       timeFilter: 'school year',
       sortByProximity: false,
     }
@@ -173,6 +174,9 @@ export default class extends Component {
     } = this.state
     return (
       <Fragment>
+        <Helmet>
+          <title>High School Hackathons in {this.region.name}</title>
+        </Helmet>
         <Base>
           <a href="https://hackclub.com" target="_blank">
             <Image src="/flag.svg" width={128} ml={[3, 4, 5]} />
@@ -200,12 +204,13 @@ export default class extends Component {
           </Flex>
           <Container maxWidth={36} px={3} align="center">
             <Heading.h1 f={[5, null, 6]} mt={[4, 5]} mb={3}>
-              Upcoming High School Hackathons in {new Date().getFullYear()}
+              {this.region ? null : 'Upcoming '}
+              High School Hackathons in{' '}
+              {this.region.name || new Date().getFullYear()}
             </Heading.h1>
             <Text mb={4} f={4} style={{ maxWidth: '800px' }} mx="auto">
-              Find, register, and compete in {this.stats.total} free student-led
-              hackathons across {this.stats.state} states + {this.stats.country}{' '}
-              countries.
+              Find, register, and compete in {this.stats.total} student-led
+              hackathons around {this.region.name}.
             </Text>
             <EmailListForm location={formattedAddress} />
             <Text color="muted" mt={4} mb={3}>
@@ -287,31 +292,3 @@ export default class extends Component {
     )
   }
 }
-
-export const pageQuery = graphql`
-  query PageQuery {
-    allEventsJson {
-      edges {
-        node {
-          id
-          startHumanized: start(formatString: "MMMM D")
-          endHumanized: end(formatString: "D")
-          start
-          end
-          startYear: start(formatString: "YYYY")
-          parsed_city
-          parsed_state
-          parsed_state_code
-          parsed_country
-          parsed_country_code
-          name
-          website: website_redirect
-          latitude
-          longitude
-          banner
-          logo
-        }
-      }
-    }
-  }
-`
