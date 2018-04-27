@@ -274,7 +274,7 @@ export default class extends Component {
           <Text f={3} my={4} color="black">
             This directory is maintained by{' '}
             <Link href="//hackclub.com">Hack Club</Link>, a non-profit network
-            of student-led coding clubs.
+            of student-led computer science clubs.
           </Text>
           <Text f={3} color="black">
             Want to run your own hackathon? Do it with the support of{' '}
