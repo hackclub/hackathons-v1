@@ -2,15 +2,7 @@ const { writeFile, existsSync, mkdirSync } = require('fs')
 const axios = require('axios')
 const path = require('path')
 const { kebabCase } = require('lodash')
-// replace this with an import
-const regions = [
-  {
-    name: 'Los Angeles',
-    filter: event => {
-      return event.parsed_city === 'Los Angeles'
-    },
-  },
-]
+const regions = require('./src/regions.js')
 
 const imageFolder = 'static/images/'
 
