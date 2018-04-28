@@ -109,14 +109,16 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           const events = result.data.allEventsJson.edges.filter(edge =>
             region.filter(edge.node)
           )
-          createPage({
-            path: kebabCase(region.name),
-            component,
-            context: {
-              region,
-              events,
-            },
-          })
+          if (events.length > 3) {
+            createPage({
+              path: kebabCase(region.name),
+              component,
+              context: {
+                region,
+                events,
+              },
+            })
+          }
         })
       })
     )
