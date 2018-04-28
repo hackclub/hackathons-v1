@@ -53,7 +53,7 @@ const timeFilters = {
   },
   future: {
     name: 'in the future',
-    function: event => new Date(event.start) > new Date(),
+    function: event => new Date(event.start) >= new Date(Date.now() - 864e5),
   },
   'all time': {
     name: 'from all time',
