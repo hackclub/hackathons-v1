@@ -73,11 +73,12 @@ export default class extends Component {
       filteredEvents[key] = this.events.filter(timeFilters[key].function)
     })
 
+    const formattedAddress = undefined || this.region.address
     this.state = {
       filteredEvents,
       searchLat: null || props.searchLat,
       searchLng: null || props.searchLng,
-      formattedAddress: undefined || this.region.name,
+      formattedAddress: this.region.address === undefined ? this.region.name : this.region.address,
       timeFilter: 'school year',
       sortByProximity: false,
     }

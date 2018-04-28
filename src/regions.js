@@ -7,4 +7,9 @@ module.exports = [
     name: 'New York',
     filter: event => event.parsed_state_code === 'NY',
   },
+  {
+    name: 'the USA',
+    filter: event => event.parsed_country_code === 'US',
+    address: ''
+  }
 ]
