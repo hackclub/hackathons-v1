@@ -34,7 +34,7 @@ const TemplateWrapper = ({ children }) => (
         { property: 'og:type', content: 'website' },
         { property: 'og:url', content: url },
       ])}
-      <link rel="canonical" href="https://hackathons.hackclub.com">
+      <link rel="canonical" href="https://hackathons.hackclub.com" />
       <link rel="shortcut icon" href="favicon.ico" />
     </Helmet>
     {children()}
