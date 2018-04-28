@@ -149,7 +149,7 @@ const FormikForm = withFormik({
 })(InnerForm)
 
 export default props => (
-  <Box align="center" mx="auto" mb={4} {...props}>
+  <Box align="center" mx="auto" mb={4}>
     <FormikForm location={props.location} />
   </Box>
 )
