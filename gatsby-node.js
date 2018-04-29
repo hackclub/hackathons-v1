@@ -94,7 +94,6 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 longitude
                 banner
                 logo
-                isAssociated: hack_club_associated
               }
             }
           }
