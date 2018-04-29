@@ -14,9 +14,7 @@ const meta = tags =>
 const TemplateWrapper = ({ children }) => (
   <ThemeProvider>
     <Helmet>
-      <title>
-        Every High School Hackathon - Hack Club
-      </title>
+      <title>Every High School Hackathon - Hack Club</title>
       {meta([
         { name: 'description', content: description },
         { name: 'twitter:card', content: 'summary_large_image' },
