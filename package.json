@@ -14,6 +14,7 @@
     "gatsby-plugin-resolve-src": "^1.0.0",
     "gatsby-plugin-segment": "^1.0.2",
     "gatsby-plugin-sharp": "^1.6.41",
+    "gatsby-plugin-sitemap": "^1.2.23",
     "gatsby-plugin-styled-components": "^2.0.9",
     "gatsby-source-filesystem": "^1.5.27",
     "gatsby-transformer-json": "^1.0.16",

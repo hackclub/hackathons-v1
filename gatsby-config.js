@@ -1,4 +1,7 @@
 module.exports = {
+  siteMetadata: {
+    siteUrl: 'https://hackathons.hackclub.com'
+  },
   plugins: [
     {
       resolve: 'gatsby-source-filesystem',
@@ -13,6 +16,7 @@ module.exports = {
         writeKey: 'enReVnqn2tVrMigdaSA5py2tRjSzlgHb'
       }
     },
+    'gatsby-plugin-sitemap',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-react-next',
     'gatsby-transformer-json',
