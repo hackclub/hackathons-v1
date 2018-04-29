@@ -1,4 +1,4 @@
-# 💻💥 https://hackathons.hackclub.com
+# https://hackathons.hackclub.com
 
 Hackathons are awesome - but it's hard to find a high quality directory of events for high schoolers. That's where this project comes in.
 
