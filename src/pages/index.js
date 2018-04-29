@@ -17,10 +17,6 @@ import EmailListForm from 'components/EmailListForm'
 import { distance, trackClick } from 'utils'
 import styled from 'styled-components'
 
-const Base = Box.extend.attrs({ m: 0 })`
-  width: 100vw;
-`
-
 const StyledLink = L.extend`
   color: ${props => props.theme.colors.primary};
   &:hover {
@@ -173,7 +169,7 @@ export default class extends Component {
     } = this.state
     return (
       <Fragment>
-        <Base>
+        <Box>
           <a href="https://hackclub.com" target="_blank">
             <Image src="/flag.svg" width={128} ml={[3, 4, 5]} />
           </a>
@@ -269,7 +265,7 @@ export default class extends Component {
                 ))}
             </Flex>
           </Container>
-        </Base>
+        </Box>
         <Container maxWidth={40} px={[2, 3]} py={5} align="center">
           <Text f={3} my={4} color="black">
             This directory is maintained by{' '}
