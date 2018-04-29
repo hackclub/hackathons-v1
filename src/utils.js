@@ -26,5 +26,9 @@ export const trackClick = props => e => {
   } catch (err) {
     console.error(err)
   }
-  props.onClick ? props.onClick(e) : window.open(props.href, '_blank')
+  props.onClick
+    ? props.onClick(e)
+    : props.noNewTab
+      ? (location.href = props.href)
+      : window.open(props.href, '_blank')
 }

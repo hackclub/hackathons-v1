@@ -78,8 +78,11 @@ export default class extends Component {
       filteredEvents,
       searchLat: null || props.searchLat,
       searchLng: null || props.searchLng,
-      formattedAddress: this.region.address === undefined ? this.region.name : this.region.address,
-      timeFilter: 'school year',
+      formattedAddress:
+        this.region.address === undefined
+          ? this.region.name
+          : this.region.address,
+      timeFilter: 'all time',
       sortByProximity: false,
     }
 
@@ -206,12 +209,22 @@ export default class extends Component {
           <Container maxWidth={36} px={3} align="center">
             <Heading.h1 f={[5, null, 6]} mt={[4, 5]} mb={3}>
               {this.region ? null : 'Upcoming '}
-              High School Hackathons in{' '}
-              {this.region.name || new Date().getFullYear()}
+              High School Hackathons in
+              {(
+                <Fragment>
+                  <br />
+                  {this.region.name}
+                </Fragment>
+              ) || new Date().getFullYear()}
             </Heading.h1>
-            <Text mb={4} f={4} style={{ maxWidth: '800px' }} mx="auto">
+            <Text f={4} style={{ maxWidth: '800px' }} mx="auto">
               Find, register, and compete in {this.stats.total} student-led
               hackathons around {this.region.name}.
+            </Text>
+            <Text f={3} my={3}>
+              <Link href="/" noNewTab>
+                See events everywhere
+              </Link>
             </Text>
             <EmailListForm location={formattedAddress} />
             <Text color="muted" mt={4} mb={3}>
