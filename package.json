@@ -28,8 +28,8 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --write \"{src/**,}\"",
+    "dev": "gatsby develop",
+    "fmt": "prettier --write \"{src/**,}\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
