@@ -124,6 +124,10 @@ const FormikForm = withFormik({
     }
     try {
       analytics.identify({ email: data.email })
+      analytics.track('Submitted Email', {
+        email: data.email,
+        location: data.location,
+      })
     } catch (err) {
       console.error(err)
     }
