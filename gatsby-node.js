@@ -94,6 +94,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 longitude
                 banner
                 logo
+                mlh: mlh_associated
               }
             }
           }
