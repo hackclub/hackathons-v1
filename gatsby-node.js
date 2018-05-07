@@ -111,7 +111,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           )
           if (events.length > 3) {
             createPage({
-              path: kebabCase(region.name),
+              path: `list-of-hackathons-in-${kebabCase(region.name)}`,
               component,
               context: {
                 region,
