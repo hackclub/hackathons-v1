@@ -306,6 +306,7 @@ export const pageQuery = graphql`
           longitude
           banner
           logo
+          mlh: mlh_associated
         }
       }
     }

@@ -37,10 +37,6 @@ const EventCard = Card.withComponent(Tilt).extend.attrs({
   color: 'white',
   boxShadowSize: 'md',
 })`
-  padding-top: ${props =>
-    props.theme.space[3] - (props.isAssociated ? 5 : 0)}px;
-  border-top: solid ${props => props.theme.colors.primary} ${props =>
-  props.isAssociated ? 5 : 0}px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,18 +50,15 @@ const EventCard = Card.withComponent(Tilt).extend.attrs({
  background-size: cover;
 `
 
-const AssociatedText = Text.span.extend.attrs({
-  color: 'white',
-  bg: 'primary',
-  children: 'Hack Club Affiliated',
+const MLHLogo = Image.extend.attrs({
   py: 1,
   px: 2,
-  f: 1,
+  bg: 'white',
+  w: '6em',
 })`
-  position: relative;
-  left: 0;
-  top: 0;
-  border-bottom-right-radius: ${props => props.theme.space[2]}px;
+  border-top-right-radius: ${props => props.theme.radii[2]};
+  border-bottom-right-radius: ${props => props.theme.radii[2]};
+  visibility: ${props => (props.mlhAssociated ? 'visible' : 'hidden')}
 `
 
 const AssociatedSeal = Box.extend.attrs({
@@ -74,8 +67,9 @@ const AssociatedSeal = Box.extend.attrs({
   mt: -theme.space[3] + 5,
   mb: 1,
   children: props => (
-    <AssociatedText
-      style={{ visibility: props.isAssociated ? 'visible' : 'hidden' }}
+    <MLHLogo
+      src="/mlh-logo-grayscale.svg"
+      mlhAssociated={props.mlhAssociated}
     />
   ),
 })``
@@ -123,7 +117,7 @@ export default ({
   logo,
   distanceTo,
   startYear,
-  isAssociated,
+  mlh,
 }) => (
   <Base
     id={id}
@@ -143,8 +137,8 @@ export default ({
     itemScope
     itemType="http://schema.org/Event"
   >
-    <EventCard bg={banner} isAssociated={isAssociated}>
-      <AssociatedSeal isAssociated={isAssociated} />
+    <EventCard bg={banner}>
+      <AssociatedSeal mlhAssociated={mlh} />
       <LogoContainer>
         {logo && (
           <Image
