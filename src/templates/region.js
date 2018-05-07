@@ -176,10 +176,16 @@ export default class extends Component {
       filteredEvents,
       sortByProximity,
     } = this.state
+    const description = `Find, register, and compete in high school hackathons near ${
+      this.region.name
+    }... Currently showing events from the 2017 - 2018 school year. This directory is maintained by Hack Club, a non-profit network of student-led coding clubs.`
     return (
       <Fragment>
         <Helmet>
-          <title>High School Hackathons in {this.region.name}</title>
+          <title>{this.region.name} - List of High School Hackathons</title>
+          <meta name="description" content={description} />
+          <meta name="twitter:description" content={description} />
+          <meta property="og:description" content={description} />
         </Helmet>
         <Base>
           <a href="https://hackclub.com" target="_blank">
