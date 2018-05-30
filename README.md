@@ -36,7 +36,7 @@ Install dependencies!
 
 Run it!
 
-    $ yarn run develop
+    $ yarn run dev
 
 ### License
 
