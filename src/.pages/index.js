@@ -43,18 +43,18 @@ if (now.getMonth() < 7 /* august */) {
 }
 
 const timeFilters = {
-  'upcoming': {
+  'school year': {
+    name: 'from the 2017 - 2018 school year',
+    function: event => new Date(event.start) > beginningOfSchoolYear,
+  },
+  future: {
     name: 'in the future',
     function: event => new Date(event.start) >= new Date(Date.now() - 864e5),
   },
-  'past': {
-    name: 'from the past',
-    function: event => new Date(event.start) < new Date(Date.now() - 864e5)
+  'all time': {
+    name: 'from all time',
+    function: event => true,
   },
-  'bazinga': {
-    name: "bazinga-name",
-    function: () => "bazinga-func"
-  }
 }
 
 export default class extends Component {
@@ -73,7 +73,7 @@ export default class extends Component {
       searchLat: null || props.searchLat,
       searchLng: null || props.searchLng,
       formattedAddress: undefined,
-      timeFilter: 'bazinga',
+      timeFilter: 'school year',
       sortByProximity: false,
     }
 
@@ -196,7 +196,7 @@ export default class extends Component {
           </Flex>
           <Container maxWidth={36} px={3} align="center">
             <Heading.h1 f={[5, null, 6]} mt={[4, 5]} mb={3}>
-              Upcoming High School Hackathons!
+              Upcoming High School Hackathons in {new Date().getFullYear()}
             </Heading.h1>
             <Text mb={4} f={4} style={{ maxWidth: '800px' }} mx="auto">
               Find, register, and compete in {this.stats.total} free student-led
@@ -204,8 +204,24 @@ export default class extends Component {
               countries.
             </Text>
             <EmailListForm location={formattedAddress} />
+            <Text color="muted" mt={4} mb={3}>
+              Showing events{' '}
+              <Link
+                href="#"
+                onClick={e => {
+                  e.preventDefault()
+                  const fKeys = Object.keys(timeFilters)
+                  const index = (fKeys.indexOf(timeFilter) + 1) % fKeys.length
+                  this.setState({
+                    timeFilter: fKeys[index],
+                  })
+                }}
+              >
+                {timeFilters[timeFilter].name}
+              </Link>.
+            </Text>
             <Text color="muted" mt={3} mb={4}>
-              The following is being sorted by{' '}
+              Sorting by{' '}
               <Link
                 href="#"
                 onClick={e => {
@@ -221,13 +237,10 @@ export default class extends Component {
               </Link>
               {sortByProximity && formattedAddress && ` to ${formattedAddress}`}.
             </Text>
-            <Text color="muted" mt={4} mb={3}>
-              Events that are coming right up&#33;
-            </Text>
           </Container>
           <Container px={3}>
             <Flex mx={[1, 2, -3]} wrap justify="center">
-              {filteredEvents['upcoming']
+              {filteredEvents[timeFilter]
                 .sort((a, b) => {
                   if (sortByProximity) {
                     const distToA = this.distanceTo(a.latitude, a.longitude)
@@ -237,36 +250,6 @@ export default class extends Component {
                     return distToA - distToB
                   } else {
                     return new Date(a.start) - new Date(b.start)
-                  }
-                })
-                .map(event => (
-                  <EventCard
-                    {...event}
-                    distanceTo={
-                      sortByProximity
-                        ? this.distanceTo(event.latitude, event.longitude).miles
-                        : null
-                    }
-                    key={event.id}
-                  />
-                ))}
-            </Flex>
-            <Container maxWidth={36} px={3} align="center">
-              <Text color="muted" mt={4} mb={3}>
-                Events that have already passed&#33;
-              </Text>
-            </Container>
-            <Flex mx={[1, 2, -3]} wrap justify="center">
-              {filteredEvents['past']
-                .sort((a, b) => {
-                  if (sortByProximity) {
-                    const distToA = this.distanceTo(a.latitude, a.longitude)
-                      .miles
-                    const distToB = this.distanceTo(b.latitude, b.longitude)
-                      .miles
-                    return distToA - distToB
-                  } else {
-                    return new Date(b.start) - new Date(a.start)
                   }
                 })
                 .map(event => (

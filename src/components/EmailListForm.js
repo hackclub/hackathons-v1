@@ -76,7 +76,7 @@ const InnerForm = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <EmailHeading>
-      Want to hear when events are added in your area? Enter your email +
+      Want to get notified when events are added in your area? Enter your email +
       location.
     </EmailHeading>
     <Flex justify="center">
@@ -104,7 +104,7 @@ const InnerForm = ({
       />
     </Flex>
     <Heading.h4 color="muted" mt={2} mb={3} f={2}>
-      <em>(we’ll never spam you & you can always unsubscribe)</em>
+      <em>(we won’t spam you & you can always unsubscribe)</em>
     </Heading.h4>
     <Submit status={status} onSubmit={handleSubmit} />
   </form>
