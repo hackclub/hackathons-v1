@@ -50,10 +50,6 @@ const timeFilters = {
   'past': {
     name: 'from the past',
     function: event => new Date(event.start) < new Date(Date.now() - 864e5)
-  },
-  'bazinga': {
-    name: "bazinga-name",
-    function: () => "bazinga-func"
   }
 }
 
@@ -73,7 +69,6 @@ export default class extends Component {
       searchLat: null || props.searchLat,
       searchLng: null || props.searchLng,
       formattedAddress: undefined,
-      timeFilter: 'bazinga',
       sortByProximity: false,
     }
 
@@ -163,7 +158,6 @@ export default class extends Component {
   render() {
     const {
       formattedAddress,
-      timeFilter,
       filteredEvents,
       sortByProximity,
     } = this.state
@@ -222,7 +216,7 @@ export default class extends Component {
               {sortByProximity && formattedAddress && ` to ${formattedAddress}`}.
             </Text>
             <Text color="muted" mt={4} mb={3}>
-              Events that are coming right up&#33;
+              Events that are coming right up!
             </Text>
           </Container>
           <Container px={3}>
@@ -253,7 +247,7 @@ export default class extends Component {
             </Flex>
             <Container maxWidth={36} px={3} align="center">
               <Text color="muted" mt={4} mb={3}>
-                Events that have already passed&#33;
+                Events that have already passed
               </Text>
             </Container>
             <Flex mx={[1, 2, -3]} wrap justify="center">
