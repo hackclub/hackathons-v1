@@ -20,8 +20,8 @@ const bg = {
 
 const content = {
   error: 'Something went wrong',
-  success: 'Check Your Email ✈️',
-  submitting: 'Submitting...',
+  success: 'Check your email! 📬',
+  submitting: 'Submitting…',
 }
 
 const Submit = ({ status, onSubmit }) => (
@@ -34,13 +34,12 @@ const Submit = ({ status, onSubmit }) => (
   />
 )
 
-const EmailHeading = Heading.h4.extend.attrs({ color: 'black' })`
-font-style: italic;
-max-width: 400px;
-margin-left: auto;
-margin-right: auto;
-margin-bottom: 16px;
-`
+const EmailHeading = Container.withComponent('h4')
+const EmailHeading.defaultProps = {
+  maxWidth: 32,
+  mb: 3,
+  color: 'slate'
+})
 
 export const Error = Text.extend.attrs({
   className: 'error',

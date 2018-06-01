@@ -215,8 +215,13 @@ export default class extends Component {
               </Link>
               {sortByProximity && formattedAddress && ` to ${formattedAddress}`}.
             </Text>
+<<<<<<< HEAD
             <Text color="muted" mt={4} mb={3}>
               Events that are coming right up!
+=======
+            <Text f={3} color="slate" mt={4} mb={3}>
+              Events coming right up
+>>>>>>> 1d4cb400f086cb9f5fbc685d76f4cd105ae53d32
             </Text>
           </Container>
           <Container px={3}>
@@ -246,8 +251,13 @@ export default class extends Component {
                 ))}
             </Flex>
             <Container maxWidth={36} px={3} align="center">
+<<<<<<< HEAD
               <Text color="muted" mt={4} mb={3}>
                 Events that have already passed
+=======
+              <Text f={3} color="slate" mt={4} mb={3}>
+                Past events
+>>>>>>> 1d4cb400f086cb9f5fbc685d76f4cd105ae53d32
               </Text>
             </Container>
             <Flex mx={[1, 2, -3]} wrap justify="center">
