@@ -20,8 +20,8 @@ const bg = {
 
 const content = {
   error: 'Something went wrong',
-  success: 'Check Your Email ✈️',
-  submitting: 'Submitting...',
+  success: 'Check your email! 📬',
+  submitting: 'Submitting…',
 }
 
 const Submit = ({ status, onSubmit }) => (
@@ -34,13 +34,12 @@ const Submit = ({ status, onSubmit }) => (
   />
 )
 
-const EmailHeading = Heading.h4.extend.attrs({ color: 'black' })`
-font-style: italic;
-max-width: 400px;
-margin-left: auto;
-margin-right: auto;
-margin-bottom: 16px;
-`
+const EmailHeading = Container.withComponent('h4')
+const EmailHeading.defaultProps = {
+  maxWidth: 32,
+  mb: 3,
+  color: 'slate'
+})
 
 export const Error = Text.extend.attrs({
   className: 'error',
@@ -76,7 +75,7 @@ const InnerForm = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <EmailHeading>
-      Want to hear when events are added in your area? Enter your email +
+      Want to get notified when events are added in your area? Enter your email +
       location.
     </EmailHeading>
     <Flex justify="center">
@@ -104,7 +103,7 @@ const InnerForm = ({
       />
     </Flex>
     <Heading.h4 color="muted" mt={2} mb={3} f={2}>
-      <em>(we’ll never spam you & you can always unsubscribe)</em>
+      <em>(we won’t spam you & you can always unsubscribe)</em>
     </Heading.h4>
     <Submit status={status} onSubmit={handleSubmit} />
   </form>
