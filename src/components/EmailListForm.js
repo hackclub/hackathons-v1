@@ -104,7 +104,9 @@ const InnerForm = ({
       />
     </Flex>
     <Heading.h4 color="muted" mt={2} mb={3} f={2}>
-      <em>(we’ll never spam you & you can always unsubscribe)</em>
+      <em>
+        Join hundreds of subscribers from 94 cities and 19 countries.
+      </em>
     </Heading.h4>
     <Submit status={status} onSubmit={handleSubmit} />
   </form>
