@@ -25,7 +25,7 @@ const content = {
   submitting: 'Submitting…',
 }
 
-const Base = Container.extend.attrs({
+const Base = Container.withComponent(form).extend.attrs({
   maxWidth: 48,
   bg: 'blue.0',
   color: 'black',
