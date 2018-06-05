@@ -1,7 +1,8 @@
 import React from 'react'
 import {
-  Label,
-  Input,
+  Field,
+  Card,
+  Container,
   Box,
   Button,
   Text,
@@ -20,9 +21,43 @@ const bg = {
 
 const content = {
   error: 'Something went wrong',
-  success: 'Check Your Email ✈️',
-  submitting: 'Submitting...',
+  success: 'Check your email! 📬',
+  submitting: 'Submitting…',
 }
+
+const Base = Container.extend.attrs({
+  maxWidth: 48,
+  bg: 'blue.0',
+  color: 'black',
+  mx: 'auto',
+  p: 3,
+})`
+  border-radius: ${({ theme }) => theme.radius};
+  input[type='email'],
+  input[type='text'] {
+    background: ${({ theme }) => theme.colors.blue[1]};
+    border: 0;
+    &::placeholder {
+      color: ${({ theme }) => theme.colors.muted};
+    }
+  }
+`
+
+const Form = Box.extend`
+  display: grid;
+  grid-gap: ${({ theme }) => theme.space[3]}px;
+  align-items: flex-end;
+  ${({ theme }) => theme.mediaQueries.md} {
+    grid-template-columns: 1fr 1fr auto;
+  }
+  label {
+    margin-bottom: 0;
+  }
+  label div {
+    color: ${({ theme }) => theme.colors.slate};
+    font-size: ${({ theme }) => theme.fontSizes[1]}px;
+  }
+`
 
 const Submit = ({ status, onSubmit }) => (
   <Button.input
@@ -33,14 +68,6 @@ const Submit = ({ status, onSubmit }) => (
     disabled={status === 'submitting'}
   />
 )
-
-const EmailHeading = Heading.h4.extend.attrs({ color: 'black' })`
-font-style: italic;
-max-width: 400px;
-margin-left: auto;
-margin-right: auto;
-margin-bottom: 16px;
-`
 
 export const Error = Text.extend.attrs({
   className: 'error',
@@ -54,16 +81,6 @@ export const Error = Text.extend.attrs({
   &:before { content: '— '; }
 `
 
-const Field = ({ type, name, placeholder, error, label, ...props }) => (
-  <Label className={type} id={name} mb={2}>
-    <Input name={name} type={type} placeholder={placeholder} {...props} />
-    <Flex align="center" mb={2} wrap>
-      {error && <Error children={error} />}
-      {label}
-    </Flex>
-  </Label>
-)
-
 const InnerForm = ({
   values,
   errors,
@@ -74,15 +91,17 @@ const InnerForm = ({
   isSubmitting,
   status,
 }) => (
-  <form onSubmit={handleSubmit}>
-    <EmailHeading>
-      Want to hear when events are added in your area? Enter your email +
-      location.
-    </EmailHeading>
-    <Flex justify="center">
+  <Base onSubmit={handleSubmit}>
+    <Heading.h2 f={3} color="black" mt={1} mb={1}>
+      Want to hear when events are added in your area?
+    </Heading.h2>
+    <Text f={2} color="muted" mb={2}>
+      Join hundreds of subscribers from 94 cities + 19 countries.
+    </Text>
+    <Form>
       <Field
         name="email"
-        label=""
+        label="Email"
         type="email"
         value={values.email || ''}
         error={touched.email && errors.email}
@@ -91,10 +110,10 @@ const InnerForm = ({
         onBlur={handleBlur}
         disabled={isSubmitting}
       />
-      <span style={{ width: '10px' }} /> {/* spacer */}
       <Field
         name="location"
-        label=""
+        label="Location"
+        type="text"
         value={values.location || ''}
         error={touched.location && errors.location}
         placeholder="Chicago, IL"
@@ -102,14 +121,9 @@ const InnerForm = ({
         onBlur={handleBlur}
         disabled={isSubmitting}
       />
-    </Flex>
-    <Heading.h4 color="muted" mt={2} mb={3} f={2}>
-      <em>
-        Join hundreds of subscribers from 94 cities and 19 countries.
-      </em>
-    </Heading.h4>
-    <Submit status={status} onSubmit={handleSubmit} />
-  </form>
+      <Submit status={status} onSubmit={handleSubmit} />
+    </Form>
+  </Base>
 )
 
 const FormikForm = withFormik({
