@@ -242,7 +242,7 @@ export default class extends Component {
             </Link>
             {sortByProximity && formattedAddress && ` to ${formattedAddress}`}
           </Text>
-          <SectionHeading>Events coming right up</SectionHeading>
+          <SectionHeading>Events coming up</SectionHeading>
           <Container px={3} pb={4}>
             <Flex mx={[1, 2, -3]} wrap justify="center">
               {filteredEvents['upcoming']
