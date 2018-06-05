@@ -242,7 +242,7 @@ export default class extends Component {
             </Link>
             {sortByProximity && formattedAddress && ` to ${formattedAddress}`}
           </Text>
-          <SectionHeading>Events coming up</SectionHeading>
+          <SectionHeading>Upcoming Events</SectionHeading>
           <Container px={3} pb={4}>
             <Flex mx={[1, 2, -3]} wrap justify="center">
               {filteredEvents['upcoming']
@@ -272,7 +272,7 @@ export default class extends Component {
           </Container>
         </Gradient>
         <Gradient>
-          <SectionHeading>Past events</SectionHeading>
+          <SectionHeading>Past Events</SectionHeading>
           <Container px={3} pb={4}>
             <Flex mx={[1, 2, -3]} wrap justify="center">
               {filteredEvents['past']
