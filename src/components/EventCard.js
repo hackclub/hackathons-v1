@@ -22,42 +22,42 @@ const humanizeDistance = num => {
 }
 
 const LogoContainer = Box.extend`
-  height: ${props => props.theme.space[5]}px;
+  height: ${({ theme }) => theme.space[5]}px;
   position: relative;
 `
 
-const EventCard = Card.withComponent(Tilt).extend.attrs({
+const EventCard = Flex.withComponent(Tilt).extend.attrs({
   options: {
     max: 15,
     scale: 1.05,
   },
+  flexDirection: 'column',
+  align: 'center',
   w: 1,
   p: 3,
   m: [1, 2],
   color: 'white',
   boxShadowSize: 'md',
 })`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.32);
+  border-radius: ${({ theme }) => theme.radius};
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.375);
   background:
    linear-gradient(
      rgba(0, 0, 0, 0) 0%,
-     rgba(0, 0, 0, 0.45) 75%
+     rgba(0, 0, 0, 0.375) 75%
    ),
    url(${props => props.bg}) no-repeat;
- background-size: cover;
+  background-size: cover;
+  overflow: hidden;
 `
 
 const MLHLogo = Image.extend.attrs({
-  py: 1,
-  px: 2,
+  p: 2,
   bg: 'white',
   w: '6em',
 })`
-  border-top-right-radius: ${props => props.theme.radii[2]};
-  border-bottom-right-radius: ${props => props.theme.radii[2]};
+  border-top-right-radius: ${({ theme }) => theme.radius};
+  border-bottom-right-radius: ${({ theme }) => theme.radius};
   visibility: ${props => (props.mlhAssociated ? 'visible' : 'hidden')}
 `
 
@@ -76,15 +76,15 @@ const AssociatedSeal = Box.extend.attrs({
 
 const Base = styled(Overdrive)`
   opacity: 1 !important;
-  padding: ${props => props.theme.space[2]};
+  padding: ${({ theme }) => theme.space[2]};
   text-decoration: none;
   display: flex;
   flex: 1 0 auto;
   width: 100%;
-  ${props => props.theme.mediaQueries[1]} {
+  ${({ theme }) => theme.mediaQueries[1]} {
     width: 50%;
   }
-  ${props => props.theme.mediaQueries[2]} {
+  ${({ theme }) => theme.mediaQueries[2]} {
     width: 33.33%;
   }
 `
@@ -144,11 +144,17 @@ export default ({
           <Image
             itemProp="image"
             src={logo}
-            style={{ height: theme.space[5], borderRadius: theme.space[1] }}
+            style={{ height: theme.space[5], borderRadius: theme.radius }}
           />
         )}
       </LogoContainer>
-      <Heading.h3 regular my={2} style={{ flex: '1 0 auto' }} itemProp="name">
+      <Heading.h3
+        regular
+        align="center"
+        my={2}
+        style={{ flex: '1 0 auto' }}
+        itemProp="name"
+      >
         {name}
       </Heading.h3>
       <Flex justify="space-between" w={1}>
@@ -175,7 +181,6 @@ export default ({
           </Text>
         )}
       </Flex>
-
       {/* Include microdata that doesn't easily fit elsewhere */}
       <div style={{ display: 'none' }}>
         <span itemProp="url">{website}</span>
