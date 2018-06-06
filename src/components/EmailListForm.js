@@ -9,6 +9,7 @@ import {
   Flex,
   Heading,
 } from '@hackclub/design-system'
+import styled from 'styled-components'
 import { withFormik } from 'formik'
 import yup from 'yup'
 import axios from 'axios'
@@ -43,7 +44,7 @@ const Base = Container.extend.attrs({
   }
 `
 
-const Form = Box.extend`
+const Form = styled.form`
   display: grid;
   grid-gap: ${({ theme }) => theme.space[3]}px;
   align-items: flex-end;
@@ -91,14 +92,14 @@ const InnerForm = ({
   isSubmitting,
   status,
 }) => (
-  <Base onSubmit={handleSubmit}>
+  <Base>
     <Heading.h2 f={3} color="black" mt={1} mb={1}>
       Want to hear when events are added in your area?
     </Heading.h2>
     <Text f={2} color="muted" mb={2}>
       Join hundreds of subscribers from 94 cities + 19 countries.
     </Text>
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Field
         name="email"
         label="Email"
