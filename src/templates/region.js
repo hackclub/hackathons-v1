@@ -22,7 +22,7 @@ const Base = Box.extend.attrs({ m: 0 })`
 `
 
 const StyledLink = L.extend`
-  color: ${props => props.theme.colors.primary};
+  color: ${({ theme }) => theme.colors.primary};
   &:hover {
     text-decoration: underline;
   }
@@ -32,7 +32,7 @@ const Link = props => <StyledLink {...props} onClick={trackClick(props)} />
 
 const HideOnMobile = Box.extend`
   display: none;
-  ${props => props.theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.sm} {
     display: unset;
   }
 `

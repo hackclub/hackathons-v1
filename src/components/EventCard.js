@@ -58,7 +58,7 @@ const MLHLogo = Image.extend.attrs({
 })`
   border-top-right-radius: ${({ theme }) => theme.radius};
   border-bottom-right-radius: ${({ theme }) => theme.radius};
-  visibility: ${props => (props.mlhAssociated ? 'visible' : 'hidden')}
+  visibility: ${props => (props.mlhAssociated ? 'visible' : 'hidden')};
 `
 
 const AssociatedSeal = Box.extend.attrs({
