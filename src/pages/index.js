@@ -9,11 +9,11 @@ import {
   Image,
   Link as L,
   Heading,
+  cx,
 } from '@hackclub/design-system'
 import EventCard from 'components/EventCard'
 import EmailListForm from 'components/EmailListForm'
 import { distance, trackClick } from 'utils'
-import styled from 'styled-components'
 
 const PrimaryLink = L.extend`
   color: ${({ theme }) => theme.colors.primary};
@@ -28,6 +28,34 @@ const HideOnMobile = Box.extend`
   display: none;
   ${({ theme }) => theme.mediaQueries.sm} {
     display: unset;
+  }
+`
+
+const Switch = Box.extend`
+  border-radius: 99999px;
+  display: inline-flex;
+  width: 40px;
+  height: 24px;
+  background-color: ${props =>
+    props.checked ? props.theme.cx(props.color) : 'transparent'};
+  box-shadow: inset 0 0 0 2px;
+  transition-property: background-color;
+  transition-duration: 0.25s;
+  transition-timing-function: ease-out;
+  user-select: none;
+  &:after {
+    content: ' ';
+    width: 16px;
+    height: 16px;
+    margin: 4px;
+    border-radius: 8px;
+    background-color: ${props =>
+      props.checked ? props.theme.colors.white : props.theme.cx(props.color)};
+    transition-property: transform, color;
+    transition-duration: 0.125s;
+    transition-timing-function: ease-out;
+    transform: ${props =>
+      props.checked ? `translateX(16px)` : `translateX(0)`};
   }
 `
 
@@ -184,7 +212,7 @@ export default class extends Component {
     const { formattedAddress, filteredEvents, sortByProximity } = this.state
     return (
       <Fragment>
-        <Gradient>
+        <Gradient pb={4}>
           <a href="https://hackclub.com" target="_blank">
             <Image src="/flag.svg" width={128} ml={[3, 4, 5]} />
           </a>
@@ -225,12 +253,15 @@ export default class extends Component {
             </Text>
           </Container>
           <EmailListForm location={formattedAddress} />
-          <Text f={1} caps align="center" color="muted" px={3} mt={3} mb={4}>
-            The following are sorted by{' '}
-            <Link
-              href="#"
+          <Flex f={1} align="center" justify="center" px={3} wrap>
+            <Text color="slate" caps>
+              The following are sorted by
+            </Text>
+            <Flex
+              align="center"
+              color="primary"
+              ml={1}
               onClick={e => {
-                e.preventDefault()
                 if (sortByProximity) {
                   this.setState({ sortByProximity: false })
                 } else {
@@ -238,10 +269,28 @@ export default class extends Component {
                 }
               }}
             >
-              {sortByProximity ? `proximity` : 'date'}
-            </Link>
-            {sortByProximity && formattedAddress && ` to ${formattedAddress}`}
-          </Text>
+              <Text.span caps bold={!sortByProximity}>
+                Date
+              </Text.span>
+              <Switch
+                color="primary"
+                role="checkbox"
+                checked={sortByProximity}
+                mx={1}
+              />
+              <Text.span caps bold={sortByProximity}>
+                Proximity
+              </Text.span>
+            </Flex>
+          </Flex>
+          <Text
+            color="muted"
+            align="center"
+            f={1}
+            children={
+              sortByProximity && formattedAddress && ` to ${formattedAddress}`
+            }
+          />
         </Gradient>
         <Gradient>
           <SectionHeading>Upcoming Events</SectionHeading>
