@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    siteUrl: 'https://hackathons.hackclub.com'
+    siteUrl: 'https://hackathons.hackclub.com',
   },
   plugins: [
     {
@@ -13,8 +13,26 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-segment',
       options: {
-        writeKey: 'enReVnqn2tVrMigdaSA5py2tRjSzlgHb'
-      }
+        writeKey: 'enReVnqn2tVrMigdaSA5py2tRjSzlgHb',
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-favicon',
+      options: {
+        logo: './static/icon.png',
+        injectHTML: true,
+        icons: {
+          android: true,
+          appleIcon: true,
+          appleStartup: true,
+          coast: false,
+          favicons: true,
+          firefox: true,
+          twitter: false,
+          yandex: false,
+          windows: false,
+        },
+      },
     },
     'gatsby-plugin-sitemap',
     'gatsby-plugin-react-helmet',
@@ -25,4 +43,4 @@ module.exports = {
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
   ],
-};
+}
