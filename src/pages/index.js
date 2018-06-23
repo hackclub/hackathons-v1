@@ -242,6 +242,8 @@ export default class extends Component {
             </Link>
             {sortByProximity && formattedAddress && ` to ${formattedAddress}`}
           </Text>
+        </Gradient>
+        <Gradient>
           <SectionHeading>Upcoming Events</SectionHeading>
           <Container px={3} pb={4}>
             <Flex mx={[1, 2, -3]} wrap justify="center">
