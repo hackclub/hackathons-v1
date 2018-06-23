@@ -11,7 +11,7 @@ import {
 } from '@hackclub/design-system'
 import styled from 'styled-components'
 import { withFormik } from 'formik'
-import yup from 'yup'
+import * as yup from 'yup'
 import axios from 'axios'
 
 const bg = {
@@ -79,7 +79,9 @@ export const Error = Text.extend.attrs({
 })`
   font-weight: normal;
   text-transform: lowercase;
-  &:before { content: '— '; }
+  &:before {
+    content: '— ';
+  }
 `
 
 const InnerForm = ({
