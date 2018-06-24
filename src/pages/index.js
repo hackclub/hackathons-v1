@@ -159,6 +159,7 @@ export default class extends Component {
                 sortByProximity: true,
               }
               if (results.length > 0) {
+                // Attempt to narrow down user's location
                 const formattedAddress = (
                   results.find(
                     result => result.types.indexOf('neighborhood') !== -1
