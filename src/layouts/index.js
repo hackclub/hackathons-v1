@@ -12,7 +12,7 @@ const meta = tags =>
   )
 
 const TemplateWrapper = ({ children }) => (
-  <ThemeProvider>
+  <ThemeProvider webfonts>
     <Helmet>
       <title>List of High School Hackathons – Hack Club</title>
       {meta([
