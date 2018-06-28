@@ -11,6 +11,7 @@ import {
   Heading,
   cx,
 } from '@hackclub/design-system'
+import BankBanner from 'components/BankBanner'
 import EventCard from 'components/EventCard'
 import EmailListForm from 'components/EmailListForm'
 import { distance, trackClick } from 'utils'
@@ -239,9 +240,10 @@ export default class extends Component {
             </L>
           </Flex>
           <Container color="black" maxWidth={36} px={3} align="center">
+            <BankBanner />
             <Heading.h1
               f={[5, null, 6]}
-              mt={[4, 5]}
+              mt={4}
               mb={3}
               style={{ lineHeight: '1.125' }}
             >
