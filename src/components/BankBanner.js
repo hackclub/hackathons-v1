@@ -21,7 +21,9 @@ const BankBanner = () => (
   <Base>
     <Text>
       💰 Store your event’s money with{' '}
-      <Link href="https://hackclub.com/bank">Hack Club Bank</Link>
+      <Link href="https://hackclub.com/bank" target="_blank">
+        Hack Club Bank
+      </Link>
     </Text>
   </Base>
 )
