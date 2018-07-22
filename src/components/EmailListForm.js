@@ -99,7 +99,7 @@ const InnerForm = ({
       Want to hear when events are added in your area?
     </Heading.h2>
     <Text f={2} color="muted" mb={2}>
-      Join hundreds of subscribers from 94 cities + 19 countries.
+      Join hundreds of subscribers from 113 cities + 24 countries.
     </Text>
     <Form onSubmit={handleSubmit}>
       <Field
