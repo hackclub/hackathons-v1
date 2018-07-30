@@ -21,6 +21,24 @@ const humanizeDistance = num => {
   }
 }
 
+const formatAddress = (city, stateCode, country, countryCode) => {
+  const firstHalf = city
+  const secondHalf = countryCode === 'US'
+    ? stateCode
+    : country
+
+  const final = `${firstHalf}, ${secondHalf}`
+
+  // Handle case where an event's location is outside the US and is so long that
+  // it overflows the card when rendering. If the total length of the location
+  // is over 16 characters and outside the US, then just show the country name.
+  if (final.length > 16 && countryCode !== 'US') {
+    return country
+  } else {
+    return final
+  }
+}
+
 const LogoContainer = Box.extend`
   height: ${({ theme }) => theme.space[5]}px;
   position: relative;
@@ -173,10 +191,7 @@ export default ({
             itemType="http://schema.org/Place"
           >
             <span itemProp="address">
-              {parsed_city},{' '}
-              {parsed_country_code === 'US'
-                ? parsed_state_code
-                : parsed_country}
+              {formatAddress(parsed_city, parsed_state_code, parsed_country, parsed_country_code)}
             </span>
           </Text>
         )}
