@@ -11,7 +11,6 @@ import {
   Heading,
   cx,
 } from '@hackclub/design-system'
-import BankBanner from 'components/BankBanner'
 import EventCard from 'components/EventCard'
 import EmailListForm from 'components/EmailListForm'
 import { distance, trackClick } from 'utils'
@@ -240,7 +239,6 @@ export default class extends Component {
             </L>
           </Flex>
           <Container color="black" maxWidth={36} px={3} align="center">
-            <BankBanner />
             <Heading.h1
               f={[5, null, 6]}
               mt={4}
@@ -250,9 +248,9 @@ export default class extends Component {
               Upcoming High School Hackathons in {new Date().getFullYear()}
             </Heading.h1>
             <Text mb={4} f={4} style={{ lineHeight: '1.25' }}>
-              Find, register, and compete in {this.stats.total} free student-led
-              hackathons across {this.stats.state} states + {this.stats.country}{' '}
-              countries.
+              A curated list of hackathons for high school students with
+              {' '}{this.stats.total} events in {this.stats.state} states +
+              {' '}{this.stats.country} countries.
             </Text>
           </Container>
           <EmailListForm location={formattedAddress} />
