@@ -357,7 +357,7 @@ export default class extends Component {
           <Container maxWidth={36} px={[2, 3]} py={5} align="center">
             <Text f={3} mb={4} color="slate">
               This directory is maintained by{' '}
-              <Link href="//hackclub.com">Hack Club</Link>, a non-profit network
+              <Link href="//hackclub.com">Hack Club</Link>, a nonprofit network
               of student-led computer science clubs.
             </Text>
             <Text color="muted" f={3}>

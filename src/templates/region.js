@@ -178,7 +178,7 @@ export default class extends Component {
     } = this.state
     const description = `Find, register, and compete in high school hackathons near ${
       this.region.name
-    }... Currently showing events from the 2017 - 2018 school year. This directory is maintained by Hack Club, a non-profit network of student-led coding clubs.`
+    }... Currently showing events from the 2017 - 2018 school year. This directory is maintained by Hack Club, a nonprofit network of student-led coding clubs.`
     return (
       <Fragment>
         <Helmet>
@@ -298,7 +298,7 @@ export default class extends Component {
         <Container maxWidth={40} px={[2, 3]} py={5} align="center">
           <Text f={3} my={4} color="black">
             This directory is maintained by{' '}
-            <Link href="//hackclub.com">Hack Club</Link>, a non-profit network
+            <Link href="//hackclub.com">Hack Club</Link>, a nonprofit network
             of student-led coding clubs.
           </Text>
           <Text f={3} color="black">
