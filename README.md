@@ -1,4 +1,8 @@
-# https://hackathons.hackclub.com
+<p align="center"><img width="200px" height="200px" alt="Hackathons icon" src="static/icon.png"></a>
+<h1 align="center"><a href="https://hackathons.hackclub.com">Hack Club Hackathons</a></h1>
+<p align="center"><i>A curated list of hackathons for high school students.</i></p>
+
+### Introduction
 
 Hackathons are awesome - but it's hard to find a high quality directory of events for high schoolers. That's where this project comes in.
 
