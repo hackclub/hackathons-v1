@@ -129,6 +129,7 @@ export default class extends Component {
       total: this.events.length,
       state: new Set(this.events.map(event => event.parsed_state)).size,
       country: new Set(this.events.map(event => event.parsed_country)).size,
+      lastUpdated: this.events.map(e => e.updated_at).sort((a, b) => (a < b) - (a > b))[0] // so this is totally insane, but basically takes the updated_at fields (formatted as YYYY-MM-DD, sorts by their string value, then takes the first sorted entry)
     }
   }
 
@@ -238,19 +239,23 @@ export default class extends Component {
               <HideOnMobile>Contribute on</HideOnMobile> GitHub
             </L>
           </Flex>
-          <Container color="black" maxWidth={36} px={3} align="center">
+          <Container color="black" px={3} align="center">
             <Heading.h1
               f={[5, null, 6]}
               mt={4}
-              mb={3}
+              mb={4}
               style={{ lineHeight: '1.125' }}
+              maxWidth={38}
             >
               Upcoming High School Hackathons in {new Date().getFullYear()}
             </Heading.h1>
-            <Text mb={4} f={4} style={{ lineHeight: '1.25' }}>
-              A curated list of hackathons for high school students with
+            <Text mb={3} f={4} style={{ lineHeight: '1.25' }}>
+              A curated list of high school hackathons with
               {' '}{this.stats.total} events in {this.stats.state} states +
               {' '}{this.stats.country} countries.
+            </Text>
+            <Text mb={4} f={4} style={{ lineHeight: '1.25' }}>
+              Maintained by the <Link href="https://hackclub.com">Hack Club</Link> staff. Last updated {this.stats.lastUpdated + '.'} {/* Not sure what's happening here, but some sort of odd space is visible before the period if I use the regular JSX templating. */}
             </Text>
           </Container>
           <EmailListForm location={formattedAddress} />
@@ -379,6 +384,7 @@ export const pageQuery = graphql`
       edges {
         node {
           id
+          updated_at(formatString: "YYYY-MM-DD")
           startHumanized: start(formatString: "MMMM D")
           endHumanized: end(formatString: "D")
           start
