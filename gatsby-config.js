@@ -34,6 +34,12 @@ module.exports = {
         },
       },
     },
+    {
+      resolve: 'gatsby-plugin-canonical-urls',
+      options: {
+        siteUrl: 'https://hackclub.com'
+      }
+    },
     'gatsby-plugin-sitemap',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-react-next',
