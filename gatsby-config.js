@@ -37,7 +37,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-canonical-urls',
       options: {
-        siteUrl: 'https://hackclub.com'
+        siteUrl: 'https://hackathons.hackclub.com'
       }
     },
     'gatsby-plugin-sitemap',
