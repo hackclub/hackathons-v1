@@ -185,7 +185,11 @@ export default class extends Component {
           <meta property="og:description" content={description} />
         </Helmet>
         <Base>
-          <a href="https://hackclub.com" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://hackclub.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Image src="/flag.svg" width={128} ml={[3, 4, 5]} />
           </a>
           <Flex
@@ -246,7 +250,8 @@ export default class extends Component {
                 }}
               >
                 {timeFilters[timeFilter].name}
-              </Link>.
+              </Link>
+              .
             </Text>
             <Text color="muted" mt={3} mb={4}>
               Sorting by{' '}
@@ -263,7 +268,8 @@ export default class extends Component {
               >
                 {sortByProximity ? `proximity` : 'date'}
               </Link>
-              {sortByProximity && formattedAddress && ` to ${formattedAddress}`}.
+              {sortByProximity && formattedAddress && ` to ${formattedAddress}`}
+              .
             </Text>
           </Container>
           <Container px={3}>
@@ -297,14 +303,15 @@ export default class extends Component {
         <Container maxWidth={40} px={[2, 3]} py={5} align="center">
           <Text f={3} my={4} color="black">
             This directory is maintained by{' '}
-            <Link href="//hackclub.com">Hack Club</Link>, a nonprofit network
-            of student-led coding clubs.
+            <Link href="//hackclub.com">Hack Club</Link>, a nonprofit network of
+            student-led coding clubs.
           </Text>
           <Text f={3} color="black">
             Want to run your own hackathon? Do it with the support of{' '}
             <Link href="https://mlh.io/event-membership" target="_blank">
               MLH
-            </Link>.
+            </Link>
+            .
           </Text>
         </Container>
       </Layout>

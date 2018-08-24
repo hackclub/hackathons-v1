@@ -120,7 +120,9 @@ class IndexPage extends Component {
       total: this.events.length,
       state: new Set(this.events.map(event => event.parsed_state)).size,
       country: new Set(this.events.map(event => event.parsed_country)).size,
-      lastUpdated: this.events.map(e => e.updated_at).sort((a, b) => (a < b) - (a > b))[0] // so this is totally insane, but basically takes the updated_at fields (formatted as YYYY-MM-DD, sorts by their string value, then takes the first sorted entry)
+      lastUpdated: this.events
+        .map(e => e.updated_at)
+        .sort((a, b) => (a < b) - (a > b))[0], // so this is totally insane, but basically takes the updated_at fields (formatted as YYYY-MM-DD, sorts by their string value, then takes the first sorted entry)
     }
   }
 
@@ -206,7 +208,11 @@ class IndexPage extends Component {
     return (
       <Layout>
         <Gradient pb={4}>
-          <a href="https://hackclub.com" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://hackclub.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Image src="/flag.svg" width={128} ml={[3, 4, 5]} />
           </a>
           <Flex
@@ -243,12 +249,15 @@ class IndexPage extends Component {
               Upcoming High School Hackathons in {new Date().getFullYear()}
             </Heading.h1>
             <Text mb={3} f={4} style={{ lineHeight: '1.25' }}>
-              A curated list of high school hackathons with
-              {' '}{this.stats.total} events in {this.stats.state} states +
-              {' '}{this.stats.country} countries.
+              A curated list of high school hackathons with {this.stats.total}{' '}
+              events in {this.stats.state} states + {this.stats.country}{' '}
+              countries.
             </Text>
             <Text mb={4} f={4} style={{ lineHeight: '1.25' }}>
-              Maintained by the <Link href="https://hackclub.com">Hack Club</Link> staff. Last updated {this.stats.lastUpdated + '.'} {/* Not sure what's happening here, but some sort of odd space is visible before the period if I use the regular JSX templating. */}
+              Maintained by the{' '}
+              <Link href="https://hackclub.com">Hack Club</Link> staff. Last
+              updated {this.stats.lastUpdated + '.'}{' '}
+              {/* Not sure what's happening here, but some sort of odd space is visible before the period if I use the regular JSX templating. */}
             </Text>
           </Container>
           <EmailListForm location={formattedAddress} />
@@ -362,7 +371,8 @@ class IndexPage extends Component {
               Want to run your own hackathon? Get the support of{' '}
               <Link href="https://mlh.io/event-membership" target="_blank">
                 MLH
-              </Link>.
+              </Link>
+              .
             </Text>
           </Container>
         </Footer>

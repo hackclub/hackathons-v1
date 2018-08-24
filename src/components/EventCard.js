@@ -1,13 +1,6 @@
 import React from 'react'
 import Tilt from 'react-tilt'
-import {
-  Box,
-  Heading,
-  Image,
-  Text,
-  Flex,
-  theme,
-} from '@hackclub/design-system'
+import { Box, Heading, Image, Text, Flex, theme } from '@hackclub/design-system'
 import { trackClick } from 'utils'
 import Overdrive from 'react-overdrive'
 import styled from 'styled-components'
@@ -22,9 +15,7 @@ const humanizeDistance = num => {
 
 const formatAddress = (city, stateCode, country, countryCode) => {
   const firstHalf = city
-  const secondHalf = countryCode === 'US'
-    ? stateCode
-    : country
+  const secondHalf = countryCode === 'US' ? stateCode : country
 
   const final = `${firstHalf}, ${secondHalf}`
 
@@ -178,7 +169,12 @@ export default ({
             itemType="http://schema.org/Place"
           >
             <span itemProp="address">
-              {formatAddress(parsed_city, parsed_state_code, parsed_country, parsed_country_code)}
+              {formatAddress(
+                parsed_city,
+                parsed_state_code,
+                parsed_country,
+                parsed_country_code
+              )}
             </span>
           </Text>
         )}

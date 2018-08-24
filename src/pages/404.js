@@ -12,7 +12,12 @@ export default () => (
       <Text f={4} mt={2} mb={3} color="muted">
         We couldn’t find that page.
       </Text>
-      <LargeButton href="/">Go Home <span role="img" aria-label="house">🏡</span></LargeButton>
+      <LargeButton href="/">
+        Go Home{' '}
+        <span role="img" aria-label="house">
+          🏡
+        </span>
+      </LargeButton>
     </Container>
   </Fragment>
 )
