@@ -382,35 +382,33 @@ class IndexPage extends Component {
 }
 
 export default () => (
-  <StaticQuery query={pageQuery} render={data => <IndexPage />} />
-)
-
-const pageQuery = graphql`
-  query PageQuery {
-    allEventsJson {
-      edges {
-        node {
-          id
-          updated_at(formatString: "YYYY-MM-DD")
-          startHumanized: start(formatString: "MMMM D")
-          endHumanized: end(formatString: "D")
-          start
-          end
-          startYear: start(formatString: "YYYY")
-          parsed_city
-          parsed_state
-          parsed_state_code
-          parsed_country
-          parsed_country_code
-          name
-          website: website_redirect
-          latitude
-          longitude
-          banner
-          logo
-          mlh: mlh_associated
+  <StaticQuery query={graphql`
+    query PageQuery {
+      allEventsJson {
+        edges {
+          node {
+            id
+            updated_at(formatString: "YYYY-MM-DD")
+            startHumanized: start(formatString: "MMMM D")
+            endHumanized: end(formatString: "D")
+            start
+            end
+            startYear: start(formatString: "YYYY")
+            parsed_city
+            parsed_state
+            parsed_state_code
+            parsed_country
+            parsed_country_code
+            name
+            website: website_redirect
+            latitude
+            longitude
+            banner
+            logo
+            mlh: mlh_associated
+          }
         }
       }
     }
-  }
-`
+  `} render={data => <IndexPage data={data} />} />
+)
