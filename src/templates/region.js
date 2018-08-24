@@ -9,13 +9,11 @@ import {
   Image,
   Link as L,
   Heading,
-  Section,
-  Button,
 } from '@hackclub/design-system'
+import Layout from 'components/Layout'
 import EventCard from 'components/EventCard'
 import EmailListForm from 'components/EmailListForm'
 import { distance, trackClick } from 'utils'
-import styled from 'styled-components'
 
 const Base = Box.extend.attrs({ m: 0 })`
   width: 100vw;
@@ -65,15 +63,14 @@ export default class extends Component {
   constructor(props) {
     super(props)
 
-    this.events = props.pathContext.events.map(({ node }) => node)
-    this.region = props.pathContext.region
+    this.events = props.pageContext.events.map(({ node }) => node)
+    this.region = props.pageContext.region
 
     const filteredEvents = {}
     Object.keys(timeFilters).forEach(key => {
       filteredEvents[key] = this.events.filter(timeFilters[key].function)
     })
 
-    const formattedAddress = undefined || this.region.address
     this.state = {
       filteredEvents,
       searchLat: null || props.searchLat,
@@ -180,7 +177,7 @@ export default class extends Component {
       this.region.name
     }... Currently showing events from the 2017 - 2018 school year. This directory is maintained by Hack Club, a nonprofit network of student-led coding clubs.`
     return (
-      <Fragment>
+      <Layout>
         <Helmet>
           <title>{this.region.name} - List of High School Hackathons</title>
           <meta name="description" content={description} />
@@ -188,7 +185,11 @@ export default class extends Component {
           <meta property="og:description" content={description} />
         </Helmet>
         <Base>
-          <a href="https://hackclub.com" target="_blank">
+          <a
+            href="https://hackclub.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Image src="/flag.svg" width={128} ml={[3, 4, 5]} />
           </a>
           <Flex
@@ -199,6 +200,7 @@ export default class extends Component {
             <L
               href="https://goo.gl/forms/ZdVkkunalNGW9nQ82"
               target="_blank"
+              rel="noopener noreferrer"
               color="slate"
             >
               Add your event
@@ -207,6 +209,7 @@ export default class extends Component {
             <L
               href="https://github.com/hackclub/hackathons"
               target="_blank"
+              rel="noopener noreferrer"
               color="slate"
             >
               <HideOnMobile>Contribute on</HideOnMobile> GitHub
@@ -247,7 +250,8 @@ export default class extends Component {
                 }}
               >
                 {timeFilters[timeFilter].name}
-              </Link>.
+              </Link>
+              .
             </Text>
             <Text color="muted" mt={3} mb={4}>
               Sorting by{' '}
@@ -264,7 +268,8 @@ export default class extends Component {
               >
                 {sortByProximity ? `proximity` : 'date'}
               </Link>
-              {sortByProximity && formattedAddress && ` to ${formattedAddress}`}.
+              {sortByProximity && formattedAddress && ` to ${formattedAddress}`}
+              .
             </Text>
           </Container>
           <Container px={3}>
@@ -298,17 +303,18 @@ export default class extends Component {
         <Container maxWidth={40} px={[2, 3]} py={5} align="center">
           <Text f={3} my={4} color="black">
             This directory is maintained by{' '}
-            <Link href="//hackclub.com">Hack Club</Link>, a nonprofit network
-            of student-led coding clubs.
+            <Link href="//hackclub.com">Hack Club</Link>, a nonprofit network of
+            student-led coding clubs.
           </Text>
           <Text f={3} color="black">
             Want to run your own hackathon? Do it with the support of{' '}
             <Link href="https://mlh.io/event-membership" target="_blank">
               MLH
-            </Link>.
+            </Link>
+            .
           </Text>
         </Container>
-      </Fragment>
+      </Layout>
     )
   }
 }

@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react'
-import Helmet from 'react-helmet'
+import React, { Component } from 'react'
 import axios from 'axios'
+import { graphql, StaticQuery } from 'gatsby'
 import {
   Box,
   Container,
@@ -9,8 +9,8 @@ import {
   Image,
   Link as L,
   Heading,
-  cx,
 } from '@hackclub/design-system'
+import Layout from 'components/Layout'
 import EventCard from 'components/EventCard'
 import EmailListForm from 'components/EmailListForm'
 import { distance, trackClick } from 'utils'
@@ -86,15 +86,6 @@ const Footer = Box.withComponent('footer').extend`
   z-index: -1;
 `
 
-// This spagetti filters out events from before this school year
-let beginningOfSchoolYear
-const now = new Date()
-if (now.getMonth() < 7 /* august */) {
-  beginningOfSchoolYear = new Date(now.getFullYear() - 1, 7)
-} else {
-  beginningOfSchoolYear = new Date(now.getFullYear(), 7)
-}
-
 const timeFilters = {
   upcoming: {
     name: 'in the future',
@@ -106,7 +97,7 @@ const timeFilters = {
   },
 }
 
-export default class extends Component {
+class IndexPage extends Component {
   constructor(props) {
     super(props)
 
@@ -129,7 +120,9 @@ export default class extends Component {
       total: this.events.length,
       state: new Set(this.events.map(event => event.parsed_state)).size,
       country: new Set(this.events.map(event => event.parsed_country)).size,
-      lastUpdated: this.events.map(e => e.updated_at).sort((a, b) => (a < b) - (a > b))[0] // so this is totally insane, but basically takes the updated_at fields (formatted as YYYY-MM-DD, sorts by their string value, then takes the first sorted entry)
+      lastUpdated: this.events
+        .map(e => e.updated_at)
+        .sort((a, b) => (a < b) - (a > b))[0], // so this is totally insane, but basically takes the updated_at fields (formatted as YYYY-MM-DD, sorts by their string value, then takes the first sorted entry)
     }
   }
 
@@ -213,9 +206,13 @@ export default class extends Component {
   render() {
     const { formattedAddress, filteredEvents, sortByProximity } = this.state
     return (
-      <Fragment>
+      <Layout>
         <Gradient pb={4}>
-          <a href="https://hackclub.com" target="_blank">
+          <a
+            href="https://hackclub.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Image src="/flag.svg" width={128} ml={[3, 4, 5]} />
           </a>
           <Flex
@@ -226,6 +223,7 @@ export default class extends Component {
             <L
               href="https://goo.gl/forms/ZdVkkunalNGW9nQ82"
               target="_blank"
+              rel="noopener noreferrer"
               color="slate"
             >
               Add your event
@@ -234,6 +232,7 @@ export default class extends Component {
             <L
               href="https://github.com/hackclub/hackathons"
               target="_blank"
+              rel="noopener noreferrer"
               color="slate"
             >
               <HideOnMobile>Contribute on</HideOnMobile> GitHub
@@ -250,12 +249,15 @@ export default class extends Component {
               Upcoming High School Hackathons in {new Date().getFullYear()}
             </Heading.h1>
             <Text mb={3} f={4} style={{ lineHeight: '1.25' }}>
-              A curated list of high school hackathons with
-              {' '}{this.stats.total} events in {this.stats.state} states +
-              {' '}{this.stats.country} countries.
+              A curated list of high school hackathons with {this.stats.total}{' '}
+              events in {this.stats.state} states + {this.stats.country}{' '}
+              countries.
             </Text>
             <Text mb={4} f={4} style={{ lineHeight: '1.25' }}>
-              Maintained by the <Link href="https://hackclub.com">Hack Club</Link> staff. Last updated {this.stats.lastUpdated + '.'} {/* Not sure what's happening here, but some sort of odd space is visible before the period if I use the regular JSX templating. */}
+              Maintained by the{' '}
+              <Link href="https://hackclub.com">Hack Club</Link> staff. Last
+              updated {this.stats.lastUpdated + '.'}{' '}
+              {/* Not sure what's happening here, but some sort of odd space is visible before the period if I use the regular JSX templating. */}
             </Text>
           </Container>
           <EmailListForm location={formattedAddress} />
@@ -369,41 +371,44 @@ export default class extends Component {
               Want to run your own hackathon? Get the support of{' '}
               <Link href="https://mlh.io/event-membership" target="_blank">
                 MLH
-              </Link>.
+              </Link>
+              .
             </Text>
           </Container>
         </Footer>
-      </Fragment>
+      </Layout>
     )
   }
 }
 
-export const pageQuery = graphql`
-  query PageQuery {
-    allEventsJson {
-      edges {
-        node {
-          id
-          updated_at(formatString: "YYYY-MM-DD")
-          startHumanized: start(formatString: "MMMM D")
-          endHumanized: end(formatString: "D")
-          start
-          end
-          startYear: start(formatString: "YYYY")
-          parsed_city
-          parsed_state
-          parsed_state_code
-          parsed_country
-          parsed_country_code
-          name
-          website: website_redirect
-          latitude
-          longitude
-          banner
-          logo
-          mlh: mlh_associated
+export default () => (
+  <StaticQuery query={graphql`
+    query PageQuery {
+      allEventsJson {
+        edges {
+          node {
+            id
+            updated_at(formatString: "YYYY-MM-DD")
+            startHumanized: start(formatString: "MMMM D")
+            endHumanized: end(formatString: "D")
+            start
+            end
+            startYear: start(formatString: "YYYY")
+            parsed_city
+            parsed_state
+            parsed_state_code
+            parsed_country
+            parsed_country_code
+            name
+            website: website_redirect
+            latitude
+            longitude
+            banner
+            logo
+            mlh: mlh_associated
+          }
         }
       }
     }
-  }
-`
+  `} render={data => <IndexPage data={data} />} />
+)
