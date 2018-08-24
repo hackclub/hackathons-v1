@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { graphql } from 'gatsby'
+import { graphql, StaticQuery } from 'gatsby'
 import {
   Box,
   Container,
@@ -97,9 +97,10 @@ const timeFilters = {
   },
 }
 
-export default class extends Component {
+class IndexPage extends Component {
   constructor(props) {
     super(props)
+
     this.events = props.data.allEventsJson.edges.map(({ node }) => node)
 
     const filteredEvents = {}
@@ -380,7 +381,11 @@ export default class extends Component {
   }
 }
 
-export const pageQuery = graphql`
+export default () => (
+  <StaticQuery query={pageQuery} render={data => <IndexPage />} />
+)
+
+const pageQuery = graphql`
   query PageQuery {
     allEventsJson {
       edges {
