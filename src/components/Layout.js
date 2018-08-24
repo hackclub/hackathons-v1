@@ -35,7 +35,7 @@ const TemplateWrapper = ({ children }) => (
       <link rel="canonical" href="https://hackathons.hackclub.com" />
       <link rel="shortcut icon" href="favicon.ico" />
     </Helmet>
-    {children()}
+    {children}
   </ThemeProvider>
 )
 

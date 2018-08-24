@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import Helmet from 'react-helmet'
 import axios from 'axios'
+import { graphql } from 'gatsby'
 import {
   Box,
   Container,
@@ -11,6 +12,7 @@ import {
   Heading,
   cx,
 } from '@hackclub/design-system'
+import Layout from 'components/Layout'
 import EventCard from 'components/EventCard'
 import EmailListForm from 'components/EmailListForm'
 import { distance, trackClick } from 'utils'
@@ -213,7 +215,7 @@ export default class extends Component {
   render() {
     const { formattedAddress, filteredEvents, sortByProximity } = this.state
     return (
-      <Fragment>
+      <Layout>
         <Gradient pb={4}>
           <a href="https://hackclub.com" target="_blank">
             <Image src="/flag.svg" width={128} ml={[3, 4, 5]} />
@@ -373,7 +375,7 @@ export default class extends Component {
             </Text>
           </Container>
         </Footer>
-      </Fragment>
+      </Layout>
     )
   }
 }

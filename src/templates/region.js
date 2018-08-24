@@ -12,6 +12,7 @@ import {
   Section,
   Button,
 } from '@hackclub/design-system'
+import Layout from 'components/Layout'
 import EventCard from 'components/EventCard'
 import EmailListForm from 'components/EmailListForm'
 import { distance, trackClick } from 'utils'
@@ -180,7 +181,7 @@ export default class extends Component {
       this.region.name
     }... Currently showing events from the 2017 - 2018 school year. This directory is maintained by Hack Club, a nonprofit network of student-led coding clubs.`
     return (
-      <Fragment>
+      <Layout>
         <Helmet>
           <title>{this.region.name} - List of High School Hackathons</title>
           <meta name="description" content={description} />
@@ -308,7 +309,7 @@ export default class extends Component {
             </Link>.
           </Text>
         </Container>
-      </Fragment>
+      </Layout>
     )
   }
 }
