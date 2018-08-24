@@ -1,7 +1,6 @@
-import React, { Component, Fragment } from 'react'
-import Helmet from 'react-helmet'
+import React, { Component } from 'react'
 import axios from 'axios'
-import { graphql } from 'gatsby'
+import { graphql, StaticQuery } from 'gatsby'
 import {
   Box,
   Container,
@@ -10,7 +9,6 @@ import {
   Image,
   Link as L,
   Heading,
-  cx,
 } from '@hackclub/design-system'
 import Layout from 'components/Layout'
 import EventCard from 'components/EventCard'
@@ -88,15 +86,6 @@ const Footer = Box.withComponent('footer').extend`
   z-index: -1;
 `
 
-// This spagetti filters out events from before this school year
-let beginningOfSchoolYear
-const now = new Date()
-if (now.getMonth() < 7 /* august */) {
-  beginningOfSchoolYear = new Date(now.getFullYear() - 1, 7)
-} else {
-  beginningOfSchoolYear = new Date(now.getFullYear(), 7)
-}
-
 const timeFilters = {
   upcoming: {
     name: 'in the future',
@@ -108,7 +97,7 @@ const timeFilters = {
   },
 }
 
-export default class extends Component {
+class IndexPage extends Component {
   constructor(props) {
     super(props)
 
@@ -217,7 +206,7 @@ export default class extends Component {
     return (
       <Layout>
         <Gradient pb={4}>
-          <a href="https://hackclub.com" target="_blank">
+          <a href="https://hackclub.com" target="_blank" rel="noopener noreferrer">
             <Image src="/flag.svg" width={128} ml={[3, 4, 5]} />
           </a>
           <Flex
@@ -228,6 +217,7 @@ export default class extends Component {
             <L
               href="https://goo.gl/forms/ZdVkkunalNGW9nQ82"
               target="_blank"
+              rel="noopener noreferrer"
               color="slate"
             >
               Add your event
@@ -236,6 +226,7 @@ export default class extends Component {
             <L
               href="https://github.com/hackclub/hackathons"
               target="_blank"
+              rel="noopener noreferrer"
               color="slate"
             >
               <HideOnMobile>Contribute on</HideOnMobile> GitHub
@@ -380,7 +371,11 @@ export default class extends Component {
   }
 }
 
-export const pageQuery = graphql`
+export default () => (
+  <StaticQuery query={pageQuery} render={data => <IndexPage />} />
+)
+
+const pageQuery = graphql`
   query PageQuery {
     allEventsJson {
       edges {

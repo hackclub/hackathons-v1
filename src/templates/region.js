@@ -9,14 +9,11 @@ import {
   Image,
   Link as L,
   Heading,
-  Section,
-  Button,
 } from '@hackclub/design-system'
 import Layout from 'components/Layout'
 import EventCard from 'components/EventCard'
 import EmailListForm from 'components/EmailListForm'
 import { distance, trackClick } from 'utils'
-import styled from 'styled-components'
 
 const Base = Box.extend.attrs({ m: 0 })`
   width: 100vw;
@@ -66,15 +63,14 @@ export default class extends Component {
   constructor(props) {
     super(props)
 
-    this.events = props.pathContext.events.map(({ node }) => node)
-    this.region = props.pathContext.region
+    this.events = props.pageContext.events.map(({ node }) => node)
+    this.region = props.pageContext.region
 
     const filteredEvents = {}
     Object.keys(timeFilters).forEach(key => {
       filteredEvents[key] = this.events.filter(timeFilters[key].function)
     })
 
-    const formattedAddress = undefined || this.region.address
     this.state = {
       filteredEvents,
       searchLat: null || props.searchLat,
@@ -189,7 +185,7 @@ export default class extends Component {
           <meta property="og:description" content={description} />
         </Helmet>
         <Base>
-          <a href="https://hackclub.com" target="_blank">
+          <a href="https://hackclub.com" target="_blank" rel="noopener noreferrer">
             <Image src="/flag.svg" width={128} ml={[3, 4, 5]} />
           </a>
           <Flex
@@ -200,6 +196,7 @@ export default class extends Component {
             <L
               href="https://goo.gl/forms/ZdVkkunalNGW9nQ82"
               target="_blank"
+              rel="noopener noreferrer"
               color="slate"
             >
               Add your event
@@ -208,6 +205,7 @@ export default class extends Component {
             <L
               href="https://github.com/hackclub/hackathons"
               target="_blank"
+              rel="noopener noreferrer"
               color="slate"
             >
               <HideOnMobile>Contribute on</HideOnMobile> GitHub

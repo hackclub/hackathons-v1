@@ -2,7 +2,6 @@ import React from 'react'
 import Tilt from 'react-tilt'
 import {
   Box,
-  Card,
   Heading,
   Image,
   Text,
@@ -106,18 +105,6 @@ const Base = styled(Overdrive)`
     width: 33.33%;
   }
 `
-
-const AssociatedEvent = Box.extend.attrs({
-  children: 'Hack Club',
-  bg: 'primary',
-  p: 1,
-})`
-  border-radius: 5px;
-  position: absolute;
-  right: 0;
-`
-
-const pathToUrl = path => (path ? `https://api.hackclub.com${path}` : null)
 
 export default ({
   id,
