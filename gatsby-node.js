@@ -43,20 +43,28 @@ const processEvent = async event => ({
 
 exports.onPreBootstrap = () => (
 new Promise((resolve, reject) => {
+  let startTime = Date.now()
+  const logMessage = (msg) => {
+    process.stdout.clearLine()
+    process.stdout.cursorTo(0)
+    const elapsedTime = ((Date.now() - startTime).toFixed(2) / 1000)
+    console.log(`    ${msg} – ${elapsedTime} s`)
+    startTime = Date.now()
+  }
   axios
   .get('https://api.hackclub.com/v1/events')
   .then(res => {
-    console.log('Creating image folder')
+    logMessage(`Fetched events data`)
     if (!existsSync(imageFolder)){
       mkdirSync(imageFolder)
+      logMessage(`Created image folder`)
     }
-    console.log('Mapping through event data')
     const promiseArray = res.data.map(event => processEvent(event))
     return new Promise.all(promiseArray).then(data => {
-      console.log('Writing event data to file')
+      logMessage('Mapped through event data')
       writeFile('data/events.json', JSON.stringify(data), err => {
         if (err) reject(err)
-        console.log('Event data written to file')
+        logMessage('Event data written to file')
         resolve()
       })
     })
