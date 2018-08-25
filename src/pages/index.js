@@ -13,7 +13,7 @@ import {
 import Layout from 'components/Layout'
 import EventCard from 'components/EventCard'
 import EmailListForm from 'components/EmailListForm'
-import { distance, trackClick } from 'utils'
+import { distance, trackClick, timeSince } from 'utils'
 
 const PrimaryLink = L.extend`
   color: ${({ theme }) => theme.colors.primary};
@@ -120,9 +120,7 @@ class IndexPage extends Component {
       total: this.events.length,
       state: new Set(this.events.map(event => event.parsed_state)).size,
       country: new Set(this.events.map(event => event.parsed_country)).size,
-      lastUpdated: this.events
-        .map(e => e.updated_at)
-        .sort((a, b) => (a < b) - (a > b))[0], // so this is totally insane, but basically takes the updated_at fields (formatted as YYYY-MM-DD, sorts by their string value, then takes the first sorted entry)
+      lastUpdated: timeSince(Math.max(...this.events.map(e => Date.parse(e.updated_at))))
     }
   }
 
