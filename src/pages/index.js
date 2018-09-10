@@ -102,6 +102,7 @@ class IndexPage extends Component {
     super(props)
 
     this.events = props.data.allEventsJson.edges.map(({ node }) => node)
+    this.emailStats = props.data.dataJson
 
     const filteredEvents = {}
     Object.keys(timeFilters).forEach(key => {
@@ -258,7 +259,7 @@ class IndexPage extends Component {
               {/* Not sure what's happening here, but some sort of odd space is visible before the period if I use the regular JSX templating. */}
             </Text>
           </Container>
-          <EmailListForm location={formattedAddress} />
+          <EmailListForm stats={this.emailStats} location={formattedAddress} />
           <Flex f={1} align="center" justify="center" px={3} wrap>
             <Text color="slate" caps>
               The following are sorted by
@@ -407,6 +408,10 @@ export default () => (
               mlh: mlh_associated
             }
           }
+        }
+        dataJson {
+          cities
+          countries
         }
       }
     `}

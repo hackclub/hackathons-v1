@@ -90,14 +90,14 @@ const InnerForm = ({
   handleBlur,
   handleSubmit,
   isSubmitting,
-  status,
+  status
 }) => (
   <Base>
     <Heading.h2 f={3} color="black" mt={1} mb={1}>
       Want to hear when events are added in your area?
     </Heading.h2>
     <Text f={2} color="muted" mb={2}>
-      Join hundreds of subscribers from 157 cities + 24 countries.
+      Join hundreds of subscribers from {values.stats.cities} cities + {values.stats.countries} countries.
     </Text>
     <Form onSubmit={handleSubmit}>
       <Field
@@ -171,6 +171,6 @@ const FormikForm = withFormik({
 
 export default props => (
   <Box align="center" mx="auto" mb={4} px={3}>
-    <FormikForm location={props.location} />
+    <FormikForm stats={props.stats} location={props.location} />
   </Box>
 )

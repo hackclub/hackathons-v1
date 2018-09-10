@@ -42,8 +42,7 @@ const processEvent = async event => ({
   logo: await downloadImage(event.logo),
 })
 
-exports.onPreBootstrap = () => (
-new Promise((resolve, reject) => {
+exports.onPreBootstrap = () => {
   let startTime = Date.now()
   const logMessage = (msg) => {
     readline.clearLine(process.stdout)
@@ -52,28 +51,46 @@ new Promise((resolve, reject) => {
     console.log(`    ${msg} – ${elapsedTime} s`)
     startTime = Date.now()
   }
-  axios
-  .get('https://api.hackclub.com/v1/events')
-  .then(res => {
-    logMessage(`Fetched events data`)
-    if (!existsSync(imageFolder)){
-      mkdirSync(imageFolder)
-      logMessage(`Created image folder`)
-    }
-    const promiseArray = res.data.map(event => processEvent(event))
-    return new Promise.all(promiseArray).then(data => {
-      logMessage('Mapped through event data')
-      writeFile('data/events.json', JSON.stringify(data), err => {
-        if (err) reject(err)
-        logMessage('Event data written to file')
-        resolve()
-      })
+
+  // Download & process events
+  return axios
+    .get('https://api.hackclub.com/v1/events')
+    .then(res => {
+      logMessage(`Fetched events data`)
+      if (!existsSync(imageFolder)) {
+        mkdirSync(imageFolder)
+        logMessage(`Created image folder`)
+      }
+      const promiseArray = res.data.map(event => processEvent(event))
+      return new Promise.all(promiseArray)
+        .then(data => {
+          logMessage('Mapped through event data')
+
+          return new Promise((resolve, reject) => {
+            writeFile('data/events.json', JSON.stringify(data), err => {
+              if (err) return reject(err)
+
+              logMessage('Event data written to file')
+              resolve()
+            })
+          })
+        })
     })
-    .catch(err => { throw err })
-  })
-  .catch(reject)
-})
-)
+    // Download & process event stats
+    .then(() => (
+      axios.get('https://api.hackclub.com/v1/event_email_subscribers/stats')
+    ))
+    .then(res => (
+      new Promise((resolve, reject) => {
+        writeFile('data/stats.json', JSON.stringify(res.data), err => {
+          if (err) return reject(err)
+
+          logMessage('Event stats written to file')
+          resolve()
+        })
+      })
+    ))
+}
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
