@@ -65,6 +65,7 @@ export default class extends Component {
 
     this.events = props.pageContext.events.map(({ node }) => node)
     this.region = props.pageContext.region
+    this.emailStats = props.pageContext.emailStats
 
     const filteredEvents = {}
     Object.keys(timeFilters).forEach(key => {
@@ -235,7 +236,7 @@ export default class extends Component {
                 See events everywhere
               </Link>
             </Text>
-            <EmailListForm location={formattedAddress} />
+            <EmailListForm stats={this.emailStats} location={formattedAddress} />
             <Text color="muted" mt={4} mb={3}>
               Showing events{' '}
               <Link

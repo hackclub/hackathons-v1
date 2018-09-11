@@ -124,6 +124,10 @@ exports.createPages = ({ graphql, actions }) => {
               }
             }
           }
+          dataJson {
+            cities
+            countries
+          }
         }
       `).then(result => {
         if (result.errors) {
@@ -135,6 +139,7 @@ exports.createPages = ({ graphql, actions }) => {
           const events = result.data.allEventsJson.edges.filter(edge =>
             region.filter(edge.node)
           )
+          const emailStats = result.data.dataJson
           if (events.length > 3) {
             createPage({
               path: `list-of-hackathons-in-${kebabCase(region.name)}`,
@@ -142,6 +147,7 @@ exports.createPages = ({ graphql, actions }) => {
               context: {
                 region,
                 events,
+                emailStats
               },
             })
           }
