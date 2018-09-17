@@ -7,7 +7,7 @@ const regions = require('./src/regions.js')
 
 const imageFolder = 'static/images/'
 
-const downloadImage = image =>
+const downloadImage = (event, image) =>
   new Promise((resolve, reject) => {
     if (!image) resolve(null)
     axios
@@ -26,7 +26,8 @@ const downloadImage = image =>
           default:
             throw `Invalid content-type: ${res.headers['content-type']}`
         }
-        const fileName = image.type + '_' + image.id + extension
+        let updatedAt = Date.parse(image.updated_at)
+        const fileName = image.type + '_' + event.id + '.' + updatedAt + extension
         writeFile(imageFolder + fileName, res.data, 'binary', err => {
           if (err) throw err
           resolve(`images/${fileName}`)
@@ -38,8 +39,8 @@ const downloadImage = image =>
 const processEvent = async event => ({
   ...event,
   id: event.id.toString(),
-  banner: await downloadImage(event.banner),
-  logo: await downloadImage(event.logo),
+  banner: await downloadImage(event, event.banner),
+  logo: await downloadImage(event, event.logo)
 })
 
 exports.onPreBootstrap = () => {
