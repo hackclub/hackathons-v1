@@ -236,7 +236,10 @@ export default class extends Component {
                 See events everywhere
               </Link>
             </Text>
-            <EmailListForm stats={this.emailStats} location={formattedAddress} />
+            <EmailListForm
+              stats={this.emailStats}
+              location={formattedAddress}
+            />
             <Text color="muted" mt={4} mb={3}>
               Showing events{' '}
               <Link

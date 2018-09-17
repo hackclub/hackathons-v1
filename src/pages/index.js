@@ -121,7 +121,12 @@ class IndexPage extends Component {
       total: this.events.length,
       state: new Set(this.events.map(event => event.parsed_state)).size,
       country: new Set(this.events.map(event => event.parsed_country)).size,
-      lastUpdated: timeSince(Math.max(...this.events.map(e => Date.parse(e.updated_at))), false, new Date(), true)
+      lastUpdated: timeSince(
+        Math.max(...this.events.map(e => Date.parse(e.updated_at))),
+        false,
+        new Date(),
+        true
+      ),
     }
   }
 
@@ -212,7 +217,12 @@ class IndexPage extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Image src="/flag.svg" alt="Hack Club flag" width={128} ml={[3, 4, 5]} />
+            <Image
+              src="/flag.svg"
+              alt="Hack Club flag"
+              width={128}
+              ml={[3, 4, 5]}
+            />
           </a>
           <Flex
             py={3}
