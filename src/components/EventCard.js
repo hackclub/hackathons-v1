@@ -77,6 +77,7 @@ const AssociatedSeal = Box.extend.attrs({
   children: props => (
     <MLHLogo
       src="/mlh-logo-grayscale.svg"
+      alt="MLH logo"
       mlhAssociated={props.mlhAssociated}
     />
   ),
@@ -140,6 +141,7 @@ export default ({
           <Image
             itemProp="image"
             src={logo}
+            alt={`${name} logo`}
             style={{ height: theme.space[5], borderRadius: theme.radius }}
           />
         )}

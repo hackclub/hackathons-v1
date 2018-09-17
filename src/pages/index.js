@@ -212,7 +212,7 @@ class IndexPage extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Image src="/flag.svg" width={128} ml={[3, 4, 5]} />
+            <Image src="/flag.svg" alt="Hack Club flag" width={128} ml={[3, 4, 5]} />
           </a>
           <Flex
             py={3}
