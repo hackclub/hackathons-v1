@@ -62,7 +62,6 @@ const MLHLogo = styled(Image).attrs({
 })`
   border-top-right-radius: ${({ theme }) => theme.radius};
   border-bottom-right-radius: ${({ theme }) => theme.radius};
-  visibility: ${props => (props.mlhAssociated ? 'visible' : 'hidden')};
 `
 
 const AssociatedSeal = styled(Box).attrs({
@@ -71,11 +70,11 @@ const AssociatedSeal = styled(Box).attrs({
   mt: -theme.space[3] + 5,
   mb: 1,
   children: props => (
-    <MLHLogo
-      src="/mlh-logo-grayscale.svg"
-      alt="MLH logo"
-      mlhAssociated={props.mlhAssociated}
-    />
+    <>
+      {props.mlhAssociated && (
+        <MLHLogo src="/mlh-logo-grayscale.svg" alt="MLH logo" />
+      )}
+    </>
   ),
 })``
 
