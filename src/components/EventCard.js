@@ -29,12 +29,12 @@ const formatAddress = (city, stateCode, country, countryCode) => {
   }
 }
 
-const LogoContainer = Box.extend`
+const LogoContainer = styled(Box)`
   height: ${({ theme }) => theme.space[5]}px;
   position: relative;
 `
 
-const EventCard = Flex.withComponent(Tilt).extend.attrs({
+const EventCard = styled(Flex.withComponent(Tilt)).attrs({
   options: {
     max: 15,
     scale: 1.05,
@@ -49,17 +49,13 @@ const EventCard = Flex.withComponent(Tilt).extend.attrs({
 })`
   border-radius: ${({ theme }) => theme.radius};
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.375);
-  background:
-   linear-gradient(
-     rgba(0, 0, 0, 0) 0%,
-     rgba(0, 0, 0, 0.375) 75%
-   ),
-   url(${props => props.bg}) no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.375) 75%),
+    url(${props => props.bg}) no-repeat;
   background-size: cover;
   overflow: hidden;
 `
 
-const MLHLogo = Image.extend.attrs({
+const MLHLogo = styled(Image).attrs({
   p: 2,
   bg: 'white',
   w: '6em',
@@ -69,7 +65,7 @@ const MLHLogo = Image.extend.attrs({
   visibility: ${props => (props.mlhAssociated ? 'visible' : 'hidden')};
 `
 
-const AssociatedSeal = Box.extend.attrs({
+const AssociatedSeal = styled(Box).attrs({
   w: 1,
   ml: -theme.space[4],
   mt: -theme.space[3] + 5,
