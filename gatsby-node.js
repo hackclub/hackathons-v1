@@ -1,7 +1,6 @@
 const { writeFile, existsSync, mkdirSync } = require('fs')
 const axios = require('axios')
 const path = require('path')
-const readline = require('readline')
 const { kebabCase } = require('lodash')
 const regions = require('./src/regions.js')
 
@@ -46,8 +45,8 @@ const processEvent = async event => ({
 exports.onPreBootstrap = () => {
   let startTime = Date.now()
   const logMessage = (msg) => {
-    readline.clearLine(process.stdout)
-    readline.cursorTo(process.stdout, 0)
+    global.process.stdout.clearLine()
+    global.process.stdout.cursorTo(0)
     const elapsedTime = ((Date.now() - startTime).toFixed(2) / 1000)
     console.log(`    ${msg} – ${elapsedTime} s`)
     startTime = Date.now()
