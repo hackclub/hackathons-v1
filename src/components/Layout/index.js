@@ -4,6 +4,8 @@ import Helmet from 'react-helmet'
 import { ThemeProvider } from '@hackclub/design-system'
 import data from 'data.json'
 
+import socialImg from './social.jpg'
+
 const { description, url, img, title, name } = data
 
 const meta = tags =>
@@ -20,12 +22,10 @@ const TemplateWrapper = ({ children }) => (
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:description', content: description },
         { name: 'twitter:domain', content: url },
-        { name: 'twitter:image:src', content: img },
+        { name: 'twitter:image:src', content: socialImg },
         { name: 'twitter:title', content: title },
         { property: 'og:description', content: description },
-        { property: 'og:image', content: img },
-        { property: 'og:image:height', content: 512 },
-        { property: 'og:image:width', content: 512 },
+        { property: 'og:image', content: socialImg },
         { property: 'og:locale', content: 'en_US' },
         { property: 'og:site_name', content: name },
         { property: 'og:title', content: title },
