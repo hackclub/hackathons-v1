@@ -45,8 +45,8 @@ const processEvent = async event => ({
 exports.onPreBootstrap = () => {
   let startTime = Date.now()
   const logMessage = (msg) => {
-    global.process.stdout.clearLine()
-    global.process.stdout.cursorTo(0)
+    process.stdout.clearLine()
+    process.stdout.cursorTo(0)
     const elapsedTime = ((Date.now() - startTime).toFixed(2) / 1000)
     console.log(`    ${msg} – ${elapsedTime} s`)
     startTime = Date.now()
