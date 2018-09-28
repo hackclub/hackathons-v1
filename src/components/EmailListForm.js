@@ -1,10 +1,12 @@
 import React from 'react'
 import {
   Field,
+  Card,
   Container,
   Box,
   Button,
   Text,
+  Flex,
   Heading,
 } from '@hackclub/design-system'
 import styled from 'styled-components'
@@ -140,8 +142,8 @@ const FormikForm = withFormik({
       timestamp: new Date(),
     }
     try {
-      window.analytics.identify({ email: data.email })
-      window.analytics.track('Submitted Email', {
+      analytics.identify({ email: data.email })
+      analytics.track('Submitted Email', {
         email: data.email,
         location: data.location,
       })

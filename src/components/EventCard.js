@@ -1,6 +1,14 @@
 import React from 'react'
 import Tilt from 'react-tilt'
-import { Box, Heading, Image, Text, Flex, theme } from '@hackclub/design-system'
+import {
+  Box,
+  Card,
+  Heading,
+  Image,
+  Text,
+  Flex,
+  theme,
+} from '@hackclub/design-system'
 import { trackClick } from 'utils'
 import Overdrive from 'react-overdrive'
 import styled from 'styled-components'
@@ -15,7 +23,9 @@ const humanizeDistance = num => {
 
 const formatAddress = (city, stateCode, country, countryCode) => {
   const firstHalf = city
-  const secondHalf = countryCode === 'US' ? stateCode : country
+  const secondHalf = countryCode === 'US'
+    ? stateCode
+    : country
 
   const final = `${firstHalf}, ${secondHalf}`
 
@@ -98,6 +108,18 @@ const Base = styled(Overdrive)`
   }
 `
 
+const AssociatedEvent = Box.extend.attrs({
+  children: 'Hack Club',
+  bg: 'primary',
+  p: 1,
+})`
+  border-radius: 5px;
+  position: absolute;
+  right: 0;
+`
+
+const pathToUrl = path => (path ? `https://api.hackclub.com${path}` : null)
+
 export default ({
   id,
   website,
@@ -171,12 +193,7 @@ export default ({
             itemType="http://schema.org/Place"
           >
             <span itemProp="address">
-              {formatAddress(
-                parsed_city,
-                parsed_state_code,
-                parsed_country,
-                parsed_country_code
-              )}
+              {formatAddress(parsed_city, parsed_state_code, parsed_country, parsed_country_code)}
             </span>
           </Text>
         )}

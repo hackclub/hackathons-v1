@@ -93,8 +93,8 @@ exports.onPreBootstrap = () => {
     ))
 }
 
-exports.createPages = ({ graphql, actions }) => {
-  const { createPage } = actions
+exports.createPages = ({ graphql, boundActionCreators }) => {
+  const { createPage } = boundActionCreators
 
   return new Promise((resolve, reject) => {
     const component = path.resolve('src/templates/region.js')

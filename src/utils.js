@@ -29,7 +29,7 @@ export const trackClick = props => e => {
   props.onClick
     ? props.onClick(e)
     : props.noNewTab
-      ? (window.location.href = props.href)
+      ? (location.href = props.href)
       : window.open(props.href, '_blank')
 }
 
