@@ -34,7 +34,12 @@ export const trackClick = props => e => {
 }
 
 // based on https://github.com/withspectrum/spectrum/blob/alpha/src/helpers/utils.js#L146
-export const timeSince = (previous, absoluteDuration = false, current = new Date(), longForm = false) => {
+export const timeSince = (
+  previous,
+  absoluteDuration = false,
+  current = new Date(),
+  longForm = false
+) => {
   const msPerSecond = 1000
   const msPerMinute = msPerSecond * 60
   const msPerHour = msPerMinute * 60
@@ -46,22 +51,24 @@ export const timeSince = (previous, absoluteDuration = false, current = new Date
 
   let humanizedTime
   if (elapsed < msPerMinute) {
-    humanizedTime ='< 1m'
+    humanizedTime = '< 1m'
   } else if (elapsed < msPerHour) {
     const now = Math.round(elapsed / msPerMinute)
-    humanizedTime = (longForm ? `${now} minutes` : `${now}m`)
+    humanizedTime = longForm
+      ? `${now} minute${now !== 1 ? 's' : ''}`
+      : `${now}m`
   } else if (elapsed < msPerDay) {
     const now = Math.round(elapsed / msPerHour)
-    humanizedTime = (longForm ? `${now} hours` : `${now}h`)
+    humanizedTime = longForm ? `${now} hour${now !== 1 ? 's' : ''}` : `${now}h`
   } else if (elapsed < msPerWeek) {
     const now = Math.round(elapsed / msPerDay)
-    humanizedTime = (longForm ? `${now} days` : `${now}d`)
+    humanizedTime = longForm ? `${now} day${now !== 1 ? 's' : ''}` : `${now}d`
   } else if (elapsed < msPerYear) {
     const now = Math.round(elapsed / msPerWeek)
-    humanizedTime = (longForm ? `${now} weeks` : `${now}w`)
+    humanizedTime = longForm ? `${now} week${now !== 1 ? 's' : ''}` : `${now}w`
   } else {
     const now = Math.round(elapsed / msPerYear)
-    humanizedTime = (longForm ? `${now} years` : `${now}y`)
+    humanizedTime = longForm ? `${now} year${now !== 1 ? 's' : ''}` : `${now}y`
   }
 
   if (absoluteDuration) {

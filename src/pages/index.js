@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import styled from 'styled-components'
 import { graphql, StaticQuery } from 'gatsby'
 import {
   Box,
@@ -15,7 +16,7 @@ import EventCard from 'components/EventCard'
 import EmailListForm from 'components/EmailListForm'
 import { distance, trackClick, timeSince } from 'utils'
 
-const PrimaryLink = L.extend`
+const PrimaryLink = styled(L)`
   color: ${({ theme }) => theme.colors.primary};
   &:hover {
     text-decoration: underline;
@@ -24,14 +25,14 @@ const PrimaryLink = L.extend`
 
 const Link = props => <PrimaryLink {...props} onClick={trackClick(props)} />
 
-const HideOnMobile = Box.extend`
+const HideOnMobile = styled(Box)`
   display: none;
   ${({ theme }) => theme.mediaQueries.sm} {
     display: unset;
   }
 `
 
-const Switch = Box.extend`
+const Switch = styled(Box)`
   border-radius: 99999px;
   display: inline-flex;
   width: 40px;
@@ -59,7 +60,7 @@ const Switch = Box.extend`
   }
 `
 
-const SectionHeading = Heading.h2.extend.attrs({
+const SectionHeading = styled(Heading.h2).attrs({
   f: [4, 5],
   color: 'black',
   align: 'center',
@@ -67,14 +68,14 @@ const SectionHeading = Heading.h2.extend.attrs({
   p: 3,
 })``
 
-const Gradient = Box.extend`
+const Gradient = styled(Box)`
   background-image: linear-gradient(
     ${({ theme }) => theme.colors.white},
     ${({ theme }) => theme.colors.snow}
   );
 `
 
-const Footer = Box.withComponent('footer').extend`
+const Footer = styled(Box.withComponent('footer'))`
   background-image: radial-gradient(
     ${({ theme }) => theme.colors.smoke} 1px,
     transparent 1px
@@ -121,7 +122,12 @@ class IndexPage extends Component {
       total: this.events.length,
       state: new Set(this.events.map(event => event.parsed_state)).size,
       country: new Set(this.events.map(event => event.parsed_country)).size,
-      lastUpdated: timeSince(Math.max(...this.events.map(e => Date.parse(e.updated_at))), false, new Date(), true)
+      lastUpdated: timeSince(
+        Math.max(...this.events.map(e => Date.parse(e.updated_at))),
+        false,
+        new Date(),
+        true
+      ),
     }
   }
 
@@ -212,7 +218,12 @@ class IndexPage extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Image src="/flag.svg" alt="Hack Club flag" width={128} ml={[3, 4, 5]} />
+            <Image
+              src="/flag.svg"
+              alt="Hack Club flag"
+              width={128}
+              ml={[3, 4, 5]}
+            />
           </a>
           <Flex
             py={3}

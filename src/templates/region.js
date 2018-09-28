@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import Helmet from 'react-helmet'
 import axios from 'axios'
+import styled from 'styled-components'
 import {
   Box,
   Container,
@@ -15,11 +16,11 @@ import EventCard from 'components/EventCard'
 import EmailListForm from 'components/EmailListForm'
 import { distance, trackClick } from 'utils'
 
-const Base = Box.extend.attrs({ m: 0 })`
+const Base = styled(Box).attrs({ m: 0 })`
   width: 100vw;
 `
 
-const StyledLink = L.extend`
+const StyledLink = styled(L)`
   color: ${({ theme }) => theme.colors.primary};
   &:hover {
     text-decoration: underline;
@@ -28,7 +29,7 @@ const StyledLink = L.extend`
 
 const Link = props => <StyledLink {...props} onClick={trackClick(props)} />
 
-const HideOnMobile = Box.extend`
+const HideOnMobile = styled(Box)`
   display: none;
   ${({ theme }) => theme.mediaQueries.sm} {
     display: unset;
@@ -236,7 +237,10 @@ export default class extends Component {
                 See events everywhere
               </Link>
             </Text>
-            <EmailListForm stats={this.emailStats} location={formattedAddress} />
+            <EmailListForm
+              stats={this.emailStats}
+              location={formattedAddress}
+            />
             <Text color="muted" mt={4} mb={3}>
               Showing events{' '}
               <Link

@@ -24,7 +24,7 @@ const content = {
   submitting: 'Submitting…',
 }
 
-const Base = Container.extend.attrs({
+const Base = styled(Container).attrs({
   maxWidth: 48,
   bg: 'blue.0',
   color: 'black',
@@ -68,7 +68,7 @@ const Submit = ({ status, onSubmit }) => (
   />
 )
 
-export const Error = Text.extend.attrs({
+export const Error = styled(Text).attrs({
   className: 'error',
   color: 'error',
   f: 1,
@@ -90,14 +90,15 @@ const InnerForm = ({
   handleBlur,
   handleSubmit,
   isSubmitting,
-  status
+  status,
 }) => (
   <Base>
     <Heading.h2 f={3} color="black" mt={1} mb={1}>
       Want to hear when events are added in your area?
     </Heading.h2>
     <Text f={2} color="muted" mb={2}>
-      Join hundreds of subscribers from {values.stats.cities} cities + {values.stats.countries} countries.
+      Join hundreds of subscribers from {values.stats.cities} cities +{' '}
+      {values.stats.countries} countries.
     </Text>
     <Form onSubmit={handleSubmit}>
       <Field
