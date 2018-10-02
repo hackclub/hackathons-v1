@@ -43,7 +43,7 @@ const regionData = [
     filter: event => event.parsed_country_code === 'US',
   },
   {
-    name: 'San Francisco Bay',
+    name: 'Bay Area',
     nameIsArticle: true,
     filter: event => {
       const position = [37.641045, -122.228916]
