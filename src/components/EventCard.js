@@ -142,7 +142,13 @@ export default ({
             itemProp="image"
             src={logo}
             alt={`${name} logo`}
-            style={{ height: theme.space[5], borderRadius: theme.radius }}
+            style={{
+              height: 'auto',
+              width: 'auto',
+              maxHeight: '100%',
+              maxWidth: '100%',
+              borderRadius: theme.radius
+            }}
           />
         )}
       </LogoContainer>
