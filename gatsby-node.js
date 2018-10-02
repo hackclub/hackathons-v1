@@ -2,7 +2,6 @@ const { writeFile, existsSync, mkdirSync } = require('fs')
 const axios = require('axios')
 const path = require('path')
 const readline = require('readline')
-const { kebabCase } = require('lodash')
 const regions = require('./src/regions.js')
 
 const imageFolder = 'static/images/'
@@ -143,7 +142,7 @@ exports.createPages = ({ graphql, actions }) => {
           const emailStats = result.data.dataJson
           if (events.length > 3) {
             createPage({
-              path: `list-of-hackathons-in-${kebabCase(region.name)}`,
+              path: region.path,
               component,
               context: {
                 region,

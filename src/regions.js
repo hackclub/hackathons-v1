@@ -1,4 +1,4 @@
-'use strict'
+const { kebabCase } = require('lodash')
 
 const distance = (lat1, lon1, lat2, lon2) => {
   // https://www.geodatasource.com/developers/javascript
@@ -18,7 +18,7 @@ const distance = (lat1, lon1, lat2, lon2) => {
   }
 }
 
-module.exports = [
+const regionData = [
   {
     name: 'Los Angeles',
     filter: event => event.parsed_city === 'Los Angeles',
@@ -38,12 +38,13 @@ module.exports = [
     filter: event => event.parsed_state_code === 'NY',
   },
   {
-    name: 'the USA',
+    name: 'USA',
+    nameIsArticle: true,
     filter: event => event.parsed_country_code === 'US',
-    address: '',
   },
   {
-    name: 'the San Francisco Bay',
+    name: 'San Francisco Bay',
+    nameIsArticle: true,
     filter: event => {
       const position = [37.641045, -122.228916]
       return (
@@ -53,3 +54,11 @@ module.exports = [
     },
   },
 ]
+
+module.exports = regionData.map(region => {
+  region.nameInSentence = region.nameIsArticle
+    ? `the ${region.name}`
+    : region.name
+  region.path = `list-of-hackathons-in-${kebabCase(region.nameInSentence)}`
+  return region
+})

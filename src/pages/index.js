@@ -10,6 +10,7 @@ import {
   Link as L,
   Heading,
 } from '@hackclub/design-system'
+import Footer from 'components/Footer'
 import Layout from 'components/Layout'
 import EventCard from 'components/EventCard'
 import EmailListForm from 'components/EmailListForm'
@@ -74,18 +75,6 @@ const Gradient = Box.extend`
   );
 `
 
-const Footer = Box.withComponent('footer').extend`
-  background-image: radial-gradient(
-    ${({ theme }) => theme.colors.smoke} 1px,
-    transparent 1px
-  );
-  background-size: ${({ theme }) => theme.space[3]}px
-    ${({ theme }) => theme.space[3]}px;
-  background-position: ${({ theme }) => theme.space[2]}px
-    ${({ theme }) => theme.space[2]}px;
-  z-index: -1;
-`
-
 const timeFilters = {
   upcoming: {
     name: 'in the future',
@@ -121,7 +110,12 @@ class IndexPage extends Component {
       total: this.events.length,
       state: new Set(this.events.map(event => event.parsed_state)).size,
       country: new Set(this.events.map(event => event.parsed_country)).size,
-      lastUpdated: timeSince(Math.max(...this.events.map(e => Date.parse(e.updated_at))), false, new Date(), true)
+      lastUpdated: timeSince(
+        Math.max(...this.events.map(e => Date.parse(e.updated_at))),
+        false,
+        new Date(),
+        true
+      ),
     }
   }
 
@@ -212,7 +206,12 @@ class IndexPage extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Image src="/flag.svg" alt="Hack Club flag" width={128} ml={[3, 4, 5]} />
+            <Image
+              src="/flag.svg"
+              alt="Hack Club flag"
+              width={128}
+              ml={[3, 4, 5]}
+            />
           </a>
           <Flex
             py={3}
@@ -359,22 +358,7 @@ class IndexPage extends Component {
             </Flex>
           </Container>
         </Gradient>
-        <Footer>
-          <Container maxWidth={36} px={[2, 3]} py={5} align="center">
-            <Text f={3} mb={4} color="slate">
-              This directory is maintained by{' '}
-              <Link href="//hackclub.com">Hack Club</Link>, a nonprofit network
-              of student-led computer science clubs.
-            </Text>
-            <Text color="muted" f={3}>
-              Want to run your own hackathon? Get the support of{' '}
-              <Link href="https://mlh.io/event-membership" target="_blank">
-                MLH
-              </Link>
-              .
-            </Text>
-          </Container>
-        </Footer>
+        <Footer />
       </Layout>
     )
   }

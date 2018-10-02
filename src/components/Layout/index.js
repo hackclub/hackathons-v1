@@ -6,7 +6,7 @@ import data from 'data.json'
 
 import socialImg from './social.jpg'
 
-const { description, url, img, title, name } = data
+const { description, url, title, name } = data
 
 const meta = tags =>
   tags.map((props, index) =>

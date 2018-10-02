@@ -13,6 +13,7 @@ import {
 import Layout from 'components/Layout'
 import EventCard from 'components/EventCard'
 import EmailListForm from 'components/EmailListForm'
+import Footer from 'components/Footer'
 import { distance, trackClick } from 'utils'
 
 const Base = Box.extend.attrs({ m: 0 })`
@@ -223,20 +224,23 @@ export default class extends Component {
               {(
                 <Fragment>
                   <br />
-                  {this.region.name}
+                  {this.region.nameInSentence}
                 </Fragment>
               ) || new Date().getFullYear()}
             </Heading.h1>
             <Text f={4} style={{ maxWidth: '800px' }} mx="auto">
               Find, register, and compete in {this.stats.total} student-led
-              hackathons around {this.region.name}.
+              hackathons around {this.region.nameInSentence}.
             </Text>
             <Text f={3} my={3}>
               <Link href="/" noNewTab>
                 See events everywhere
               </Link>
             </Text>
-            <EmailListForm stats={this.emailStats} location={formattedAddress} />
+            <EmailListForm
+              stats={this.emailStats}
+              location={formattedAddress}
+            />
             <Text color="muted" mt={4} mb={3}>
               Showing events{' '}
               <Link
@@ -301,20 +305,7 @@ export default class extends Component {
             </Flex>
           </Container>
         </Base>
-        <Container maxWidth={40} px={[2, 3]} py={5} align="center">
-          <Text f={3} my={4} color="black">
-            This directory is maintained by{' '}
-            <Link href="//hackclub.com">Hack Club</Link>, a nonprofit network of
-            student-led coding clubs.
-          </Text>
-          <Text f={3} color="black">
-            Want to run your own hackathon? Do it with the support of{' '}
-            <Link href="https://mlh.io/event-membership" target="_blank">
-              MLH
-            </Link>
-            .
-          </Text>
-        </Container>
+        <Footer />
       </Layout>
     )
   }
