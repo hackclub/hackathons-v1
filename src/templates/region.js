@@ -217,7 +217,7 @@ export default class extends Component {
               <HideOnMobile>Contribute on</HideOnMobile> GitHub
             </L>
           </Flex>
-          <Container maxWidth={36} px={3} align="center">
+          <Container px={3} align="center">
             <Heading.h1 f={[5, null, 6]} mt={[4, 5]} mb={3}>
               {this.region ? null : 'Upcoming '}
               High School Hackathons in
