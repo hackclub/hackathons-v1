@@ -1,3 +1,5 @@
+import pluralize from 'pluralize'
+
 export const distance = (lat1, lon1, lat2, lon2) => {
   // https://www.geodatasource.com/developers/javascript
   const radlat1 = (Math.PI * lat1) / 180
@@ -54,19 +56,19 @@ export const timeSince = (
     humanizedTime = '< 1m'
   } else if (elapsed < msPerHour) {
     const now = Math.round(elapsed / msPerMinute)
-    humanizedTime = longForm ? `${now} minutes` : `${now}m`
+    humanizedTime = longForm ? `${now} ${pluralize('minute', now)}` : `${now}m`
   } else if (elapsed < msPerDay) {
     const now = Math.round(elapsed / msPerHour)
-    humanizedTime = longForm ? `${now} hours` : `${now}h`
+    humanizedTime = longForm ? `${now} ${pluralize('hour', now)}` : `${now}h`
   } else if (elapsed < msPerWeek) {
     const now = Math.round(elapsed / msPerDay)
-    humanizedTime = longForm ? `${now} days` : `${now}d`
+    humanizedTime = longForm ? `${now} ${pluralize('day', now)}` : `${now}d`
   } else if (elapsed < msPerYear) {
     const now = Math.round(elapsed / msPerWeek)
-    humanizedTime = longForm ? `${now} weeks` : `${now}w`
+    humanizedTime = longForm ? `${now} ${pluralize('week', now)}` : `${now}w`
   } else {
     const now = Math.round(elapsed / msPerYear)
-    humanizedTime = longForm ? `${now} years` : `${now}y`
+    humanizedTime = longForm ? `${now} ${pluralize('year', now)}` : `${now}y`
   }
 
   if (absoluteDuration) {
