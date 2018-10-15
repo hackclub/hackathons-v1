@@ -38,11 +38,6 @@ const regionData = [
     filter: event => event.parsed_state_code === 'NY',
   },
   {
-    name: 'USA',
-    nameIsArticle: true,
-    filter: event => event.parsed_country_code === 'US',
-  },
-  {
     name: 'Bay Area',
     nameIsArticle: true,
     filter: event => {
@@ -53,6 +48,19 @@ const regionData = [
       )
     },
   },
+  {
+    name: 'USA',
+    nameIsArticle: true,
+    filter: event => event.parsed_country_code === 'US',
+  },
+  {
+    name: 'Canada',
+    filter: event => event.parsed_country_code === 'CA',
+  },
+  {
+    name: 'India',
+    filter: event => event.parsed_country_code === 'IN',
+  }
 ]
 
 module.exports = regionData.map(region => {
