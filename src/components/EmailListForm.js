@@ -24,7 +24,7 @@ const content = {
   submitting: 'Submitting…',
 }
 
-const Base = Container.extend.attrs({
+const Base = styled(Container).attrs({
   maxWidth: 48,
   bg: 'blue.0',
   color: 'black',
@@ -68,7 +68,7 @@ const Submit = ({ status, onSubmit }) => (
   />
 )
 
-export const Error = Text.extend.attrs({
+export const Error = styled(Text).attrs({
   className: 'error',
   color: 'error',
   f: 1,

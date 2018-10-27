@@ -15,12 +15,13 @@ import EventCard from 'components/EventCard'
 import EmailListForm from 'components/EmailListForm'
 import Footer from 'components/Footer'
 import { distance, trackClick } from 'utils'
+import styled from 'styled-components'
 
-const Base = Box.extend.attrs({ m: 0 })`
+const Base = styled(Box).attrs({ m: 0 })`
   width: 100vw;
 `
 
-const StyledLink = L.extend`
+const StyledLink = styled(L)`
   color: ${({ theme }) => theme.colors.primary};
   &:hover {
     text-decoration: underline;
@@ -29,7 +30,7 @@ const StyledLink = L.extend`
 
 const Link = props => <StyledLink {...props} onClick={trackClick(props)} />
 
-const HideOnMobile = Box.extend`
+const HideOnMobile = styled(Box)`
   display: none;
   ${({ theme }) => theme.mediaQueries.sm} {
     display: unset;

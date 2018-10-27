@@ -29,12 +29,12 @@ const formatAddress = (city, stateCode, country, countryCode) => {
   }
 }
 
-const LogoContainer = Box.extend`
+const LogoContainer = styled(Box)`
   height: ${({ theme }) => theme.space[5]}px;
   position: relative;
 `
 
-const EventCard = Flex.withComponent(Tilt).extend.attrs({
+const EventCard = styled(Flex.withComponent(Tilt)).attrs({
   options: {
     max: 15,
     scale: 1.05,
@@ -59,17 +59,16 @@ const EventCard = Flex.withComponent(Tilt).extend.attrs({
   overflow: hidden;
 `
 
-const MLHLogo = Image.extend.attrs({
+const MLHLogo = styled(Image).attrs({
   p: 2,
   bg: 'white',
   w: '6em',
 })`
   border-top-right-radius: ${({ theme }) => theme.radius};
   border-bottom-right-radius: ${({ theme }) => theme.radius};
-  visibility: ${props => (props.mlhAssociated ? 'visible' : 'hidden')};
 `
 
-const AssociatedSeal = Box.extend.attrs({
+const MlhSeal = styled(Box).attrs({
   w: 1,
   ml: -theme.space[4],
   mt: -theme.space[3] + 5,
@@ -78,7 +77,6 @@ const AssociatedSeal = Box.extend.attrs({
     <MLHLogo
       src="/mlh-logo-grayscale.svg"
       alt="MLH logo"
-      mlhAssociated={props.mlhAssociated}
     />
   ),
 })``
@@ -90,6 +88,7 @@ const Base = styled(Overdrive)`
   display: flex;
   flex: 1 0 auto;
   width: 100%;
+  max-width: ${({ theme }) => theme.space[4]};
   ${({ theme }) => theme.mediaQueries[1]} {
     width: 50%;
   }
@@ -135,7 +134,7 @@ export default ({
     itemType="http://schema.org/Event"
   >
     <EventCard bg={banner}>
-      <AssociatedSeal mlhAssociated={mlh} />
+      <MlhSeal style={{visibility: mlh ? 'visible' : 'hidden'}} />
       <LogoContainer>
         {logo && (
           <Image
