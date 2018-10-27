@@ -64,7 +64,7 @@ const MLHLogo = styled(Image).attrs({
   border-bottom-right-radius: ${({ theme }) => theme.radius};
 `
 
-const MlhSeal = styled(Box).attrs({
+const MLHSeal = styled(Box).attrs({
   w: 1,
   ml: -theme.space[4],
   mt: -theme.space[3] + 5,
@@ -125,7 +125,7 @@ export default ({
     itemType="http://schema.org/Event"
   >
     <EventCard bg={banner}>
-      <MlhSeal style={{ visibility: mlh ? 'visible' : 'hidden' }} />
+      <MLHSeal style={{ visibility: mlh ? 'visible' : 'hidden' }} />
       <LogoContainer>
         {logo && (
           <Image
