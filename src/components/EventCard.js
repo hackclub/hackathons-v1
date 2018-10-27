@@ -49,12 +49,8 @@ const EventCard = styled(Flex.withComponent(Tilt)).attrs({
 })`
   border-radius: ${({ theme }) => theme.radius};
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.375);
-  background:
-   linear-gradient(
-     rgba(0, 0, 0, 0) 0%,
-     rgba(0, 0, 0, 0.375) 75%
-   ),
-   url(${props => props.bg}) no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.375) 75%),
+    url(${props => props.bg}) no-repeat;
   background-size: cover;
   overflow: hidden;
 `
@@ -73,12 +69,7 @@ const MlhSeal = styled(Box).attrs({
   ml: -theme.space[4],
   mt: -theme.space[3] + 5,
   mb: 1,
-  children: props => (
-    <MLHLogo
-      src="/mlh-logo-grayscale.svg"
-      alt="MLH logo"
-    />
-  ),
+  children: props => <MLHLogo src="/mlh-logo-grayscale.svg" alt="MLH logo" />,
 })``
 
 const Base = styled(Overdrive)`
@@ -134,7 +125,7 @@ export default ({
     itemType="http://schema.org/Event"
   >
     <EventCard bg={banner}>
-      <MlhSeal style={{visibility: mlh ? 'visible' : 'hidden'}} />
+      <MlhSeal style={{ visibility: mlh ? 'visible' : 'hidden' }} />
       <LogoContainer>
         {logo && (
           <Image
@@ -146,7 +137,7 @@ export default ({
               width: 'auto',
               maxHeight: '100%',
               maxWidth: '100%',
-              borderRadius: theme.radius
+              borderRadius: theme.radius,
             }}
           />
         )}
