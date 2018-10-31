@@ -13,6 +13,7 @@ import {
 import Footer from 'components/Footer'
 import Layout from 'components/Layout'
 import EventCard from 'components/EventCard'
+import GroupCard from 'components/GroupCard'
 import EmailListForm from 'components/EmailListForm'
 import { distance, trackClick, timeSince } from 'utils'
 import styled from 'styled-components'
@@ -303,6 +304,22 @@ class IndexPage extends Component {
           <SectionHeading>Upcoming Events</SectionHeading>
           <Container px={3} pb={4}>
             <Flex mx={[1, 2, -3]} wrap justify="center">
+              <GroupCard
+                group={{
+                  id: 1,
+                  events: filteredEvents['past'],
+                  created_at: '2018-10-28T00:23:19.447Z',
+                  updated_at: '2018-10-28T00:23:19.447Z',
+                  name: 'Local Hack Day',
+                  location: 'International',
+                  start: '2018-01-13',
+                  end: '2018-01-14',
+                  logo:
+                    'https://api.hackclub.com/rails/active_storage/variants/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBa0lOIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--9b1f1d25ecea82e96873e01242d9e845c471caa1/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MY21WemFYcGxTU0lKZURFMU1BWTZCa1ZVT2dsMGNtbHRWQT09IiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--0a3410a893c16b77303680cd0aaa2ada739a06b7/lhd-2018-logo-red-35989d19388c8d5cc24ec590f4b0dd356f506b9d64ba7fc630c4fd2a8aa4939f%20(1).png',
+                  banner:
+                    'https://api.hackclub.com/rails/active_storage/variants/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBa01OIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--aac15e1045f9d35a5634b0d0aabd49062f9a823f/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdERG9LYzNSeWFYQlVPZzVwYm5SbGNteGhZMlZKSWdwUWJHRnVaUVk2QmtWVU9oSm5ZWFZ6YzJsaGJsOWliSFZ5Wmdrd0xqQTFPZ3h4ZFdGc2FYUjVTU0lJT0RVbEJqc0hWRG9MWkdWbWFXNWxTU0lhYW5CbFp6cGtZM1F0YldWMGFHOWtQV1pzYjJGMEJqc0hWRG9VYzJGdGNHeHBibWRmWm1GamRHOXlTU0lLTkRveU9qQUdPd2RVT2d0eVpYTnBlbVZKSWdrMU1EQjRCanNIVkE9PSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--7d4c10d23979a9bcafff7ea8da85dcefd2837226/Group%201.png',
+                }}
+              />
               {filteredEvents['upcoming']
                 .sort((a, b) => {
                   if (sortByProximity) {

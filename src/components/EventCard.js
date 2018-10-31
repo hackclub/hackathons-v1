@@ -2,7 +2,6 @@ import React from 'react'
 import Tilt from 'react-tilt'
 import { Box, Heading, Image, Text, Flex, theme } from '@hackclub/design-system'
 import { trackClick } from 'utils'
-import Overdrive from 'react-overdrive'
 import styled from 'styled-components'
 
 const humanizeDistance = num => {
@@ -43,7 +42,7 @@ const EventCard = styled(Flex.withComponent(Tilt)).attrs({
   align: 'center',
   w: 1,
   p: 3,
-  m: [1, 2],
+  m: [2, 3],
   color: 'white',
   boxShadowSize: 'md',
 })`
@@ -72,9 +71,8 @@ const MLHSeal = styled(Box).attrs({
   children: props => <MLHLogo src="/mlh-logo-grayscale.svg" alt="MLH logo" />,
 })``
 
-const Base = styled(Overdrive)`
+const Base = styled('a')`
   opacity: 1 !important;
-  padding: ${({ theme }) => theme.space[2]};
   text-decoration: none;
   display: flex;
   flex: 1 0 auto;
@@ -107,9 +105,6 @@ export default ({
   mlh,
 }) => (
   <Base
-    id={id}
-    duration={400}
-    element="a"
     href={website}
     target="_blank"
     onClick={trackClick({
