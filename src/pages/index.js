@@ -391,8 +391,6 @@ export default () => (
             node {
               id
               updated_at(formatString: "YYYY-MM-DD")
-              startHumanized: start(formatString: "MMMM D")
-              endHumanized: end(formatString: "D")
               start
               end
               startYear: start(formatString: "YYYY")

@@ -3,6 +3,7 @@ import Tilt from 'react-tilt'
 import { Box, Heading, Image, Text, Flex, theme } from '@hackclub/design-system'
 import styled from 'styled-components'
 import EventCard from 'components/EventCard'
+import { humanizedDateRange } from '../utils'
 
 const fauxCardShadow = px => `
     1px 0 1px rgba(0,0,0,0.15),
@@ -109,7 +110,7 @@ class GroupCard extends Component {
               {name}
             </Heading.h3>
             <Flex justify="space-between" w={1}>
-              <Text>{start}</Text>
+              <Text>{humanizedDateRange(start, end)}</Text>
               <Text
                 itemProp="location"
                 itemScope

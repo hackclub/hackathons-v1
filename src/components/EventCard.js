@@ -1,7 +1,7 @@
 import React from 'react'
 import Tilt from 'react-tilt'
 import { Box, Heading, Image, Text, Flex, theme } from '@hackclub/design-system'
-import { trackClick } from 'utils'
+import { trackClick, humanizedDateRange } from 'utils'
 import styled from 'styled-components'
 
 const humanizeDistance = num => {
@@ -147,12 +147,7 @@ export default ({
         {name}
       </Heading.h3>
       <Flex justify="space-between" w={1}>
-        <Text>
-          {start === end ? startHumanized : `${startHumanized}–${endHumanized}`}
-          {new Date().getFullYear() !== parseInt(startYear)
-            ? `, ${startYear}`
-            : null}
-        </Text>
+        <Text>{humanizedDateRange(start, end)}</Text>
         {distanceTo ? (
           <Text>{`${humanizeDistance(distanceTo)} miles`}</Text>
         ) : (
