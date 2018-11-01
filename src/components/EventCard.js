@@ -71,7 +71,7 @@ const MLHSeal = styled(Box).attrs({
   children: props => <MLHLogo src="/mlh-logo-grayscale.svg" alt="MLH logo" />,
 })``
 
-const Base = styled('a')`
+const Base = styled.a`
   opacity: 1 !important;
   text-decoration: none;
   display: flex;

@@ -6,7 +6,7 @@ const regions = require('./src/regions.js')
 
 const imageFolder = 'static/images/'
 
-const downloadImage = (event, image, type='event') =>
+const downloadImage = (event, image, type = 'event') =>
   new Promise((resolve, reject) => {
     if (!image) resolve(null)
     axios
@@ -26,7 +26,7 @@ const downloadImage = (event, image, type='event') =>
             throw `Invalid content-type: ${res.headers['content-type']}`
         }
         let updatedAt = Date.parse(image.updated_at)
-        const fileName = type + '_' + image.type + '_' + event.id + '.' + updatedAt + extension
+        const fileName = `${type}_${image.type}_${event.id}.${updatedAt}${extension}`
         writeFile(imageFolder + fileName, res.data, 'binary', err => {
           if (err) throw err
           resolve(`images/${fileName}`)
@@ -63,13 +63,13 @@ exports.onPreBootstrap = () => {
   return axios
     .get('https://api.hackclub.com/v1/events')
     .then(eventsRes => {
-      logMessage(`Fetched events data`)
+      logMessage('Fetched events data')
       return axios.get('https://api.hackclub.com/v1/events/groups').then(groupsRes => {
         logMessage('Fetched groups data')
 
         if (!existsSync(imageFolder)) {
           mkdirSync(imageFolder)
-          logMessage(`Created image folder`)
+          logMessage('Created image folder')
         }
         const groupsPromiseArray = groupsRes.data.map(group => processGroup(group))
         return new Promise.all(groupsPromiseArray).then(groupsData => {

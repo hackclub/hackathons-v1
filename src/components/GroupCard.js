@@ -51,13 +51,15 @@ const GroupCardBase = styled(Flex.withComponent(Tilt)).attrs({
   &:hover {
     box-shadow: ${props => (props.open ? insetShadow(13) : fauxCardShadow(13))};
   }
+  &:focus {
+    box-shadow: ${props => (props.open ? insetShadow(13) : fauxCardShadow(13))};
+  }
 `
 
-const Base = styled(Box)`
+const Base = styled(Flex)`
   opacity: 1 !important;
   padding: ${({ theme }) => theme.space[2]};
   text-decoration: none;
-  display: flex;
   flex: 1 0 auto;
   width: 100%;
   max-width: ${({ theme }) => theme.space[4]};
@@ -100,7 +102,6 @@ class GroupCard extends Component {
                   width: 'auto',
                   maxHeight: '100%',
                   maxWidth: '100%',
-                  borderRadius: theme.radius,
                 }}
               />
             )}
