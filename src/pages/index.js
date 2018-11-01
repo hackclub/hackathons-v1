@@ -95,7 +95,10 @@ class IndexPage extends Component {
 
     const filteredEvents = {}
     Object.keys(timeFilters).forEach(key => {
-      filteredEvents[key] = this.events.filter(timeFilters[key].function)
+      filteredEvents[key] = this.events
+        // remove group events until PR#28 is merged
+        .filter(event => event.group_id == null)
+        .filter(timeFilters[key].function)
     })
 
     this.state = {
