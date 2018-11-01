@@ -92,8 +92,8 @@ class IndexPage extends Component {
   constructor(props) {
     super(props)
 
-    this.events = props.data.allEventsJson.edges.map(({ node }) => node)
-    this.groups = props.data.allGroupsJson.edges.map(({ node }) => node)
+    this.events = props.data.allEventsJson.edges.map(({ node }) => ({...node, type: 'event'}))
+    this.groups = props.data.allGroupsJson.edges.map(({ node }) => ({...node, type: 'group'}))
     this.emailStats = props.data.dataJson
 
     const filteredEvents = {}
@@ -262,6 +262,7 @@ class IndexPage extends Component {
             </Text>
           </Container>
           <EmailListForm stats={this.emailStats} location={formattedAddress} />
+          {/* This is hidden until groups can be sorted by location
           <Flex f={1} align="center" justify="center" px={3} wrap>
             <Text color="slate" caps>
               The following are sorted by
@@ -292,6 +293,7 @@ class IndexPage extends Component {
               </Text.span>
             </Flex>
           </Flex>
+          */}
           <Text
             color="muted"
             align="center"
@@ -305,7 +307,23 @@ class IndexPage extends Component {
           <SectionHeading>Upcoming Events</SectionHeading>
           <Container px={3} pb={4}>
             <Flex mx={[1, 2, -3]} wrap justify="center">
-              {this.groups.map(group => (
+              {
+                this.groups.concat(filteredEvents['upcoming'].filter(event => event.group_id === null))
+                // add events to groups
+                .map(card => card.type === 'group' ? {...card, events: filteredEvents['upcoming'].filter(e => e.group_id == card.id)} : card)
+                // add start dates to groups
+                .map(card => card.type === 'group' ? {...card, start: card.events.map(e => e.start).sort()[0]} : card)
+                // sort cards by start date
+                .sort((a, b) => (new Date(a.start) - new Date(b.start)))
+                .map(card => {
+                  if (card.type === 'group') {
+                    return <GroupCard group={card} events={card.events} key={'group' + card.id} />
+                  } else {
+                    return <EventCard {...card} key={'event' + card.id} />
+                  }
+                })
+              }
+              {/*this.groups.map(group => (
                 <GroupCard
                   group={group}
                   events={filteredEvents['upcoming'].filter(
@@ -337,7 +355,7 @@ class IndexPage extends Component {
                     }
                     key={event.id}
                   />
-                ))}
+                  ))*/}
             </Flex>
           </Container>
         </Gradient>
