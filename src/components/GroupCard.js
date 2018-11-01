@@ -18,6 +18,11 @@ const fauxCardShadow = px => `
     -${px * 2}px 0 1px -9px rgba(0,0,0,0.15)
 `
 
+const insetShadow = px => `
+  inset 0 0 ${px}px ${px / 2}px rgba(0, 0, 0, 0.875),
+  1px 0 1px rgba(0,0,0,0.15)
+`
+
 const GroupCardBase = styled(Flex.withComponent(Tilt)).attrs({
   options: {
     max: 15,
@@ -32,6 +37,7 @@ const GroupCardBase = styled(Flex.withComponent(Tilt)).attrs({
   color: 'white',
   boxShadowSize: 'md',
 })`
+  cursor: pointer;
   border-radius: ${({ theme }) => theme.radius};
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.375);
   background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.375) 75%),
@@ -40,10 +46,10 @@ const GroupCardBase = styled(Flex.withComponent(Tilt)).attrs({
   overflow: hidden;
   ${props =>
     props.open &&
-    'transform: scale(0.95) !important;'} transition: box-shadow 0.3s ease-in, transform 0.6s ease-in;
-  box-shadow: ${props => fauxCardShadow(props.open ? 0 : 10)};
+    'transform: scale(0.9) !important;'} transition: box-shadow 0.3s ease-in;
+  box-shadow: ${props => (props.open ? insetShadow(10) : fauxCardShadow(10))};
   &:hover {
-    box-shadow: ${props => fauxCardShadow(props.open ? 0 : 12)};
+    box-shadow: ${props => (props.open ? insetShadow(13) : fauxCardShadow(13))};
   }
 `
 
@@ -72,15 +78,13 @@ class GroupCard extends Component {
   toggle = this.toggle.bind(this)
 
   render() {
-    const {
-      name,
-      location,
-      logo,
-      banner,
-      events,
-      start,
-      end,
-    } = this.props.group
+    const { events } = this.props
+    const start = events.map(event => new Date(event.start)).sort()[0]
+    const end = events.map(event => new Date(event.start))[events.length - 1]
+    const { name, location, logo, banner } = this.props.group
+    if (events.length === 0) {
+      return null
+    }
     return (
       <Fragment>
         <Base onClick={this.toggle}>
@@ -120,14 +124,14 @@ class GroupCard extends Component {
               </Text>
             </Flex>
             {/* Include microdata that doesn't easily fit elsewhere */}
-            <div style={{ display: 'none' }}>
-              <span itemProp="startDate" content={start}>
-                {start}
+            {/*<div style={{ display: 'none' }}>
+              <span itemProp="startDate" content={start.toString()}>
+                {start.toString()}
               </span>
-              <span itemProp="endDate" content={end}>
-                {end}
+              <span itemProp="endDate" content={end.toString()}>
+                {end.toString()}
               </span>
-            </div>
+              </div>*/}
           </GroupCardBase>
         </Base>
         {this.state.open &&
