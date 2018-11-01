@@ -6,7 +6,7 @@ const regions = require('./src/regions.js')
 
 const imageFolder = 'static/images/'
 
-const downloadImage = (event, image) =>
+const downloadImage = (event, image, type='event') =>
   new Promise((resolve, reject) => {
     if (!image) resolve(null)
     axios
@@ -26,7 +26,7 @@ const downloadImage = (event, image) =>
             throw `Invalid content-type: ${res.headers['content-type']}`
         }
         let updatedAt = Date.parse(image.updated_at)
-        const fileName = image.type + '_' + event.id + '.' + updatedAt + extension
+        const fileName = type + '_' + image.type + '_' + event.id + '.' + updatedAt + extension
         writeFile(imageFolder + fileName, res.data, 'binary', err => {
           if (err) throw err
           resolve(`images/${fileName}`)
@@ -42,6 +42,13 @@ const processEvent = async event => ({
   logo: await downloadImage(event, event.logo)
 })
 
+const processGroup = async group => ({
+  ...group,
+  id: group.id.toString(),
+  banner: await downloadImage(group, group.banner, 'group'),
+  logo: await downloadImage(group, group.logo, 'group')
+})
+
 exports.onPreBootstrap = () => {
   let startTime = Date.now()
   const logMessage = (msg) => {
@@ -55,26 +62,43 @@ exports.onPreBootstrap = () => {
   // Download & process events
   return axios
     .get('https://api.hackclub.com/v1/events')
-    .then(res => {
+    .then(eventsRes => {
       logMessage(`Fetched events data`)
-      if (!existsSync(imageFolder)) {
-        mkdirSync(imageFolder)
-        logMessage(`Created image folder`)
-      }
-      const promiseArray = res.data.map(event => processEvent(event))
-      return new Promise.all(promiseArray)
-        .then(data => {
-          logMessage('Mapped through event data')
+      return axios.get('https://api.hackclub.com/v1/events/groups').then(groupsRes => {
+        logMessage('Fetched groups data')
 
-          return new Promise((resolve, reject) => {
-            writeFile('data/events.json', JSON.stringify(data), err => {
-              if (err) return reject(err)
+        if (!existsSync(imageFolder)) {
+          mkdirSync(imageFolder)
+          logMessage(`Created image folder`)
+        }
+        const groupsPromiseArray = groupsRes.data.map(group => processGroup(group))
+        return new Promise.all(groupsPromiseArray).then(groupsData => {
+          const eventsPromiseArray = eventsRes.data.slice(1, 75)
+            .map(event => processEvent(event))
+          return new Promise.all(eventsPromiseArray)
+            .then(eventsData => {
+              logMessage('Mapped through event data')
+              const writeGroups = new Promise((resolve, reject) => {
+                writeFile('data/groups.json', JSON.stringify(groupsData), err => {
+                  if (err) return reject(err)
 
-              logMessage('Event data written to file')
-              resolve()
+                  logMessage('Group data written to file')
+                  resolve()
+                })
+              })
+
+              const writeEvents = new Promise((resolve, reject) => {
+                writeFile('data/events.json', JSON.stringify(eventsData), err => {
+                  if (err) return reject(err)
+
+                  logMessage('Event data written to file')
+                  resolve()
+                })
+              })
+              return new Promise.all([writeEvents, writeGroups])
             })
-          })
         })
+      })
     })
     // Download & process event stats
     .then(() => (
