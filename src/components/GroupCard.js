@@ -82,7 +82,7 @@ class GroupCard extends Component {
   render() {
     const { events } = this.props
     const start = events.map(event => new Date(event.start)).sort()[0]
-    const end = events.map(event => new Date(event.start))[events.length - 1]
+    const end = events.map(event => new Date(event.end))[events.length - 1]
     const { name, location, logo, banner } = this.props.group
     if (events.length === 0) {
       return null
