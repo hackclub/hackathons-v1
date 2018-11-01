@@ -393,6 +393,7 @@ export default () => (
               banner
               logo
               mlh: mlh_associated
+              group_id
             }
           }
         }
