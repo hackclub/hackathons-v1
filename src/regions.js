@@ -60,7 +60,7 @@ const regionData = [
   {
     name: 'India',
     filter: event => event.parsed_country_code === 'IN',
-  }
+  },
 ]
 
 module.exports = regionData.map(region => {

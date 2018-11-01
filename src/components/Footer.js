@@ -9,8 +9,9 @@ import {
   Heading,
 } from '@hackclub/design-system'
 import regions from 'regions'
+import styled from 'styled-components'
 
-const Wrapper = Box.extend`
+const Wrapper = styled(Box)`
   background-image: radial-gradient(
     ${({ theme }) => theme.colors.smoke} 1px,
     transparent 1px
@@ -25,7 +26,7 @@ Wrapper.defaultProps = {
   p: 4,
 }
 
-const RegionLink = Box.withComponent(Link).extend`
+const RegionLink = styled(Box.withComponent(Link))`
   border-radius: ${({ theme }) => theme.radius};
   border: 1px solid ${({ theme }) => theme.colors.slate};
 `

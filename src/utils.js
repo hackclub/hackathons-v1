@@ -18,6 +18,30 @@ export const distance = (lat1, lon1, lat2, lon2) => {
   }
 }
 
+const humanizedMonth = date => date.toLocaleString('en', { month: 'long' })
+
+export const humanizedDateRange = (start, end) => {
+  let result = ''
+  const startDate = new Date(start)
+  const endDate = new Date(end)
+  if (startDate.getMonth() === endDate.getMonth()) {
+    if (startDate.getDate() === endDate.getDate()) {
+      // Same day and month means we can return the date
+      result = `${humanizedMonth(startDate)} ${startDate.getDate() + 1}`
+    } else {
+      result = `${humanizedMonth(startDate)} ${startDate.getDate() +
+        1}–${endDate.getDate() + 1}`
+    }
+  } else {
+    result = `${humanizedMonth(startDate)} ${startDate.getDate() +
+      1}–${humanizedMonth(endDate)} ${endDate.getDate() + 1}`
+  }
+  if (new Date().getFullYear() !== startDate.getFullYear()) {
+    result += `, ${startDate.getFullYear()}`
+  }
+  return result
+}
+
 export const trackClick = props => e => {
   e.preventDefault()
   try {

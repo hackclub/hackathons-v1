@@ -13,10 +13,12 @@ import {
 import Footer from 'components/Footer'
 import Layout from 'components/Layout'
 import EventCard from 'components/EventCard'
+import GroupCard from 'components/GroupCard'
 import EmailListForm from 'components/EmailListForm'
 import { distance, trackClick, timeSince } from 'utils'
+import styled from 'styled-components'
 
-const PrimaryLink = L.extend`
+const PrimaryLink = styled(L)`
   color: ${({ theme }) => theme.colors.primary};
   &:hover {
     text-decoration: underline;
@@ -25,14 +27,14 @@ const PrimaryLink = L.extend`
 
 const Link = props => <PrimaryLink {...props} onClick={trackClick(props)} />
 
-const HideOnMobile = Box.extend`
+const HideOnMobile = styled(Box)`
   display: none;
   ${({ theme }) => theme.mediaQueries.sm} {
     display: unset;
   }
 `
 
-const Switch = Box.extend`
+const Switch = styled(Box)`
   border-radius: 99999px;
   display: inline-flex;
   width: 40px;
@@ -60,7 +62,7 @@ const Switch = Box.extend`
   }
 `
 
-const SectionHeading = Heading.h2.extend.attrs({
+const SectionHeading = styled(Heading.h2).attrs({
   f: [4, 5],
   color: 'black',
   align: 'center',
@@ -68,7 +70,7 @@ const SectionHeading = Heading.h2.extend.attrs({
   p: 3,
 })``
 
-const Gradient = Box.extend`
+const Gradient = styled(Box)`
   background-image: linear-gradient(
     ${({ theme }) => theme.colors.white},
     ${({ theme }) => theme.colors.snow}
@@ -90,7 +92,14 @@ class IndexPage extends Component {
   constructor(props) {
     super(props)
 
-    this.events = props.data.allEventsJson.edges.map(({ node }) => node)
+    this.events = props.data.allEventsJson.edges.map(({ node }) => ({
+      ...node,
+      type: 'event',
+    }))
+    this.groups = props.data.allGroupsJson.edges.map(({ node }) => ({
+      ...node,
+      type: 'group',
+    }))
     this.emailStats = props.data.dataJson
 
     const filteredEvents = {}
@@ -262,6 +271,7 @@ class IndexPage extends Component {
             </Text>
           </Container>
           <EmailListForm stats={this.emailStats} location={formattedAddress} />
+          {/* This is hidden until groups can be sorted by location
           <Flex f={1} align="center" justify="center" px={3} wrap>
             <Text color="slate" caps>
               The following are sorted by
@@ -292,6 +302,7 @@ class IndexPage extends Component {
               </Text.span>
             </Flex>
           </Flex>
+          */}
           <Text
             color="muted"
             align="center"
@@ -305,7 +316,60 @@ class IndexPage extends Component {
           <SectionHeading>Upcoming Events</SectionHeading>
           <Container px={3} pb={4}>
             <Flex mx={[1, 2, -3]} wrap justify="center">
+              {this.groups
+                .concat(
+                  filteredEvents['upcoming'].filter(
+                    event => event.group_id === null
+                  )
+                )
+                // add events to groups
+                .map(
+                  card =>
+                    card.type === 'group'
+                      ? {
+                          ...card,
+                          events: filteredEvents['upcoming'].filter(
+                            e => e.group_id == card.id
+                          ),
+                        }
+                      : card
+                )
+                // add start dates to groups
+                .map(
+                  card =>
+                    card.type === 'group'
+                      ? {
+                          ...card,
+                          start: card.events.map(e => e.start).sort()[0],
+                        }
+                      : card
+                )
+                // sort cards by start date
+                .sort((a, b) => new Date(a.start) - new Date(b.start))
+                .map(card => {
+                  if (card.type === 'group') {
+                    return (
+                      <GroupCard
+                        group={card}
+                        events={card.events}
+                        key={'group' + card.id}
+                      />
+                    )
+                  } else {
+                    return <EventCard {...card} key={'event' + card.id} />
+                  }
+                })}
+              {/*this.groups.map(group => (
+                <GroupCard
+                  group={group}
+                  events={filteredEvents['upcoming'].filter(
+                    event => event.group_id == group.id
+                  )}
+                  key={group.id}
+                />
+              ))}
               {filteredEvents['upcoming']
+                .filter(event => event.group_id === null)
                 .sort((a, b) => {
                   if (sortByProximity) {
                     const distToA = this.distanceTo(a.latitude, a.longitude)
@@ -327,7 +391,7 @@ class IndexPage extends Component {
                     }
                     key={event.id}
                   />
-                ))}
+                  ))*/}
             </Flex>
           </Container>
         </Gradient>
@@ -376,8 +440,6 @@ export default () => (
             node {
               id
               updated_at(formatString: "YYYY-MM-DD")
-              startHumanized: start(formatString: "MMMM D")
-              endHumanized: end(formatString: "D")
               start
               end
               startYear: start(formatString: "YYYY")
@@ -394,6 +456,17 @@ export default () => (
               logo
               mlh: mlh_associated
               group_id
+            }
+          }
+        }
+        allGroupsJson {
+          edges {
+            node {
+              id
+              name
+              location
+              logo
+              banner
             }
           }
         }

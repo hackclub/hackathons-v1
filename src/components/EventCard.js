@@ -1,8 +1,7 @@
 import React from 'react'
 import Tilt from 'react-tilt'
 import { Box, Heading, Image, Text, Flex, theme } from '@hackclub/design-system'
-import { trackClick } from 'utils'
-import Overdrive from 'react-overdrive'
+import { trackClick, humanizedDateRange } from 'utils'
 import styled from 'styled-components'
 
 const humanizeDistance = num => {
@@ -29,12 +28,12 @@ const formatAddress = (city, stateCode, country, countryCode) => {
   }
 }
 
-const LogoContainer = Box.extend`
+const LogoContainer = styled(Box)`
   height: ${({ theme }) => theme.space[5]}px;
   position: relative;
 `
 
-const EventCard = Flex.withComponent(Tilt).extend.attrs({
+const EventCard = styled(Flex.withComponent(Tilt)).attrs({
   options: {
     max: 15,
     scale: 1.05,
@@ -43,53 +42,42 @@ const EventCard = Flex.withComponent(Tilt).extend.attrs({
   align: 'center',
   w: 1,
   p: 3,
-  m: [1, 2],
+  m: [2, 3],
   color: 'white',
   boxShadowSize: 'md',
 })`
   border-radius: ${({ theme }) => theme.radius};
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.375);
-  background:
-   linear-gradient(
-     rgba(0, 0, 0, 0) 0%,
-     rgba(0, 0, 0, 0.375) 75%
-   ),
-   url(${props => props.bg}) no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.375) 75%),
+    url(${props => props.bg}) no-repeat;
   background-size: cover;
   overflow: hidden;
 `
 
-const MLHLogo = Image.extend.attrs({
+const MLHLogo = styled(Image).attrs({
   p: 2,
   bg: 'white',
   w: '6em',
 })`
   border-top-right-radius: ${({ theme }) => theme.radius};
   border-bottom-right-radius: ${({ theme }) => theme.radius};
-  visibility: ${props => (props.mlhAssociated ? 'visible' : 'hidden')};
 `
 
-const AssociatedSeal = Box.extend.attrs({
+const MLHSeal = styled(Box).attrs({
   w: 1,
   ml: -theme.space[4],
   mt: -theme.space[3] + 5,
   mb: 1,
-  children: props => (
-    <MLHLogo
-      src="/mlh-logo-grayscale.svg"
-      alt="MLH logo"
-      mlhAssociated={props.mlhAssociated}
-    />
-  ),
+  children: props => <MLHLogo src="/mlh-logo-grayscale.svg" alt="MLH logo" />,
 })``
 
-const Base = styled(Overdrive)`
+const Base = styled.a`
   opacity: 1 !important;
-  padding: ${({ theme }) => theme.space[2]};
   text-decoration: none;
   display: flex;
   flex: 1 0 auto;
   width: 100%;
+  max-width: ${({ theme }) => theme.space[4]};
   ${({ theme }) => theme.mediaQueries[1]} {
     width: 50%;
   }
@@ -117,9 +105,6 @@ export default ({
   mlh,
 }) => (
   <Base
-    id={id}
-    duration={400}
-    element="a"
     href={website}
     target="_blank"
     onClick={trackClick({
@@ -135,7 +120,7 @@ export default ({
     itemType="http://schema.org/Event"
   >
     <EventCard bg={banner}>
-      <AssociatedSeal mlhAssociated={mlh} />
+      <MLHSeal style={{ visibility: mlh ? 'visible' : 'hidden' }} />
       <LogoContainer>
         {logo && (
           <Image
@@ -147,7 +132,7 @@ export default ({
               width: 'auto',
               maxHeight: '100%',
               maxWidth: '100%',
-              borderRadius: theme.radius
+              borderRadius: theme.radius,
             }}
           />
         )}
@@ -162,12 +147,7 @@ export default ({
         {name}
       </Heading.h3>
       <Flex justify="space-between" w={1}>
-        <Text>
-          {start === end ? startHumanized : `${startHumanized}–${endHumanized}`}
-          {new Date().getFullYear() !== parseInt(startYear)
-            ? `, ${startYear}`
-            : null}
-        </Text>
+        <Text>{humanizedDateRange(start, end)}</Text>
         {distanceTo ? (
           <Text>{`${humanizeDistance(distanceTo)} miles`}</Text>
         ) : (

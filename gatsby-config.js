@@ -7,7 +7,21 @@ module.exports = {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'data',
-        path: `${__dirname}/data/`,
+        path: `${__dirname}/data/stats.json`,
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'events',
+        path: `${__dirname}/data/events.json`,
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'groups',
+        path: `${__dirname}/data/groups.json`,
       },
     },
     {
