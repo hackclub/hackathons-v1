@@ -331,6 +331,8 @@ class IndexPage extends Component {
                         }
                       : card
                 )
+                // remove groups that have no events
+                .filter(card => card.type === 'event' || card.events.length > 0)
                 // add start dates to groups
                 .map(
                   card =>
