@@ -73,8 +73,7 @@ exports.onPreBootstrap = () => {
         }
         const groupsPromiseArray = groupsRes.data.map(group => processGroup(group))
         return new Promise.all(groupsPromiseArray).then(groupsData => {
-          const eventsPromiseArray = eventsRes.data.slice(1, 75)
-            .map(event => processEvent(event))
+          const eventsPromiseArray = eventsRes.data.map(event => processEvent(event))
           return new Promise.all(eventsPromiseArray)
             .then(eventsData => {
               logMessage('Mapped through event data')
