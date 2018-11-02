@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import Tilt from 'react-tilt'
-import { Box, Heading, Image, Text, Flex, theme } from '@hackclub/design-system'
+import { Heading, Image, Text, Flex, theme } from '@hackclub/design-system'
 import styled from 'styled-components'
 import EventCard from 'components/EventCard'
 import { humanizedDateRange } from '../utils'
