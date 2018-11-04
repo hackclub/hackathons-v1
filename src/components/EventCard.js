@@ -1,5 +1,5 @@
 import React from 'react'
-import Tilt from 'react-tilt'
+import Tilt from 'components/Tilt'
 import { Box, Heading, Image, Text, Flex, theme } from '@hackclub/design-system'
 import { trackClick, humanizedDateRange } from 'utils'
 import styled from 'styled-components'
@@ -34,10 +34,6 @@ const LogoContainer = styled(Box)`
 `
 
 const EventCard = styled(Flex.withComponent(Tilt)).attrs({
-  options: {
-    max: 15,
-    scale: 1.05,
-  },
   flexDirection: 'column',
   align: 'center',
   w: 1,

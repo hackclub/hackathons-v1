@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import Tilt from 'react-tilt'
+import Tilt from 'components/Tilt'
 import { Heading, Image, Text, Flex, theme } from '@hackclub/design-system'
 import styled from 'styled-components'
 import EventCard from 'components/EventCard'
@@ -24,10 +24,6 @@ const insetShadow = px => `
 `
 
 const GroupCardBase = styled(Flex.withComponent(Tilt)).attrs({
-  options: {
-    max: 15,
-    scale: 1.05,
-  },
   flexDirection: 'column',
   align: 'center',
   w: 1,
@@ -136,7 +132,9 @@ class GroupCard extends Component {
           </GroupCardBase>
         </Base>
         {this.state.open &&
-          events.map(event => <EventCard {...event} key={event.id} />)}
+          events.map(event => (
+            <EventCard {...event} key={event.id} inGroup={true} />
+          ))}
       </Fragment>
     )
   }
