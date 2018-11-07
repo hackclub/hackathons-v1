@@ -131,8 +131,7 @@ class GroupCard extends Component {
               </div>*/}
           </GroupCardBase>
         </Base>
-        {this.state.open &&
-          events.map(event => <EventCard {...event} key={event.id} inGroup />)}
+        {events.map(event => <EventCard {...event} key={event.id} invisible={!this.state.open} inGroup />)}
       </Fragment>
     )
   }

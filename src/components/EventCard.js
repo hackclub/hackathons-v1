@@ -70,7 +70,7 @@ const MLHSeal = styled(Box).attrs({
 const Base = styled.a`
   opacity: 1 !important;
   text-decoration: none;
-  display: flex;
+  display: ${({ invisible }) => invisible ? 'none' : 'flex'};
   flex: 1 0 auto;
   width: 100%;
   max-width: ${({ theme }) => theme.space[4]};
@@ -99,6 +99,7 @@ export default ({
   distanceTo,
   startYear,
   mlh,
+  invisible
 }) => (
   <Base
     href={website}
@@ -114,6 +115,7 @@ export default ({
     })}
     itemScope
     itemType="http://schema.org/Event"
+    invisible={invisible}
   >
     <EventCard bg={banner}>
       <MLHSeal style={{ visibility: mlh ? 'visible' : 'hidden' }} />
