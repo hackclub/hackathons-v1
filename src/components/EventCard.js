@@ -16,7 +16,7 @@ const formatAddress = (city, stateCode, country, countryCode) => {
   const firstHalf = city
   const secondHalf = countryCode === 'US' ? stateCode : country
 
-  const final = [firstHalf, secondHalf].join(', ') // Handle case where city or country is null
+  const final = [firstHalf, secondHalf].filter(e => e).join(', ') // Handle case where city or country is null
 
   // Handle case where an event's location is outside the US and is so long that
   // it overflows the card when rendering. If the total length of the location
