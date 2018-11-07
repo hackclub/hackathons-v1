@@ -28,6 +28,19 @@ const formatAddress = (city, stateCode, country, countryCode) => {
   }
 }
 
+const NameHeading = props => {
+  const Tag = props.children.length < 20 ? Heading.h3 : Heading.h4
+  return (
+    <Tag
+      regular
+      align="center"
+      my={2}
+      style={{ flex: '1 0 auto' }}
+      {...props}
+    />
+  )
+}
+
 const LogoContainer = styled(Box)`
   height: ${({ theme }) => theme.space[5]}px;
   position: relative;
@@ -135,15 +148,7 @@ export default ({
           />
         )}
       </LogoContainer>
-      <Heading.h3
-        regular
-        align="center"
-        my={2}
-        style={{ flex: '1 0 auto' }}
-        itemProp="name"
-      >
-        {name}
-      </Heading.h3>
+      <NameHeading itemProp="name">{name}</NameHeading>
       <Flex justify="space-between" w={1}>
         <Text>{humanizedDateRange(start, end)}</Text>
         {distanceTo ? (
