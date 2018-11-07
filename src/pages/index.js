@@ -101,7 +101,6 @@ class IndexPage extends Component {
     this.groups.forEach(node => {
       node.type = 'group'
     })
-    console.log(this.groups)
     this.emailStats = props.data.dataJson
 
     const filteredEvents = {}
