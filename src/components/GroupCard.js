@@ -31,7 +31,6 @@ const GroupCardBase = styled(Flex.withComponent(Tilt)).attrs({
   pt: 5,
   m: [2, 3],
   color: 'white',
-  boxShadowSize: 'md',
 })`
   cursor: pointer;
   border-radius: ${({ theme }) => theme.radius};

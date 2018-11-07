@@ -53,7 +53,6 @@ const EventCard = styled(Flex.withComponent(Tilt)).attrs({
   p: 3,
   m: [2, 3],
   color: 'white',
-  boxShadowSize: 'md',
 })`
   border-radius: ${({ theme }) => theme.radius};
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.375);
