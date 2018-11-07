@@ -57,6 +57,7 @@ const EventCard = styled(Flex.withComponent(Tilt)).attrs({
 })`
   border-radius: ${({ theme }) => theme.radius};
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.375);
+  box-shadow: 0px 0 2px 1px rgba(0,0,0,0.125);
   background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.375) 75%),
     url(${props => props.bg}) no-repeat;
   background-size: cover;
