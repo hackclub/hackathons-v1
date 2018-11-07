@@ -33,8 +33,8 @@ export const humanizedDateRange = (start, end) => {
         1}–${endDate.getDate() + 1}`
     }
   } else {
-    result = `${humanizedMonth(startDate).split(1, 3)} ${startDate.getDate() +
-      1}–${humanizedMonth(endDate).split(1, 3)} ${endDate.getDate() + 1}`
+    result = `${humanizedMonth(startDate).substring(0, 3)} ${startDate.getDate() +
+      1}–${humanizedMonth(endDate).substring(0, 3)} ${endDate.getDate() + 1}`
   }
   if (new Date().getFullYear() !== startDate.getFullYear()) {
     result += `, ${startDate.getFullYear()}`
