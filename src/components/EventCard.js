@@ -111,6 +111,7 @@ export default ({
   startYear,
   mlh,
   invisible,
+  inGroup
 }) => (
   <Base
     href={website}
@@ -146,7 +147,7 @@ export default ({
           />
         )}
       </LogoContainer>
-      <NameHeading itemProp="name">{name}</NameHeading>
+      <NameHeading itemProp="name">{inGroup ? name.replace('LHD ', '') : name}</NameHeading>
       <Flex justify="space-between" w={1}>
         <Text>{humanizedDateRange(start, end)}</Text>
         {distanceTo ? (
