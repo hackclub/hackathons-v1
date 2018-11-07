@@ -110,7 +110,7 @@ class GroupCard extends Component {
             >
               {name}
             </Heading.h3>
-            <Flex justify="space-between" w={1}>
+            <Flex justify="space-between" width={1}>
               <Text>{humanizedDateRange(start, end)}</Text>
               <Text
                 itemProp="location"
@@ -132,9 +132,7 @@ class GroupCard extends Component {
           </GroupCardBase>
         </Base>
         {this.state.open &&
-          events.map(event => (
-            <EventCard {...event} key={event.id} inGroup={true} />
-          ))}
+          events.map(event => <EventCard {...event} key={event.id} inGroup />)}
       </Fragment>
     )
   }
