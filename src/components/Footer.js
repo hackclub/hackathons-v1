@@ -74,7 +74,7 @@ export default () => (
         <Wrapper>
           <Container>
             <Heading.h2 align="center">Popular regions</Heading.h2>
-            <Flex justify="center">
+            <Flex justify="center" wrap>
               {visibleRegions.map((region, index) => (
                 <RegionLink href={region.path} key={index}>
                   {region.name}
