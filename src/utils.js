@@ -19,22 +19,29 @@ export const distance = (lat1, lon1, lat2, lon2) => {
 }
 
 const humanizedMonth = date => date.toLocaleString('en', { month: 'long' })
+const shortHumanizedMonth = date => humanizedMonth(date).substring(0, 3)
 
 export const humanizedDateRange = (start, end) => {
   let result = ''
   const startDate = new Date(start)
+  startDate.setDate(startDate.getDate() + 1)
   const endDate = new Date(end)
+  endDate.setDate(endDate.getDate() + 1)
   if (startDate.getMonth() === endDate.getMonth()) {
     if (startDate.getDate() === endDate.getDate()) {
       // Same day and month means we can return the date
-      result = `${humanizedMonth(startDate)} ${startDate.getDate() + 1}`
+      result = `${humanizedMonth(startDate)} ${startDate.getDate()}`
     } else {
-      result = `${humanizedMonth(startDate)} ${startDate.getDate() +
-        1}–${endDate.getDate() + 1}`
+      result = `${humanizedMonth(
+        startDate
+      )} ${startDate.getDate()}–${endDate.getDate()}`
     }
   } else {
-    result = `${humanizedMonth(startDate).split(1, 3)} ${startDate.getDate() +
-      1}–${humanizedMonth(endDate).split(1, 3)} ${endDate.getDate() + 1}`
+    result = `${shortHumanizedMonth(
+      startDate
+    )} ${startDate.getDate()}–${shortHumanizedMonth(
+      endDate
+    )} ${endDate.getDate()}`
   }
   if (new Date().getFullYear() !== startDate.getFullYear()) {
     result += `, ${startDate.getFullYear()}`

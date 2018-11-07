@@ -19,7 +19,7 @@ const fauxCardShadow = px => `
 `
 
 const insetShadow = px => `
-  inset 0 0 ${px}px ${px / 2}px rgba(0, 0, 0, 0.875),
+  inset 0 0 ${px}px ${px / 2}px rgba(0, 0, 0, 0.375),
   1px 0 1px rgba(0,0,0,0.15)
 `
 
@@ -31,7 +31,6 @@ const GroupCardBase = styled(Flex.withComponent(Tilt)).attrs({
   pt: 5,
   m: [2, 3],
   color: 'white',
-  boxShadowSize: 'md',
 })`
   cursor: pointer;
   border-radius: ${({ theme }) => theme.radius};
@@ -44,11 +43,8 @@ const GroupCardBase = styled(Flex.withComponent(Tilt)).attrs({
     props.open &&
     'transform: scale(0.9) !important;'} transition: box-shadow 0.3s ease-in;
   box-shadow: ${props => (props.open ? insetShadow(10) : fauxCardShadow(10))};
-  &:hover {
-    box-shadow: ${props => (props.open ? insetShadow(13) : fauxCardShadow(13))};
-  }
-  &:focus {
-    box-shadow: ${props => (props.open ? insetShadow(13) : fauxCardShadow(13))};
+  &:hover, &:focus {
+    box-shadow: ${props => (props.open ? insetShadow(15) : fauxCardShadow(13))};
   }
 `
 
@@ -131,8 +127,14 @@ class GroupCard extends Component {
               </div>*/}
           </GroupCardBase>
         </Base>
-        {this.state.open &&
-          events.map(event => <EventCard {...event} key={event.id} inGroup />)}
+        {events.map(event => (
+          <EventCard
+            {...event}
+            key={event.id}
+            invisible={!this.state.open}
+            inGroup
+          />
+        ))}
       </Fragment>
     )
   }

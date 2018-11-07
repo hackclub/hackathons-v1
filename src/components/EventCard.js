@@ -16,16 +16,29 @@ const formatAddress = (city, stateCode, country, countryCode) => {
   const firstHalf = city
   const secondHalf = countryCode === 'US' ? stateCode : country
 
-  const final = `${firstHalf}, ${secondHalf}`
+  const final = [firstHalf, secondHalf].filter(e => e).join(', ') // Handle case where city or country is null
 
   // Handle case where an event's location is outside the US and is so long that
   // it overflows the card when rendering. If the total length of the location
   // is over 16 characters and outside the US, then just show the country name.
-  if (final.length > 16 && countryCode !== 'US') {
+  if (countryCode !== 'US' && final.length > 16) {
     return country
   } else {
     return final
   }
+}
+
+const NameHeading = props => {
+  const Tag = props.children.length < 20 ? Heading.h3 : Heading.h4
+  return (
+    <Tag
+      regular
+      align="center"
+      my={2}
+      style={{ flex: '1 0 auto' }}
+      {...props}
+    />
+  )
 }
 
 const LogoContainer = styled(Box)`
@@ -40,10 +53,10 @@ const EventCard = styled(Flex.withComponent(Tilt)).attrs({
   p: 3,
   m: [2, 3],
   color: 'white',
-  boxShadowSize: 'md',
 })`
   border-radius: ${({ theme }) => theme.radius};
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.375);
+  box-shadow: 0px 0 2px 1px rgba(0,0,0,0.125);
   background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.375) 75%),
     url(${props => props.bg}) no-repeat;
   background-size: cover;
@@ -70,7 +83,7 @@ const MLHSeal = styled(Box).attrs({
 const Base = styled.a`
   opacity: 1 !important;
   text-decoration: none;
-  display: flex;
+  display: ${({ invisible }) => (invisible ? 'none' : 'flex')};
   flex: 1 0 auto;
   width: 100%;
   max-width: ${({ theme }) => theme.space[4]};
@@ -88,8 +101,6 @@ export default ({
   name,
   start,
   end,
-  startHumanized,
-  endHumanized,
   parsed_city,
   parsed_state_code,
   parsed_country,
@@ -99,6 +110,8 @@ export default ({
   distanceTo,
   startYear,
   mlh,
+  invisible,
+  inGroup
 }) => (
   <Base
     href={website}
@@ -114,6 +127,7 @@ export default ({
     })}
     itemScope
     itemType="http://schema.org/Event"
+    invisible={invisible}
   >
     <EventCard bg={banner}>
       <MLHSeal style={{ visibility: mlh ? 'visible' : 'hidden' }} />
@@ -133,15 +147,7 @@ export default ({
           />
         )}
       </LogoContainer>
-      <Heading.h3
-        regular
-        align="center"
-        my={2}
-        style={{ flex: '1 0 auto' }}
-        itemProp="name"
-      >
-        {name}
-      </Heading.h3>
+      <NameHeading itemProp="name">{inGroup ? name.replace('LHD ', '') : name}</NameHeading>
       <Flex justify="space-between" w={1}>
         <Text>{humanizedDateRange(start, end)}</Text>
         {distanceTo ? (

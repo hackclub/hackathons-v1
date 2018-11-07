@@ -31,7 +31,6 @@ const RegionLink = styled(Box.withComponent(Link))`
   border: 1px solid ${({ theme }) => theme.colors.slate};
 `
 RegionLink.defaultProps = {
-  boxShadowSize: 'md',
   p: 3,
   m: 3,
   bg: 'white',
