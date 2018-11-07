@@ -16,12 +16,12 @@ const formatAddress = (city, stateCode, country, countryCode) => {
   const firstHalf = city
   const secondHalf = countryCode === 'US' ? stateCode : country
 
-  const final = `${firstHalf}, ${secondHalf}`
+  const final = [firstHalf, secondHalf].join(', ') // Handle case where city or country is null
 
   // Handle case where an event's location is outside the US and is so long that
   // it overflows the card when rendering. If the total length of the location
   // is over 16 characters and outside the US, then just show the country name.
-  if (countryCode !== 'US' && final.length > 16 && firstHalf) {
+  if (countryCode !== 'US' && final.length > 16) {
     return country
   } else {
     return final
