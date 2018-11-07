@@ -17,6 +17,7 @@ import GroupCard from 'components/GroupCard'
 import EmailListForm from 'components/EmailListForm'
 import { distance, trackClick, timeSince } from 'utils'
 import styled from 'styled-components'
+import groupsData from '../../data/groups.json'
 
 const PrimaryLink = styled(L)`
   color: ${({ theme }) => theme.colors.primary};
@@ -96,10 +97,11 @@ class IndexPage extends Component {
       ...node,
       type: 'event',
     }))
-    this.groups = props.data.allGroupsJson.edges.map(({ node }) => ({
-      ...node,
-      type: 'group',
-    }))
+    this.groups = groupsData
+    this.groups.forEach(node => {
+      node.type = 'group'
+    })
+    console.log(this.groups)
     this.emailStats = props.data.dataJson
 
     const filteredEvents = {}
@@ -320,17 +322,14 @@ class IndexPage extends Component {
                   )
                 )
                 // add events to groups
-                .map(
-                  card =>
-                    card.type === 'group'
-                      ? {
-                          ...card,
-                          events: filteredEvents['upcoming'].filter(
-                            e => e.group_id == card.id
-                          ),
-                        }
-                      : card
-                )
+                .map(card => {
+                  if (card.type === 'group') {
+                    card.events = filteredEvents.upcoming.filter(
+                      e => Number(e.group_id) === Number(card.id)
+                    )
+                  }
+                  return card
+                })
                 // remove groups that have no events
                 .filter(card => card.type === 'event' || card.events.length > 0)
                 // add start dates to groups
@@ -345,20 +344,19 @@ class IndexPage extends Component {
                 )
                 // sort cards by start date
                 .sort((a, b) => new Date(a.start) - new Date(b.start))
-                .map(card => {
-                  if (card.type === 'group') {
-                    return (
+                .map(
+                  card =>
+                    card.type === 'group' ? (
                       <GroupCard
                         group={card}
                         events={card.events}
-                        key={'group' + card.id}
+                        key={`group-${card.id}`}
                       />
+                    ) : (
+                      <EventCard {...card} key={`event-${card.id}`} />
                     )
-                  } else {
-                    return <EventCard {...card} key={'event' + card.id} />
-                  }
-                })}
-              {/*this.groups.map(group => (
+                )}
+              {/* this.groups.map(group => (
                 <GroupCard
                   group={group}
                   events={filteredEvents['upcoming'].filter(
@@ -390,7 +388,7 @@ class IndexPage extends Component {
                     }
                     key={event.id}
                   />
-                  ))*/}
+                  )) */}
             </Flex>
           </Container>
         </Gradient>
@@ -455,17 +453,6 @@ export default () => (
               logo
               mlh: mlh_associated
               group_id
-            }
-          }
-        }
-        allGroupsJson {
-          edges {
-            node {
-              id
-              name
-              location
-              logo
-              banner
             }
           }
         }
