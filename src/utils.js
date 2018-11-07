@@ -32,11 +32,16 @@ export const humanizedDateRange = (start, end) => {
       // Same day and month means we can return the date
       result = `${humanizedMonth(startDate)} ${startDate.getDate()}`
     } else {
-      result = `${humanizedMonth(startDate)} ${startDate.getDate()}–${endDate.getDate()}`
+      result = `${humanizedMonth(
+        startDate
+      )} ${startDate.getDate()}–${endDate.getDate()}`
     }
   } else {
-    result = `${shortHumanizedMonth(startDate)
-    } ${startDate.getDate()}–${shortHumanizedMonth(endDate)} ${endDate.getDate()}`
+    result = `${shortHumanizedMonth(
+      startDate
+    )} ${startDate.getDate()}–${shortHumanizedMonth(
+      endDate
+    )} ${endDate.getDate()}`
   }
   if (new Date().getFullYear() !== startDate.getFullYear()) {
     result += `, ${startDate.getFullYear()}`

@@ -119,7 +119,11 @@ class IndexPage extends Component {
 
     this.stats = {
       total: this.events.length,
-      state: new Set(this.events.filter(event => event.parsed_country_code === "US").map(event => event.parsed_state)).size,
+      state: new Set(
+        this.events
+          .filter(event => event.parsed_country_code === 'US')
+          .map(event => event.parsed_state)
+      ).size,
       country: new Set(this.events.map(event => event.parsed_country)).size,
       lastUpdated: timeSince(
         Math.max(...this.events.map(e => Date.parse(e.updated_at))),
