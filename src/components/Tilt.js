@@ -7,8 +7,7 @@ class Tilt extends Component {
       max: 15,
       scale: 1.05,
       speed: 400,
-      glare: true,
-      'max-glare': 0.3,
+      glare: false,
       ...this.props.tiltOptions,
     })
   }
