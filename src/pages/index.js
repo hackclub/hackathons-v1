@@ -346,7 +346,9 @@ class IndexPage extends Component {
                       : card
                 )
                 // sort cards by start date
-                .sort((a, b) => new Date(a.start) - new Date(b.start))
+                .sort((a, b) => {
+                  return new Date(a.start) - new Date(b.start) || a.id - b.id
+                })
                 .map(
                   card =>
                     card.type === 'group' ? (
