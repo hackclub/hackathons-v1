@@ -56,7 +56,7 @@ const EventCard = styled(Flex.withComponent(Tilt)).attrs({
 })`
   border-radius: ${({ theme }) => theme.radius};
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.375);
-  box-shadow: 0px 0 2px 1px rgba(0,0,0,0.125);
+  box-shadow: 0px 0 2px 1px rgba(0, 0, 0, 0.125);
   background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.375) 75%),
     url(${props => props.bg}) no-repeat;
   background-size: cover;
@@ -111,7 +111,7 @@ export default ({
   startYear,
   mlh,
   invisible,
-  inGroup
+  inGroup,
 }) => (
   <Base
     href={website}
@@ -147,7 +147,9 @@ export default ({
           />
         )}
       </LogoContainer>
-      <NameHeading itemProp="name">{inGroup ? name.replace('LHD ', '') : name}</NameHeading>
+      <NameHeading itemProp="name">
+        {inGroup ? name.replace('LHD ', '') : name}
+      </NameHeading>
       <Flex justify="space-between" w={1}>
         <Text>{humanizedDateRange(start, end)}</Text>
         {distanceTo ? (

@@ -43,7 +43,8 @@ const GroupCardBase = styled(Flex.withComponent(Tilt)).attrs({
     props.open &&
     'transform: scale(0.9) !important;'} transition: box-shadow 0.3s ease-in;
   box-shadow: ${props => (props.open ? insetShadow(10) : fauxCardShadow(10))};
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     box-shadow: ${props => (props.open ? insetShadow(15) : fauxCardShadow(13))};
   }
 `
