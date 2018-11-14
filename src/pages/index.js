@@ -347,7 +347,14 @@ class IndexPage extends Component {
                 )
                 // sort cards by start date
                 .sort((a, b) => {
-                  return new Date(a.start) - new Date(b.start) || a.id - b.id
+                  const [a_year, a_month, a_day] = a.start.split('-')
+                  const [b_year, b_month, b_day] = b.start.split('-')
+                  return (
+                    a_year - b_year ||
+                    a_month - b_month ||
+                    a_day - b_day ||
+                    a.id - b.id
+                  )
                 })
                 .map(
                   card =>
