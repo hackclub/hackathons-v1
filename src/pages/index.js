@@ -410,15 +410,14 @@ class IndexPage extends Component {
             <Flex mx={[1, 2, -3]} wrap justify="center">
               {filteredEvents['past']
                 .sort((a, b) => {
-                  if (sortByProximity) {
-                    const distToA = this.distanceTo(a.latitude, a.longitude)
-                      .miles
-                    const distToB = this.distanceTo(b.latitude, b.longitude)
-                      .miles
-                    return distToA - distToB
-                  } else {
-                    return new Date(b.start) - new Date(a.start)
-                  }
+                  const [a_year, a_month, a_day] = a.start.split('-')
+                  const [b_year, b_month, b_day] = b.start.split('-')
+                  return (
+                    b_year - a_year ||
+                    b_month - a_month ||
+                    b_day - a_day ||
+                    b.id - a.id
+                  )
                 })
                 .map(event => (
                   <EventCard
