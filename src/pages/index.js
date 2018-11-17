@@ -12,12 +12,10 @@ import {
 } from '@hackclub/design-system'
 import Footer from 'components/Footer'
 import Layout from 'components/Layout'
-import EventCard from 'components/EventCard'
-import GroupCard from 'components/GroupCard'
+import EventList from 'components/EventList'
 import EmailListForm from 'components/EmailListForm'
 import { distance, trackClick, timeSince } from 'utils'
 import styled from 'styled-components'
-import groupsData from '../../data/groups.json'
 
 const PrimaryLink = styled(L)`
   color: ${({ theme }) => theme.colors.primary};
@@ -93,14 +91,7 @@ class IndexPage extends Component {
   constructor(props) {
     super(props)
 
-    this.events = props.data.allEventsJson.edges.map(({ node }) => ({
-      ...node,
-      type: 'event',
-    }))
-    this.groups = groupsData
-    this.groups.forEach(node => {
-      node.type = 'group'
-    })
+    this.events = props.data.allEventsJson.edges.map(edge => ({ ...edge.node }))
     this.emailStats = props.data.dataJson
 
     const filteredEvents = {}
@@ -318,89 +309,7 @@ class IndexPage extends Component {
           <SectionHeading>Upcoming Events</SectionHeading>
           <Container px={3} pb={4}>
             <Flex mx={[1, 2, -3]} wrap justify="center">
-              {this.groups
-                .concat(
-                  filteredEvents['upcoming'].filter(
-                    event => event.group_id === null
-                  )
-                )
-                // add events to groups
-                .map(card => {
-                  if (card.type === 'group') {
-                    card.events = filteredEvents.upcoming.filter(
-                      e => Number(e.group_id) === Number(card.id)
-                    )
-                  }
-                  return card
-                })
-                // remove groups that have no events
-                .filter(card => card.type === 'event' || card.events.length > 0)
-                // add start dates to groups
-                .map(
-                  card =>
-                    card.type === 'group'
-                      ? {
-                          ...card,
-                          start: card.events.map(e => e.start).sort()[0],
-                        }
-                      : card
-                )
-                // sort cards by start date
-                .sort((a, b) => {
-                  const [a_year, a_month, a_day] = a.start.split('-')
-                  const [b_year, b_month, b_day] = b.start.split('-')
-                  return (
-                    a_year - b_year ||
-                    a_month - b_month ||
-                    a_day - b_day ||
-                    a.id - b.id
-                  )
-                })
-                .map(
-                  card =>
-                    card.type === 'group' ? (
-                      <GroupCard
-                        group={card}
-                        events={card.events}
-                        key={`group-${card.id}`}
-                      />
-                    ) : (
-                      <EventCard {...card} key={`event-${card.id}`} />
-                    )
-                )}
-              {/* this.groups.map(group => (
-                <GroupCard
-                  group={group}
-                  events={filteredEvents['upcoming'].filter(
-                    event => event.group_id == group.id
-                  )}
-                  key={group.id}
-                />
-              ))}
-              {filteredEvents['upcoming']
-                .filter(event => event.group_id === null)
-                .sort((a, b) => {
-                  if (sortByProximity) {
-                    const distToA = this.distanceTo(a.latitude, a.longitude)
-                      .miles
-                    const distToB = this.distanceTo(b.latitude, b.longitude)
-                      .miles
-                    return distToA - distToB
-                  } else {
-                    return new Date(a.start) - new Date(b.start)
-                  }
-                })
-                .map(event => (
-                  <EventCard
-                    {...event}
-                    distanceTo={
-                      sortByProximity
-                        ? this.distanceTo(event.latitude, event.longitude).miles
-                        : null
-                    }
-                    key={event.id}
-                  />
-                  )) */}
+              <EventList events={filteredEvents.upcoming} />
             </Flex>
           </Container>
         </Gradient>
@@ -408,28 +317,7 @@ class IndexPage extends Component {
           <SectionHeading>Past Events</SectionHeading>
           <Container px={3} pb={4}>
             <Flex mx={[1, 2, -3]} wrap justify="center">
-              {filteredEvents['past']
-                .sort((a, b) => {
-                  const [a_year, a_month, a_day] = a.start.split('-')
-                  const [b_year, b_month, b_day] = b.start.split('-')
-                  return (
-                    b_year - a_year ||
-                    b_month - a_month ||
-                    b_day - a_day ||
-                    b.id - a.id
-                  )
-                })
-                .map(event => (
-                  <EventCard
-                    {...event}
-                    distanceTo={
-                      sortByProximity
-                        ? this.distanceTo(event.latitude, event.longitude).miles
-                        : null
-                    }
-                    key={event.id}
-                  />
-                ))}
+              <EventList events={filteredEvents.past} sortBy="start desc" />
             </Flex>
           </Container>
         </Gradient>
