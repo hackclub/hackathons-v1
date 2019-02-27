@@ -178,7 +178,7 @@ export default class extends Component {
     } = this.state
     const description = `Find, register, and compete in high school hackathons near ${
       this.region.name
-    }... Currently showing events from the 2017 - 2018 school year. This directory is maintained by Hack Club, a nonprofit network of student-led coding clubs.`
+    }... Currently showing events from the 2018 - 2019 school year. This directory is maintained by Hack Club, a nonprofit network of student-led coding clubs.`
     return (
       <Layout>
         <Helmet>
