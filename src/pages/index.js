@@ -224,7 +224,7 @@ class IndexPage extends Component {
             style={{ position: 'absolute', top: 0, right: 0 }}
           >
             <L
-              href="https://goo.gl/forms/ZdVkkunalNGW9nQ82"
+              href="https://airtable.com/shr42MplImeMkHHWP"
               target="_blank"
               rel="noopener noreferrer"
               color="slate"
