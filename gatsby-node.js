@@ -72,9 +72,9 @@ exports.onPreBootstrap = () => {
           logMessage('Created image folder')
         }
         const groupsPromiseArray = groupsRes.data.map(group => processGroup(group))
-        return new Promise.all(groupsPromiseArray).then(groupsData => {
+        return Promise.all(groupsPromiseArray).then(groupsData => {
           const eventsPromiseArray = eventsRes.data.map(event => processEvent(event))
-          return new Promise.all(eventsPromiseArray)
+          return Promise.all(eventsPromiseArray)
             .then(eventsData => {
               logMessage('Mapped through event data')
               const writeGroups = new Promise((resolve, reject) => {
@@ -94,7 +94,7 @@ exports.onPreBootstrap = () => {
                   resolve()
                 })
               })
-              return new Promise.all([writeEvents, writeGroups])
+              return Promise.all([writeEvents, writeGroups])
             })
         })
       })
