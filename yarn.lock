@@ -5371,9 +5371,9 @@ fastq@^1.6.0:
   dependencies:
     reusify "^1.0.0"
 
-"favicons-webpack-plugin@git+https://github.com/Creatiwity/favicons-webpack-plugin.git#0872de414061baaad0a2853c77ae75bc38b8bbbf":
+"favicons-webpack-plugin@https://github.com/Creatiwity/favicons-webpack-plugin.git#0872de414061baaad0a2853c77ae75bc38b8bbbf":
   version "0.0.9"
-  resolved "git+https://github.com/Creatiwity/favicons-webpack-plugin.git#0872de414061baaad0a2853c77ae75bc38b8bbbf"
+  resolved "https://github.com/Creatiwity/favicons-webpack-plugin.git#0872de414061baaad0a2853c77ae75bc38b8bbbf"
   dependencies:
     core-js "^2.5.7"
     favicons "^5.1.1"
@@ -5971,10 +5971,10 @@ gatsby-plugin-resolve-src@^2.0.0:
   resolved "https://registry.yarnpkg.com/gatsby-plugin-resolve-src/-/gatsby-plugin-resolve-src-2.0.0.tgz#ab4ccaabbdfd9f2dc2e6a963980dc64ea858f0bf"
   integrity sha512-I8defckvufL/CDMWYvInO8eFwUU1NEQ8hSyUx886wsYlbUUdF2ZBAAJyfvKT7TpAH/dE0Snq29dMH0DMWOg06A==
 
-gatsby-plugin-segment@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-segment/-/gatsby-plugin-segment-1.0.2.tgz#6b014ed477b675486a445155384afe168f3e4bbe"
-  integrity sha512-MHlQJoRVKHGtQjByS4z23BL9wm0HA5rt5gYSP4ETsWNvs1udw+Aqrm5oVtsS+b4zDT0RTMGAjGCVoJbP+PHK2g==
+gatsby-plugin-segment@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-segment/-/gatsby-plugin-segment-1.0.3.tgz#01362e0c6e5c9fc976d48a6b70943691c9ef7ec6"
+  integrity sha512-QNH8TSK1t2l9eTl2roAcFRL7Gf77wa8tC+GCR9dzBZlMzsOJUa9RqbszbJd7GcjjQpV3q6ig4UkR8VAhRqk0jg==
   dependencies:
     "@segment/snippet" "^4.0.1"
 
