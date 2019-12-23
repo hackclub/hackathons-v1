@@ -33,7 +33,7 @@
   "scripts": {
     "build": "gatsby build",
     "dev": "gatsby develop",
-    "fmt": "prettier \"{src/**,}/*.js\" --single-quote --no-semi --write",
+    "fmt": "prettier \"{src/**,}/*.js\" --write",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
