@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react'
 import Tilt from 'components/Tilt'
-import { Heading, Image, Text, Flex, theme } from '@hackclub/design-system'
+import { Box, Heading, Text, Flex, theme } from '@hackclub/design-system'
 import styled from 'styled-components'
 import EventCard from 'components/EventCard'
 import { humanizedDateRange } from '../utils'
+import GatsbyImage from 'gatsby-image'
 
 const fauxCardShadow = px => `
     1px 0 1px rgba(0,0,0,0.15),
@@ -21,6 +22,26 @@ const fauxCardShadow = px => `
 const insetShadow = px => `
   inset 0 0 ${px}px ${px / 2}px rgba(0, 0, 0, 0.375),
   1px 0 1px rgba(0,0,0,0.15)
+`
+
+const LazyImage = ({ src, alt }) => {
+  return (
+    <GatsbyImage
+      fixed={{
+        width: '100%',
+        height: '100%',
+        src: src,
+        srcSet: src,
+      }}
+      alt={alt}
+    />
+  )
+}
+
+const LogoContainer = styled(Box)`
+  height: ${({ theme }) => theme.space[5]}px;
+  width: ${({ theme }) => theme.space[5]}px;
+  position: relative;
 `
 
 const GroupCardBase = styled(Flex.withComponent(Tilt)).attrs({
@@ -84,20 +105,24 @@ class GroupCard extends Component {
       <Fragment>
         <Base onClick={this.toggle}>
           <GroupCardBase bg={banner} open={this.state.open}>
-            {logo && (
-              <Image
-                itemProp="image"
-                src={logo}
-                alt={`${name} logo`}
-                mx="auto"
-                style={{
-                  height: theme.space[5] + 'px',
-                  width: 'auto',
-                  maxHeight: '100%',
-                  maxWidth: '100%',
-                }}
-              />
-            )}
+            <LogoContainer>
+              {logo && (
+                <LazyImage
+                  itemProp="image"
+                  src={logo}
+
+                  alt={`${name} logo`}
+                  imgStyle={{
+                    height: 'auto',
+                    width: 'auto',
+                    maxHeight: '100%',
+                    maxWidth: '100%',
+                    borderRadius: theme.radius,
+                    objectFit: 'contain',
+                  }}
+                />
+              )}
+            </LogoContainer>
             <Heading.h3
               regular
               align="center"
