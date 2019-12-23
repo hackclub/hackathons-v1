@@ -34,28 +34,22 @@ const EventList = ({ events, sortBy = 'start asc' }) =>
     // remove groups that have no events
     .filter(card => card.type === 'event' || card.events.length > 0)
     // add start dates to groups
-    .map(
-      card =>
-        card.type === 'group'
-          ? {
-              ...card,
-              start: card.events.map(e => e.start).sort()[0],
-            }
-          : card
+    .map(card =>
+      card.type === 'group'
+        ? {
+            ...card,
+            start: card.events.map(e => e.start).sort()[0],
+          }
+        : card
     )
     // sort cards by start date
     .sort(sortingFunctions[sortBy])
-    .map(
-      card =>
-        card.type === 'group' ? (
-          <GroupCard
-            group={card}
-            events={card.events}
-            key={`group-${card.id}`}
-          />
-        ) : (
-          <EventCard {...card} key={`event-${card.id}`} />
-        )
+    .map(card =>
+      card.type === 'group' ? (
+        <GroupCard group={card} events={card.events} key={`group-${card.id}`} />
+      ) : (
+        <EventCard {...card} key={`event-${card.id}`} />
+      )
     )
 
 export default EventList

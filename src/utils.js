@@ -62,8 +62,8 @@ export const trackClick = props => e => {
   props.onClick
     ? props.onClick(e)
     : props.noNewTab
-      ? (window.location.href = props.href)
-      : window.open(props.href, '_blank')
+    ? (window.location.href = props.href)
+    : window.open(props.href, '_blank')
 }
 
 // based on https://github.com/withspectrum/spectrum/blob/alpha/src/helpers/utils.js#L146
