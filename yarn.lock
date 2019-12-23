@@ -799,7 +799,7 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@hackclub/design-system@^0.0.1-10":
+"@hackclub/design-system@0.0.1-10":
   version "0.0.1-10"
   resolved "https://registry.yarnpkg.com/@hackclub/design-system/-/design-system-0.0.1-10.tgz#4699b71931c4d5670b911852bb5552a18ae3ccc8"
   integrity sha1-Rpm3GTHE1WcLkRhSu1VSoYrjzMg=
