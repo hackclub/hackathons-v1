@@ -96,7 +96,7 @@ const InnerForm = ({
     <Heading.h2 f={3} color="black" mt={1} mb={1}>
       Want to hear when events are added in your area?
     </Heading.h2>
-    <Text f={2} color="muted" mb={2}>
+    <Text f={2} color="slate" mb={2}>
       Join thousands of subscribers from {values.stats.cities} cities +{' '}
       {values.stats.countries} countries.
     </Text>
