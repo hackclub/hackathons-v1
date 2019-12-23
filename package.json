@@ -5,7 +5,7 @@
   "author": "Max Wofford <max@hackclub.com>",
   "dependencies": {
     "@hackclub/design-system": "^0.0.1-10",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "babel-plugin-styled-components": "^1.5.1",
     "formik": "^0.11.11",
     "gatsby": "^2.18.16",
