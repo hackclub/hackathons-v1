@@ -36,7 +36,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "prettier": "^1.13.5"
+    "prettier": "^1.19.1"
   },
   "keywords": [
     "gatsby"
