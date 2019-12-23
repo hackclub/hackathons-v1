@@ -139,9 +139,7 @@ class IndexPage extends Component {
         pos => {
           axios
             .get(
-              `https://maps.google.com/maps/api/geocode/json?latlng=${
-                pos.coords.latitude
-              },${pos.coords.longitude}`
+              `https://maps.google.com/maps/api/geocode/json?latlng=${pos.coords.latitude},${pos.coords.longitude}`
             )
             .then(resp => {
               const { results } = resp.data

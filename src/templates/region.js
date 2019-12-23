@@ -108,9 +108,7 @@ export default class extends Component {
         pos => {
           axios
             .get(
-              `https://maps.google.com/maps/api/geocode/json?latlng=${
-                pos.coords.latitude
-              },${pos.coords.longitude}`
+              `https://maps.google.com/maps/api/geocode/json?latlng=${pos.coords.latitude},${pos.coords.longitude}`
             )
             .then(resp => {
               const { results } = resp.data
@@ -176,9 +174,7 @@ export default class extends Component {
       filteredEvents,
       sortByProximity,
     } = this.state
-    const description = `Find, register, and compete in high school hackathons near ${
-      this.region.name
-    }... Currently showing events from the 2018 - 2019 school year. This directory is maintained by Hack Club, a nonprofit network of student-led coding clubs.`
+    const description = `Find, register, and compete in high school hackathons near ${this.region.name}... Currently showing events from the 2018 - 2019 school year. This directory is maintained by Hack Club, a nonprofit network of student-led coding clubs.`
     return (
       <Layout>
         <Helmet>
