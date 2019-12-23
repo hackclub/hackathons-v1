@@ -25,9 +25,10 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-segment',
+      resolve: 'gatsby-plugin-segment-js',
       options: {
-        writeKey: 'enReVnqn2tVrMigdaSA5py2tRjSzlgHb',
+        prodKey: 'enReVnqn2tVrMigdaSA5py2tRjSzlgHb',
+        trackPage: true
       },
     },
     {
