@@ -7,7 +7,7 @@
     "@hackclub/design-system": "^0.0.1-10",
     "axios": "^0.19.0",
     "babel-plugin-styled-components": "^1.10.6",
-    "formik": "^0.11.11",
+    "formik": "^2.0.8",
     "gatsby": "^2.18.16",
     "gatsby-plugin-canonical-urls": "^2.1.18",
     "gatsby-plugin-favicon": "^3.1.6",
