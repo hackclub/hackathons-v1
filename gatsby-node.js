@@ -177,11 +177,5 @@ exports.createPages = ({ graphql, actions }) => {
         })
       })
     )
-    locations.map(location => {
-      createPage({
-        path: location,
-        component,
-      })
-    })
   })
 }
