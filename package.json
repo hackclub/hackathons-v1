@@ -20,7 +20,7 @@
     "gatsby-source-filesystem": "^2.1.43",
     "gatsby-transformer-json": "^2.2.22",
     "gatsby-transformer-sharp": "^2.3.9",
-    "pluralize": "^7.0.0",
+    "pluralize": "^8.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.0",
