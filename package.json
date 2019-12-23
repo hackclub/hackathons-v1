@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "author": "Max Wofford <max@hackclub.com>",
   "dependencies": {
-    "@hackclub/design-system": "^0.0.1-10",
+    "@hackclub/design-system": "0.0.1-10",
     "axios": "^0.19.0",
     "babel-plugin-styled-components": "^1.10.6",
     "formik": "^2.0.8",
