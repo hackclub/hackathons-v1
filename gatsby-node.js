@@ -23,11 +23,11 @@ const downloadImage = (event, image, type = 'event') =>
             extension = '.png'
             break
           default:
-            throw `Invalid content-type: ${res.headers['content-type']}`
+            throw new Error(`Invalid content-type: ${res.headers['content-type']}`)
         }
-        let updatedAt = Date.parse(image.updated_at)
+        const updatedAt = Date.parse(image.updated_at)
         const fileName = `${type}_${image.type}_${event.id}.${updatedAt}${extension}`
-        writeFile(imageFolder + fileName, res.data, 'binary', err => {
+        writeFile(imageFolder + fileName, res.data, err => {
           if (err) throw err
           resolve(`images/${fileName}`)
         })
@@ -177,11 +177,5 @@ exports.createPages = ({ graphql, actions }) => {
         })
       })
     )
-    locations.map(location => {
-      createPage({
-        path: location,
-        component,
-      })
-    })
   })
 }
