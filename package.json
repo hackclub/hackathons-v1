@@ -9,7 +9,6 @@
     "babel-plugin-styled-components": "^1.10.6",
     "formik": "^2.0.8",
     "gatsby": "^2.18.16",
-    "gatsby-image": "^2.2.37",
     "gatsby-plugin-canonical-urls": "^2.1.18",
     "gatsby-plugin-favicon": "^3.1.6",
     "gatsby-plugin-html-attributes": "^1.0.5",
@@ -34,7 +33,7 @@
   "scripts": {
     "build": "gatsby build",
     "dev": "gatsby develop",
-    "fmt": "prettier \"{src/**,}/*.js\" --write",
+    "fmt": "prettier \"{src/**,}/*.js\" --single-quote --no-semi --write",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {

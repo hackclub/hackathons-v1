@@ -3,7 +3,6 @@ import Tilt from 'components/Tilt'
 import { Box, Heading, Image, Text, Flex, theme } from '@hackclub/design-system'
 import { trackClick, humanizedDateRange } from 'utils'
 import styled from 'styled-components'
-import GatsbyImage from 'gatsby-image'
 
 const humanizeDistance = num => {
   if (num <= 100) {
@@ -36,7 +35,7 @@ const NameHeading = props => {
       regular
       align="center"
       my={2}
-      style={{ flex: '1 0 auto', zIndex: 1 }}
+      style={{ flex: '1 0 auto' }}
       {...props}
     />
   )
@@ -58,8 +57,10 @@ const EventCard = styled(Flex.withComponent(Tilt)).attrs({
   border-radius: ${({ theme }) => theme.radius};
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.375);
   box-shadow: 0px 0 2px 1px rgba(0, 0, 0, 0.125);
+  background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.375) 75%),
+    url(${props => props.bg}) no-repeat;
+  background-size: cover;
   overflow: hidden;
-  position: relative;
 `
 
 const MLHLogo = styled(Image).attrs({
@@ -69,7 +70,6 @@ const MLHLogo = styled(Image).attrs({
 })`
   border-top-right-radius: ${({ theme }) => theme.radius};
   border-bottom-right-radius: ${({ theme }) => theme.radius};
-  z-index: 2;
 `
 
 const MLHSeal = styled(Box).attrs({
@@ -78,32 +78,7 @@ const MLHSeal = styled(Box).attrs({
   mt: -theme.space[3] + 5,
   mb: 1,
   children: props => <MLHLogo src="/mlh-logo-grayscale.svg" alt="MLH logo" />,
-})`
-  z-index: 2;
-`
-
-const EventImageContainer = styled(Box).attrs({
-  mt: -3,
-  mb: -3
-})`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-`
-
-const LazyImage = ({ src, alt }) => {
-  return (
-    <GatsbyImage
-      fixed={{
-        width: '100%',
-        height: '100%',
-        src: src,
-        srcSet: src,
-      }}
-      alt={alt}
-    />
-  )
-}
+})``
 
 const Base = styled.a`
   opacity: 1 !important;
@@ -136,7 +111,7 @@ export default ({
   startYear,
   mlh,
   invisible,
-  inGroup
+  inGroup,
 }) => (
   <Base
     href={website}
@@ -154,36 +129,20 @@ export default ({
     itemType="http://schema.org/Event"
     invisible={invisible}
   >
-    <EventCard>
-      <EventImageContainer style={{ zIndex: 1, }}>
-        <Image
-          src='bg-filter.png'
-          style={{
-            height: '100%',
-            width: '100%'
-          }}
-        />
-      </EventImageContainer>
-      <EventImageContainer>
-        <LazyImage
-          src={banner}
-          alt={`${name} background`}
-        />
-      </EventImageContainer>
+    <EventCard bg={banner}>
       <MLHSeal style={{ visibility: mlh ? 'visible' : 'hidden' }} />
       <LogoContainer>
         {logo && (
-          <LazyImage
+          <Image
             itemProp="image"
             src={logo}
             alt={`${name} logo`}
-            imgStyle={{
+            style={{
               height: 'auto',
               width: 'auto',
               maxHeight: '100%',
               maxWidth: '100%',
               borderRadius: theme.radius,
-              objectFit: 'contain',
             }}
           />
         )}
@@ -191,7 +150,7 @@ export default ({
       <NameHeading itemProp="name">
         {inGroup ? name.replace('LHD ', '') : name}
       </NameHeading>
-      <Flex justify="space-between" w={1} style={{ zIndex: 1 }}>
+      <Flex justify="space-between" w={1}>
         <Text>{humanizedDateRange(start, end)}</Text>
         {distanceTo ? (
           <Text>{`${humanizeDistance(distanceTo)} miles`}</Text>
