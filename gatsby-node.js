@@ -47,8 +47,8 @@ const downloadImage = async (event, image, type = 'event') => {
       throw `Invalid content-type: ${res.headers['content-type']}`
   }
   const updatedAt = Date.parse(image.updated_at)
-  const filename = `${imageFolder}${type}_${image.type}_${event.id}.${updatedAt}${extension}`
-  await writeFile(filename, res.data, 'binary')
+  const filename = `${type}_${image.type}_${event.id}.${updatedAt}${extension}`
+  await writeFile(imageFolder + filename, res.data, 'binary')
   return filename
 }
 
