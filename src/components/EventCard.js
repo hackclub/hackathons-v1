@@ -43,6 +43,7 @@ const NameHeading = props => {
 
 const LogoContainer = styled(Box)`
   height: ${({ theme }) => theme.space[5]}px;
+  width: ${({ theme }) => theme.space[5]}px;
   position: relative;
 `
 
