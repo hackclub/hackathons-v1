@@ -142,8 +142,11 @@ export default ({
               height: 'auto',
               width: 'auto',
               maxHeight: '100%',
-              maxWidth: '100%',
-              borderRadius: theme.radius,
+              maxWidth: 'none',
+              position: 'absolute',
+              top: 0,
+              left: '50%',
+              transform: 'translateX(-50%)',
             }}
           />
         )}
