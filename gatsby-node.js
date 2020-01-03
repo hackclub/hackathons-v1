@@ -3,14 +3,22 @@ const axios = require('axios')
 const path = require('path')
 const readline = require('readline')
 const regions = require('./src/regions.js')
+const Bottleneck = require('bottleneck')
+
+const limiter = new Bottleneck({
+  maxConcurrent: 10,
+  minTime: 100,
+})
+
+const axiosGet = limiter.wrap(axios.get)
 
 const imageFolder = 'static/images/'
 
 const downloadImage = (event, image, type = 'event') =>
   new Promise((resolve, reject) => {
     if (!image) resolve(null)
-    axios
-      .get(`https://api.hackclub.com${image.file_path}`, {
+    console.log(`downloading ${image.file_path}`)
+    axiosGet(`https://api.hackclub.com${image.file_path}`, {
         responseType: 'arraybuffer',
       })
       .then(res => {
@@ -32,7 +40,11 @@ const downloadImage = (event, image, type = 'event') =>
           resolve(`images/${fileName}`)
         })
       })
-      .catch(err => reject(err))
+      .catch(err => {
+        console.log(`failure while downloading ${image.file_path}`)
+        console.error(err)
+        reject(err)
+      })
   })
 
 const processEvent = async event => ({
@@ -60,11 +72,10 @@ exports.onPreBootstrap = () => {
   }
 
   // Download & process events
-  return axios
-    .get('https://api.hackclub.com/v1/events')
+  return axiosGet('https://api.hackclub.com/v1/events')
     .then(eventsRes => {
       logMessage('Fetched events data')
-      return axios.get('https://api.hackclub.com/v1/events/groups').then(groupsRes => {
+      return axiosGet('https://api.hackclub.com/v1/events/groups').then(groupsRes => {
         logMessage('Fetched groups data')
 
         if (!existsSync(imageFolder)) {
@@ -72,8 +83,10 @@ exports.onPreBootstrap = () => {
           logMessage('Created image folder')
         }
         const groupsPromiseArray = groupsRes.data.map(group => processGroup(group))
+        logMessage(`starting to get groupsePromiseArray ${groupsPromiseArray.length}`)
         return Promise.all(groupsPromiseArray).then(groupsData => {
           const eventsPromiseArray = eventsRes.data.map(event => processEvent(event))
+          logMessage('starting to get eventsPromiseArray')
           return Promise.all(eventsPromiseArray)
             .then(eventsData => {
               logMessage('Mapped through event data')
@@ -101,7 +114,7 @@ exports.onPreBootstrap = () => {
     })
     // Download & process event stats
     .then(() => (
-      axios.get('https://api.hackclub.com/v1/event_email_subscribers/stats')
+      axiosGet('https://api.hackclub.com/v1/event_email_subscribers/stats')
     ))
     .then(res => (
       new Promise((resolve, reject) => {
