@@ -42,6 +42,14 @@ Run it!
 
     $ yarn run dev
 
+To slow? Run it with your own ratelimit config
+
+    $ MAX_CONCURRENT=20; MIN_TIME=100; yarn run dev
+
+For running in production, turn off the ratelimiter
+
+    $ NO_RATELIMIT=true && yarn run build
+
 ### License
 
 This project is licensed under the MIT license. Please see [`LICENSE.md`](LICENSE.md) for the full text.
