@@ -49,7 +49,7 @@ const downloadImage = async (event, image, type = 'event') => {
   const updatedAt = Date.parse(image.updated_at)
   const filename = `${type}_${image.type}_${event.id}.${updatedAt}${extension}`
   await writeFile(imageFolder + filename, res.data, 'binary')
-  return filename
+  return 'images/' + filename
 }
 
 const processEvent = async event => ({
